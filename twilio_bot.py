@@ -1,19 +1,21 @@
 #!/opt/sjs/bin/python
 
-from flask import Flask, Response, request
-from twilio import twiml
+from flask       import Flask, Response, request
+from twilio      import twiml
 from twilio.rest import TwilioRestClient
-from datetime import datetime,timedelta
+from datetime    import datetime,timedelta
+
 import locale
 import pickle
 import os
-import item_update
 
+# instantiate our flask app.
 app = Flask(__name__)
 
 # batteries not included.
 import square_api
 
+# load secrets.
 secrets     = json.loads(open("secrets.json").read())
 account_sid = secrets["twilio"]["account_sid"]
 auth_token  = secrets["twilio"]["auth_token"]
@@ -104,15 +106,15 @@ def inbound_sms():
         response.message(return_year())
     elif 'increase' in inbound_message.lower():
         send_sms("Increasing prices by $1...",number)
-        item_update.update_item_price(100)
+        square_api.update_item_price(100)
         send_sms("Done Processing",number)
     elif 'decrease' in inbound_message.lower():
         send_sms("Decreasing prices by $1...",number)
-        item_update.update_item_price(-100)
+        square_api.update_item_price(-100)
         send_sms("Done Processing",number)
     elif 'restore' in inbound_message.lower():
         send_sms("Restoring default prices...",number)
-        item_update.restore_item_price("regular")
+        square_api.restore_item_price("regular")
         send_sms("Done Processing",number)
     elif 'report' in inbound_message.lower():
         send_sms("Processing report...",number)

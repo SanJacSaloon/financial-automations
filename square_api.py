@@ -52,6 +52,59 @@ sql_db   = secrets["sql"]["database"]
 sql_user = secrets["sql"]["user"]
 sql_pw   = secrets["sql"]["password"]
 
+def update_item_price(amount):
+    save_item_prices('Pre-Price-Update_%s'%datetime.today().strftime("%Y-%m-%d"))
+    items = get_items()
+    count = 0
+    for i in items:
+        try:
+            if 'retail' in i['category']['name'].lower():continue
+        except: pass
+        if count >= 20:
+            time.sleep(10)
+            count = 0
+        price = 0
+        variation_id = ''
+        for n in i['variations']:
+            try:price = int(n['price_money']['amount']+amount)
+            except:
+                print '-'*20
+                print i
+                print '-'*20
+                continue
+
+            update_variation(i['id'],n['id'],'{"price_money":{"amount":%s,"currency_code": "USD"}}'%price)
+
+        count += 1
+
+def save_item_prices(name):
+    items = get_items()
+    save_items = {}
+    for i in items:
+
+        price = 0
+        variation_id = ''
+        for n in i['variations']:
+            try:price = int(n['price_money']['amount'])
+            except:continue
+            variation_id = n['id']
+        save_items[i['id']] = {'price'        : price,
+                               'variation_id' : variation_id,
+                               'item_id'      : i['id'],
+                               'item_name'    : i['name']}
+
+    pickle.dump( save_items, open( "%s.p"%name, "wb" ) )
+
+def restore_item_price(name):
+    data = pickle.load( open( "%s.p"%name, "rb" ) )
+    for d in data:
+        price = data[d]['price']
+        if price > 0:
+            update_variation(data[d]['item_id'],data[d]['variation_id'],'{"price_money":{"amount":%s,"currency_code": "USD"}}'%price)
+        else: continue
+        #time.sleep(5)
+
+
 def get_row(table,date):
   try:
     result = database("SELECT * from %s where date like '%s'"%(table,date))[0]
