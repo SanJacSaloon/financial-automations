@@ -1,5 +1,8 @@
 #!/opt/sjs/bin/python
 
+import dateutil.relativedelta
+import urlparse.urlparse
+import datetime
 import httplib
 import pymysql
 import smtplib
@@ -9,10 +12,6 @@ import locale
 import json
 import time
 import sys
-
-from urlparse import urlparse
-from datetime import *
-from dateutil.relativedelta import *
 
 # batteries not included.
 import google_api
@@ -26,7 +25,7 @@ location_ids = secrets["square"]["location_ids"]
 homepath     = secrets["general"]["home_path"]
 
 args = sys.argv
-report_date = (datetime.today()-timedelta(days=1)).strftime("%Y-%m-%d")
+report_date = (datetime.datetime.today()-timedelta(days=1)).strftime("%Y-%m-%d")
 if len(args) > 1: report_date = args[1]
 filename = "%s.txt"%report_date
 fh = open(homepath+filename, 'w')
@@ -52,7 +51,7 @@ sql_user = secrets["sql"]["user"]
 sql_pw   = secrets["sql"]["password"]
 
 def update_item_price(amount):
-    save_item_prices('Pre-Price-Update_%s'%datetime.today().strftime("%Y-%m-%d"))
+    save_item_prices('Pre-Price-Update_%s'%datetime.datetime.today().strftime("%Y-%m-%d"))
     items = get_items()
     count = 0
     for i in items:
@@ -129,9 +128,9 @@ def database(sql):# Connect to the database
 
 def populate_database(date):
   if not date: date = "2018-05-01"
-  try: date = datetime.strptime(date,"%Y-%m-%d")
+  try: date = datetime.datetime.strptime(date,"%Y-%m-%d")
   except: pass
-  while date < datetime.today():
+  while date < datetime.datetime.today():
     daily_sales(date)
     date = date + timedelta(days=1)
 
@@ -192,7 +191,7 @@ def get_items():
         # Pagination headers have the following format:
         # <https://connect.squareup.com/v1/LOCATION_ID/cash-drawer-shifts?batch_token=BATCH_TOKEN>;rel='next'
         # This line extracts the URL from the angle brackets surrounding it.
-        next_batch_url = urlparse(pagination_header.split('<')[1].split('>')[0])
+        next_batch_url = urlparse.urlparse(pagination_header.split('<')[1].split('>')[0])
 
         request_path = next_batch_url.path + '?' + next_batch_url.query
 
@@ -254,11 +253,11 @@ def get_cash_drawer(date=False):
   global log
 
   if not date:
-    reportdate = datetime.today()-timedelta(days=1)
-    end = datetime.today()
+    reportdate = datetime.datetime.today()-timedelta(days=1)
+    end = datetime.datetime.today()
     end = end.strftime("%Y-%m-%dT04:00:00-06:00")
   else:
-    reportdate = datetime.strptime(date,"%Y-%m-%d")
+    reportdate = datetime.datetime.strptime(date,"%Y-%m-%d")
     end = (reportdate+timedelta(days=1)).strftime("%Y-%m-%dT04:00:00-06:00")
   begin = reportdate.strftime("%Y-%m-%dT08:00:00-06:00")
 
@@ -301,7 +300,7 @@ def get_cash_drawer(date=False):
         # Pagination headers have the following format:
         # <https://connect.squareup.com/v1/LOCATION_ID/cash-drawer-shifts?batch_token=BATCH_TOKEN>;rel='next'
         # This line extracts the URL from the angle brackets surrounding it.
-        next_batch_url = urlparse(pagination_header.split('<')[1].split('>')[0])
+        next_batch_url = urlparse.urlparse(pagination_header.split('<')[1].split('>')[0])
 
         request_path = next_batch_url.path + '?' + next_batch_url.query
 
@@ -312,7 +311,7 @@ def get_cash_drawer(date=False):
   for drawer in drawers:
     if drawer['id'] in seen_drawer_ids: continue
 
-    if (datetime.strptime(drawer['opened_at'].replace("Z",''),"%Y-%m-%dT%H:%M:%S")-timedelta(hours=6)) < datetime.strptime(begin[:-6],"%Y-%m-%dT%H:%M:%S"): continue
+    if (datetime.datetime.strptime(drawer['opened_at'].replace("Z",''),"%Y-%m-%dT%H:%M:%S")-timedelta(hours=6)) < datetime.datetime.strptime(begin[:-6],"%Y-%m-%dT%H:%M:%S"): continue
     seen_drawer_ids.add(drawer['id'])
     unique_drawers.append(drawer)
   connection.close()
@@ -324,18 +323,18 @@ def get_payments(date=False,current=False):
 
   # Make sure to URL-encode all parameters
   if not date:
-    reportdate = datetime.today()-timedelta(days=1)
-    end = datetime.today()
+    reportdate = datetime.datetime.today()-timedelta(days=1)
+    end = datetime.datetime.today()
     end = end.strftime("%Y-%m-%dT04:00:00-06:00")
   else:
-    try:reportdate = datetime.strptime(date,"%Y-%m-%d")
+    try:reportdate = datetime.datetime.strptime(date,"%Y-%m-%d")
     except: reportdate = date
     end = (reportdate+timedelta(days=1)).strftime("%Y-%m-%dT04:00:00-06:00")
   if current:
     if not date:
         if int(time.strftime("%H")) < 4:
-            begin = (datetime.today()-timedelta(days=1)).strftime("%Y-%m-%dT08:00:00-06:00")
-        else: begin = datetime.today().strftime("%Y-%m-%dT08:00:00-06:00")
+            begin = (datetime.datetime.today()-timedelta(days=1)).strftime("%Y-%m-%dT08:00:00-06:00")
+        else: begin = datetime.datetime.today().strftime("%Y-%m-%dT08:00:00-06:00")
     else:
         begin = date + "T08:00:00-06:00"
     parameters = urllib.urlencode({'begin_time': begin})
@@ -375,7 +374,7 @@ def get_payments(date=False,current=False):
         # Pagination headers have the following format:
         # <https://connect.squareup.com/v1/LOCATION_ID/payments?batch_token=BATCH_TOKEN>;rel='next'
         # This line extracts the URL from the angle brackets surrounding it.
-        next_batch_url = urlparse(pagination_header.split('<')[1].split('>')[0])
+        next_batch_url = urlparse.urlparse(pagination_header.split('<')[1].split('>')[0])
 
         request_path = next_batch_url.path + '?' + next_batch_url.query
 
@@ -405,22 +404,22 @@ def get_transactions(date=False,current=False):
 
   # Make sure to URL-encode all parameters
   if not date:
-    reportdate = datetime.today()-timedelta(days=1)
-    end = datetime.today()
+    reportdate = datetime.datetime.today()-timedelta(days=1)
+    end = datetime.datetime.today()
     end = end.strftime("%Y-%m-%dT04:00:00-06:00")
   else:
-    try:reportdate = datetime.strptime(date,"%Y-%m-%d")
+    try:reportdate = datetime.datetime.strptime(date,"%Y-%m-%d")
     except:reportdate = date
     end = (reportdate+timedelta(days=1)).strftime("%Y-%m-%dT04:00:00-06:00")
   if current:
     if not date:
         if int(time.strftime("%H")) < 4:
-            begin = (datetime.today()-timedelta(days=1)).strftime("%Y-%m-%dT08:00:00-06:00")
-            end = datetime.today()
+            begin = (datetime.datetime.today()-timedelta(days=1)).strftime("%Y-%m-%dT08:00:00-06:00")
+            end = datetime.datetime.today()
             end = end.strftime("%Y-%m-%dT04:00:00-06:00")
         else:
-            begin = datetime.today().strftime("%Y-%m-%dT08:00:00-06:00")
-            end = datetime.today()
+            begin = datetime.datetime.today().strftime("%Y-%m-%dT08:00:00-06:00")
+            end = datetime.datetime.today()
             end = end.strftime("%Y-%m-%dT23:59:59-06:00")
     else:
         begin = date + "T08:00:00-06:00"
@@ -477,7 +476,7 @@ def get_transactions(date=False,current=False):
         # Pagination headers have the following format:
         # <https://connect.squareup.com/v1/LOCATION_ID/payments?batch_token=BATCH_TOKEN>;rel='next'
         # This line extracts the URL from the angle brackets surrounding it.
-        next_batch_url = urlparse(pagination_header.split('<')[1].split('>')[0])
+        next_batch_url = urlparse.urlparse(pagination_header.split('<')[1].split('>')[0])
         request_path = next_batch_url.path + '?' + next_batch_url.query'''
 
   # Remove potential duplicate values from the list of payments
@@ -504,7 +503,7 @@ def sales_totals(payments,drawers,reportd):
   total = {}
   categories = []
 
-  if not reportd:reportd = datetime.strptime(report_date,"%Y-%m-%d")
+  if not reportd:reportd = datetime.datetime.strptime(report_date,"%Y-%m-%d")
    # Variables for holding cumulative values of various monetary amounts
   total['sjs_tips'] = 0
   total['jacks_tips'] = 0
@@ -732,21 +731,21 @@ def daily_sales(date):
   except Exception as e:
     drawers = []
     ts = time.time()
-    log+= "[%s]: %s"%(datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S'),e)
-  try:reportdate = datetime.strptime(date,"%Y-%m-%d")
+    log+= "[%s]: %s"%(datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S'),e)
+  try:reportdate = datetime.datetime.strptime(date,"%Y-%m-%d")
   except:reportdate = date
   sales = sales_totals(payments,drawers,reportdate)
 
   full_report += report_string(sales)
 
   ####LAST YEAR####
-  last_year_report_date = reportdate+relativedelta(years=-1, weekday=reportdate.weekday())
+  last_year_report_date = reportdate + dateutil.relativedelta.relativedelta(years=-1, weekday=reportdate.weekday())
   last_year_payments = get_payments(last_year_report_date.strftime("%Y-%m-%d"))
   try:last_year_drawers = get_cash_drawer(last_year_report_date.strftime("%Y-%m-%d"))
   except Exception as e:
     last_year_drawers = []
     ts = time.time()
-    log+= "[%s]: %s"%(datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S'),e)
+    log+= "[%s]: %s"%(datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S'),e)
 
   full_report += '\n'
   full_report += '===LAST YEAR===\n'
@@ -762,7 +761,7 @@ def daily_sales(date):
 
 def weekly_sales(date,report=False,recursive=False):
   global log
-  if not date:date = datetime.today()
+  if not date:date = datetime.datetime.today()
   original_date = date
   date = date - timedelta(days=7)
   day = 0
@@ -792,14 +791,14 @@ def weekly_sales(date,report=False,recursive=False):
 
     ####LAST YEAR####
     full_report += '==LAST YEAR WEEKLY SALES REPORT==\n'
-    last_year_report_date = original_date+relativedelta(years=-1, weekday=original_date.weekday())
+    last_year_report_date = original_date + dateutil.relativedelta.relativedelta(years=-1, weekday=original_date.weekday())
     full_report += weekly_sales(last_year_report_date,recursive=True)
   else: return (weekly_total,report_string(weekly_total))
   return (weekly_total,full_report)
 
 def monthly_sales(date,recursive=False):
   global log
-  if not date: date = datetime.today() - timedelta(days=1)
+  if not date: date = datetime.datetime.today() - timedelta(days=1)
   date = date.replace(day=1)
   month = int(date.strftime("%m"))
   sdate = date
@@ -830,14 +829,14 @@ def monthly_sales(date,recursive=False):
 
     ####LAST YEAR####
     full_report += '==LAST YEAR MONTHLY SALES REPORT==\n'
-    last_year_report_date = sdate+relativedelta(years=-1)
+    last_year_report_date = sdate + dateutil.relativedelta.relativedelta(years=-1)
     full_report += monthly_sales(last_year_report_date,recursive=True)
   else: return report_string(monthly_total)
   return (monthly_total,full_report)
 
 def yearly_sales(date,recursive=False):
   global log
-  if not date: date = datetime.today()
+  if not date: date = datetime.datetime.today()
   date = date.replace(day=1)
   date = date.replace(month=1)
 
@@ -846,7 +845,7 @@ def yearly_sales(date,recursive=False):
   yearly_total = {}
   full_report = ""
 
-  while int(date.strftime("%m")) < datetime.today().strftime("%m"):
+  while int(date.strftime("%m")) < datetime.datetime.today().strftime("%m"):
     if date.strftime("%Y-%m-%d") > date.today().strftime("%Y-%m-%d"):
       break
     money = get_row('monthly',date.strftime("%Y-%m-%d"))
@@ -872,14 +871,14 @@ def yearly_sales(date,recursive=False):
 
     ####LAST YEAR####
     full_report += '==LAST YEAR MONTHLY SALES REPORT==\n'
-    last_year_report_date = sdate+relativedelta(years=-1)
+    last_year_report_date = sdate + dateutil.relativedelta.relativedelta(years=-1)
     full_report += monthly_sales(last_year_report_date,recursive=True)
   else: return report_string(yearly_total)
   return (yearly_total,full_report)
 
 def get_month():
   global log
-  date = datetime.today()
+  date = datetime.datetime.today()
   # sdate = date
   date = date.replace(day=1)
   month_total = monthly_sales(date)[0]
@@ -893,7 +892,7 @@ def get_month():
 
 def get_year(custom_date=False):
   global log
-  if not custom_date: date = datetime.today()
+  if not custom_date: date = datetime.datetime.today()
   else: date = custom_date
   # sdate = date
   date = date.replace(day=1)
@@ -995,7 +994,7 @@ def email_report(email=secrets["general"]["smtp_to"],report=False):
     server.login(username,password)
     server.sendmail(fromaddr, toaddrs, msg)
     server.quit()
-  except: log+= '\n%s: Failed to send report'%datetime.today().strftime("%Y-%m-%d:%H:%M")
+  except: log+= '\n%s: Failed to send report'%datetime.datetime.today().strftime("%Y-%m-%d:%H:%M")
 
 class Daily(dict):
     def __init__(self,day_id=False):
@@ -1115,8 +1114,8 @@ if __name__ == '__main__':
   ###########DAILY###########
   ###########################
 
-  sales = daily_sales(datetime.strptime(report_date,"%Y-%m-%d"))
-  google_api.fill_sales(datetime.strptime(report_date,"%Y-%m-%d"),sales[0])
+  sales = daily_sales(datetime.datetime.strptime(report_date,"%Y-%m-%d"))
+  google_api.fill_sales(datetime.datetime.strptime(report_date,"%Y-%m-%d"),sales[0])
   ##NOTIFY/WRITE#####################
   fh.write(sales[1])
   email_report(report={'subject':'Report for %s'%report_date,'body':sales[1]})
@@ -1124,12 +1123,12 @@ if __name__ == '__main__':
   ###########################
   ###########WEEKLY##########
   ###########################
-  if 'sun' in datetime.today().strftime("%a").lower():
-    try:sales = weekly_sales(datetime.strptime(report_date,"%Y-%m-%d"))
+  if 'sun' in datetime.datetime.today().strftime("%a").lower():
+    try:sales = weekly_sales(datetime.datetime.strptime(report_date,"%Y-%m-%d"))
     except Exception as e:
       last_year_drawers = []
       ts = time.time()
-      log+= "[%s]: %s"%(datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S'),e)
+      log+= "[%s]: %s"%(datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S'),e)
     date = report_date - timedelta(days=7)
     fil = open(homepath+"WeekOf_%s.txt"%date.strftime("%Y-%m-%d"),'w')
     fil.write(sales[1])
@@ -1140,15 +1139,15 @@ if __name__ == '__main__':
   ###########################
   ##########MONTHLY##########
   ###########################
-  if int(datetime.today().strftime("%d")) == 25:
+  if int(datetime.datetime.today().strftime("%d")) == 25:
     google_api.build_month_sheet()
-  if int(datetime.today().strftime("%d")) == 1:
-    try:sales = monthly_sales(datetime.strptime(report_date,"%Y-%m-%d"))
+  if int(datetime.datetime.today().strftime("%d")) == 1:
+    try:sales = monthly_sales(datetime.datetime.strptime(report_date,"%Y-%m-%d"))
     except Exception as e:
       last_year_drawers = []
       ts = time.time()
-      log+= "[%s]: %s"%(datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S'),e)
-    sdate = (datetime.today() - timedelta(days=1)).replace(day=1)
+      log+= "[%s]: %s"%(datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S'),e)
+    sdate = (datetime.datetime.today() - timedelta(days=1)).replace(day=1)
     fil = open(homepath+"MonthOf_%s.txt"%sdate.strftime("%Y-%m-%d"),'w')
     fil.write(sales[1])
     fil.close()
@@ -1160,12 +1159,12 @@ if __name__ == '__main__':
   try: print get_month()
   except Exception as e:
     ts = time.time()
-    log+= "[%s]: %s"%(datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S'),e)
+    log+= "[%s]: %s"%(datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S'),e)
 
   try: print get_year()
   except Exception as e:
     ts = time.time()
-    log+= "[%s]: %s"%(datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S'),e)
+    log+= "[%s]: %s"%(datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S'),e)
   ###########################
   ########WRITE LOG##########
   ###########################

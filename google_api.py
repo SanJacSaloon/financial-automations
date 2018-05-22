@@ -1,39 +1,31 @@
 #!/opt/sjs/bin/python
 
-import os
-import locale
-
-from datetime import datetime,timedelta
-import time
-import dateutil.relativedelta as relativedelta
+import dateutil.relativedelta
 import calendar
-
-from apiclient import discovery,errors
-from oauth2client import client
-from oauth2client import tools
-from oauth2client.file import Storage
-
 import gspread
-
+import locale
+import time
 import json
+import os
 
-#try:
-#    import argparse
-#    flags = argparse.ArgumentParser(parents=[tools.argparser]).parse_args()
-#except ImportError:
-#    flags = None
+from datetime           import datetime, timedelta
+from apiclient          import discovery, errors
+from oauth2client       import client
+from oauth2client       import tools
+from oauth2client.file import Storage
 
 # If modifying these scopes, delete your previously saved credentials
 # at ~/.credentials/sheets.googleapis.com-python-quickstart.json
-secrets = json.loads(open("secrets.json").read())
-SCOPES = ['https://www.googleapis.com/auth/spreadsheets','https://www.googleapis.com/auth/drive']
+secrets            = json.loads(open("secrets.json").read())
+SCOPES             = ['https://www.googleapis.com/auth/spreadsheets','https://www.googleapis.com/auth/drive']
 CLIENT_SECRET_FILE = 'client_secret.json'
-APPLICATION_NAME = 'Google Sheets API Python Quickstart'
-PARENT_FOLDER_ID = secrets["google"]["parent_folder_id"]
-CALLS = 0
+APPLICATION_NAME   = 'Google Sheets API Python Quickstart'
+PARENT_FOLDER_ID   = secrets["google"]["parent_folder_id"]
+CALLS              = 0
+
 def get_credentials():
-    global CALLS
-    """Gets valid user credentials from storage.
+    """
+    Gets valid user credentials from storage.
 
     If nothing has been stored, or if the stored credentials are invalid,
     the OAuth2 flow is completed to obtain the new credentials.
@@ -41,6 +33,7 @@ def get_credentials():
     Returns:
         Credentials, the obtained credential.
     """
+    global CALLS
     home_dir = os.path.expanduser('~')
     credential_dir = os.path.join(home_dir, '.credentials')
     if not os.path.exists(credential_dir):
@@ -108,7 +101,7 @@ def last_sunday_of_month(month):
 
 def first_day_of_month(date,first_spreadsheet=False):
     global CALLS
-    first_day = date + relativedelta.relativedelta(months=1)
+    first_day = date + dateutil.relativedelta.relativedelta(months=1)
     first_day = first_day.replace(day=1)
     if first_spreadsheet: sheet = first_spreadsheet
     else: sheet = open_google_spreadsheet(spreadsheet_title= "%s-SplitLevel_Operations_Week"%date.strftime("%m%d%y"))
@@ -121,7 +114,7 @@ def first_day_of_month(date,first_spreadsheet=False):
 
 def last_day_of_month(date,last_spreadsheet=False):
     global CALLS
-    last_day = date + relativedelta.relativedelta(months=1)
+    last_day = date + dateutil.relativedelta.relativedelta(months=1)
     last_day = last_day.replace(day=1)
     last_day = last_day+timedelta(days=-1)
     last_sunday = last_sunday_of_month(int(date.strftime("%m")))
@@ -144,7 +137,7 @@ def last_year_sales(month=False,week=False):
     value = 0
     if month:
         date = datetime.strptime(month,"%B-%Y")
-        name = date + relativedelta.relativedelta(years=-1)
+        name = date + dateutil.relativedelta.relativedelta(years=-1)
         name = name.strftime("%B-%Y")
         sheet = open_google_spreadsheet(spreadsheet_title=name)
         wsheet = sheet.sheet1
@@ -154,10 +147,10 @@ def last_year_sales(month=False,week=False):
         CALLS += 4
     if week:
         date = datetime.strptime(month,"%B-%Y")
-        date = date + relativedelta.relativedelta(weekday=relativedelta.WE(1))
-        name = date + relativedelta.relativedelta(years=-1)
+        date = date + dateutil.relativedelta.relativedelta(weekday=relativedelta.WE(1))
+        name = date + dateutil.relativedelta.relativedelta(years=-1)
         if name.strftime("%A") != "Sunday":
-            name = name + relativedelta.relativedelta(weekday=relativedelta.SU(-1))
+            name = name + dateutil.relativedelta.relativedelta(weekday=relativedelta.SU(-1))
         name = "%s-SplitLevel_Operations_Week"%name.strftime("%m%d%y")
         sheet = open_google_spreadsheet(spreadsheet_title=name)
         wsheet = sheet.sheet1
@@ -170,7 +163,7 @@ def last_year_sales(month=False,week=False):
 def find_date_cell(date,spreadsheet=False):
     if spreadsheet:sheet = spreadsheet
     else:
-        last_sun = date + relativedelta.relativedelta(weekday=relativedelta.SU(-1))
+        last_sun = date + dateutil.relativedelta.relativedelta(weekday=relativedelta.SU(-1))
         name = "%s-SplitLevel_Operations_Week"%last_sun.strftime("%m%d%y")
         sheet = open_google_spreadsheet(spreadsheet_title=name)
     wsheet = sheet.worksheet("San Jac")
@@ -367,7 +360,7 @@ def fill_sales(date,total):
 
     sheet = open_google_spreadsheet(spreadsheet_title="Averages")
     if date.strftime("%A").lower() != "sunday":
-            date = date + relativedelta.relativedelta(weekday=relativedelta.SU(-1))
+            date = date + dateutil.relativedelta.relativedelta(weekday=relativedelta.SU(-1))
     tmp = find_date_cell(date,spreadsheet=sheet)
     row = tmp[1]
     ###SAN JAC###
@@ -386,7 +379,7 @@ def update_annual_sheet(year):
     for month in xrange(12):
         try:sheets.append(open_google_spreadsheet(spreadsheet_title=date.strftime("%B-%Y")).id)
         except:break
-        date = date + relativedelta.relativedelta(months=1)
+        date = date + dateutil.relativedelta.relativedelta(months=1)
     sheet = open_google_spreadsheet(spreadsheet_title="2018")
     worksheet = sheet.worksheet("Overview")
     cell_list = worksheet.range("A1:A15")
@@ -457,7 +450,7 @@ def test():
     global CALLS
     date=datetime.today()
     if date.strftime("%A").lower() != "sunday":
-            date = date + relativedelta.relativedelta(weekday=relativedelta.SU(-1))
+            date = date + dateutil.relativedelta.relativedelta(weekday=relativedelta.SU(-1))
     last_week_date = date + timedelta(days=-7)
     last_week_sheet_title="%s-SplitLevel_Operations_Week"%last_week_date.strftime("%m%d%y")
     last_week_sheet = open_google_spreadsheet(spreadsheet_title=last_week_sheet_title)
@@ -473,7 +466,7 @@ def test():
 def build_weekly_sheet(date):
     global CALLS
     if date.strftime("%A").lower() != "sunday":
-            date = date + relativedelta.relativedelta(weekday=relativedelta.SU(-1))
+            date = date + dateutil.relativedelta.relativedelta(weekday=relativedelta.SU(-1))
     last_week_date = date + timedelta(days=-7)
     last_week_sheet_title="%s-SplitLevel_Operations_Week"%last_week_date.strftime("%m%d%y")
     last_week_sheet = open_google_spreadsheet(spreadsheet_title=last_week_sheet_title)
@@ -562,7 +555,7 @@ def build_weekly_sheet(date):
         cell_list[26-1].value = "=B25*2.13"
         cell_list[29-1].value = "=B28*5.5"
         cell_list[32-1].value = "=B31*8"
-        cell_list[34-1].value = "=3000/%d/2"%int((sjs_date + relativedelta.relativedelta(day=1, months=+1, days=-1)).strftime("%d"))
+        cell_list[34-1].value = "=3000/%d/2"%int((sjs_date + dateutil.relativedelta.relativedelta(day=1, months=+1, days=-1)).strftime("%d"))
         cell_list[36-1].value = "=sum(B34,B29,B26,B23)*0.165012146"
         cell_list[39-1].value = "=SUM(B12:B20,B23,B26,B29:B38)"
         cell_list[40-1].value = "=if(now()>B1,B10-B39,0)"
@@ -602,7 +595,7 @@ def build_weekly_sheet(date):
         cell_list[26-1].value = "=c25*2.13"
         cell_list[29-1].value = "=c28*5.5"
         cell_list[32-1].value = "=c31*8"
-        cell_list[34-1].value = "=3000/%d/2"%int((sjs_date + relativedelta.relativedelta(day=1, months=+1, days=-1)).strftime("%d"))
+        cell_list[34-1].value = "=3000/%d/2"%int((sjs_date + dateutil.relativedelta.relativedelta(day=1, months=+1, days=-1)).strftime("%d"))
         cell_list[36-1].value = "=sum(c34,c29,c26,c23)*0.165012146"
         cell_list[39-1].value = "=SUM(c12:c20,c23,c26,c29:c38)"
         cell_list[40-1].value = "=if(now()>C1,c10-c39,0)"
@@ -642,7 +635,7 @@ def build_weekly_sheet(date):
         cell_list[26-1].value = "=d25*2.13"
         cell_list[29-1].value = "=d28*5.5"
         cell_list[32-1].value = "=d31*8"
-        cell_list[34-1].value = "=3000/%d/2"%int((sjs_date + relativedelta.relativedelta(day=1, months=+1, days=-1)).strftime("%d"))
+        cell_list[34-1].value = "=3000/%d/2"%int((sjs_date + dateutil.relativedelta.relativedelta(day=1, months=+1, days=-1)).strftime("%d"))
         cell_list[36-1].value = "=sum(d34,d29,d26,d23)*0.165012146"
         cell_list[39-1].value = "=SUM(d12:d20,d23,d26,d29:d38)"
         cell_list[40-1].value = "=if(now()>D1,d10-d39,0)"
@@ -682,7 +675,7 @@ def build_weekly_sheet(date):
         cell_list[26-1].value = "=e25*2.13"
         cell_list[29-1].value = "=e28*5.5"
         cell_list[32-1].value = "=e31*8"
-        cell_list[34-1].value = "=3000/%d/2"%int((sjs_date + relativedelta.relativedelta(day=1, months=+1, days=-1)).strftime("%d"))
+        cell_list[34-1].value = "=3000/%d/2"%int((sjs_date + dateutil.relativedelta.relativedelta(day=1, months=+1, days=-1)).strftime("%d"))
         cell_list[36-1].value = "=sum(e34,e29,e26,e23)*0.165012146"
         cell_list[39-1].value = "=SUM(e12:e20,e23,e26,e29:e38)"
         cell_list[40-1].value = "=if(now()>E1,e10-e39,0)"
@@ -722,7 +715,7 @@ def build_weekly_sheet(date):
         cell_list[26-1].value = "=f25*2.13"
         cell_list[29-1].value = "=f28*5.5"
         cell_list[32-1].value = "=f31*8"
-        cell_list[34-1].value = "=3000/%d/2"%int((sjs_date + relativedelta.relativedelta(day=1, months=+1, days=-1)).strftime("%d"))
+        cell_list[34-1].value = "=3000/%d/2"%int((sjs_date + dateutil.relativedelta.relativedelta(day=1, months=+1, days=-1)).strftime("%d"))
         cell_list[36-1].value = "=sum(f34,f29,f26,f23)*0.165012146"
         cell_list[39-1].value = "=SUM(f12:f20,f23,f26,f29:f38)"
         cell_list[40-1].value = "=if(now()>F1,f10-f39,0)"
@@ -762,7 +755,7 @@ def build_weekly_sheet(date):
         cell_list[26-1].value = "=g25*2.13"
         cell_list[29-1].value = "=g28*5.5"
         cell_list[32-1].value = "=g31*8"
-        cell_list[34-1].value = "=3000/%d/2"%int((sjs_date + relativedelta.relativedelta(day=1, months=+1, days=-1)).strftime("%d"))
+        cell_list[34-1].value = "=3000/%d/2"%int((sjs_date + dateutil.relativedelta.relativedelta(day=1, months=+1, days=-1)).strftime("%d"))
         cell_list[36-1].value = "=sum(g34,g29,g26,g23)*0.165012146"
         cell_list[39-1].value = "=SUM(g12:g20,g23,g26,g29:g38)"
         cell_list[40-1].value = "=if(now()>G1,g10-g39,0)"
@@ -802,7 +795,7 @@ def build_weekly_sheet(date):
         cell_list[26-1].value = "=h25*2.13"
         cell_list[29-1].value = "=h28*5.5"
         cell_list[32-1].value = "=h31*8"
-        cell_list[34-1].value = "=3000/%d/2"%int((sjs_date + relativedelta.relativedelta(day=1, months=+1, days=-1)).strftime("%d"))
+        cell_list[34-1].value = "=3000/%d/2"%int((sjs_date + dateutil.relativedelta.relativedelta(day=1, months=+1, days=-1)).strftime("%d"))
         cell_list[36-1].value = "=sum(h34,h29,h26,h23)*0.165012146"
         cell_list[39-1].value = "=SUM(h12:h20,h23,h26,h29:h38)"
         cell_list[40-1].value = "=if(now()>H1,h10-h39,0)"
@@ -958,7 +951,7 @@ def build_weekly_sheet(date):
         cell_list[26-1].value = "=B25*2.13"
         cell_list[29-1].value = "=B28*5.5"
         cell_list[32-1].value = "=B31*8"
-        cell_list[34-1].value = "=3000/%d/2"%int((jacks_date + relativedelta.relativedelta(day=1, months=+1, days=-1)).strftime("%d"))
+        cell_list[34-1].value = "=3000/%d/2"%int((jacks_date + dateutil.relativedelta.relativedelta(day=1, months=+1, days=-1)).strftime("%d"))
         cell_list[36-1].value = "=sum(B34,B29,B26,B23)*0.165012146"
         cell_list[39-1].value = "=SUM(B12:B20,B23,B26,B29:B38)"
         cell_list[40-1].value = "=if(now()>B1,B10-B39,0)"
@@ -998,7 +991,7 @@ def build_weekly_sheet(date):
         cell_list[26-1].value = "=c25*2.13"
         cell_list[29-1].value = "=c28*5.5"
         cell_list[32-1].value = "=c31*8"
-        cell_list[34-1].value = "=3000/%d/2"%int((jacks_date + relativedelta.relativedelta(day=1, months=+1, days=-1)).strftime("%d"))
+        cell_list[34-1].value = "=3000/%d/2"%int((jacks_date + dateutil.relativedelta.relativedelta(day=1, months=+1, days=-1)).strftime("%d"))
         cell_list[36-1].value = "=sum(c34,c29,c26,c23)*0.165012146"
         cell_list[39-1].value = "=SUM(c12:c20,c23,c26,c29:c38)"
         cell_list[40-1].value = "=if(now()>C1,c10-c39,0)"
@@ -1038,7 +1031,7 @@ def build_weekly_sheet(date):
         cell_list[26-1].value = "=d25*2.13"
         cell_list[29-1].value = "=d28*5.5"
         cell_list[32-1].value = "=d31*8"
-        cell_list[34-1].value = "=3000/%d/2"%int((jacks_date + relativedelta.relativedelta(day=1, months=+1, days=-1)).strftime("%d"))
+        cell_list[34-1].value = "=3000/%d/2"%int((jacks_date + dateutil.relativedelta.relativedelta(day=1, months=+1, days=-1)).strftime("%d"))
         cell_list[36-1].value = "=sum(d34,d29,d26,d23)*0.165012146"
         cell_list[39-1].value = "=SUM(d12:d20,d23,d26,d29:d38)"
         cell_list[40-1].value = "=if(now()>D1,d10-d39,0)"
@@ -1078,7 +1071,7 @@ def build_weekly_sheet(date):
         cell_list[26-1].value = "=e25*2.13"
         cell_list[29-1].value = "=e28*5.5"
         cell_list[32-1].value = "=e31*8"
-        cell_list[34-1].value = "=3000/%d/2"%int((jacks_date + relativedelta.relativedelta(day=1, months=+1, days=-1)).strftime("%d"))
+        cell_list[34-1].value = "=3000/%d/2"%int((jacks_date + dateutil.relativedelta.relativedelta(day=1, months=+1, days=-1)).strftime("%d"))
         cell_list[36-1].value = "=sum(e34,e29,e26,e23)*0.165012146"
         cell_list[39-1].value = "=SUM(e12:e20,e23,e26,e29:e38)"
         cell_list[40-1].value = "=if(now()>E1,e10-e39,0)"
@@ -1118,7 +1111,7 @@ def build_weekly_sheet(date):
         cell_list[26-1].value = "=f25*2.13"
         cell_list[29-1].value = "=f28*5.5"
         cell_list[32-1].value = "=f31*8"
-        cell_list[34-1].value = "=3000/%d/2"%int((jacks_date + relativedelta.relativedelta(day=1, months=+1, days=-1)).strftime("%d"))
+        cell_list[34-1].value = "=3000/%d/2"%int((jacks_date + dateutil.relativedelta.relativedelta(day=1, months=+1, days=-1)).strftime("%d"))
         cell_list[36-1].value = "=sum(f34,f29,f26,f23)*0.165012146"
         cell_list[39-1].value = "=SUM(f12:f20,f23,f26,f29:f38)"
         cell_list[40-1].value = "=if(now()>F1,f10-f39,0)"
@@ -1158,7 +1151,7 @@ def build_weekly_sheet(date):
         cell_list[26-1].value = "=g25*2.13"
         cell_list[29-1].value = "=g28*5.5"
         cell_list[32-1].value = "=g31*8"
-        cell_list[34-1].value = "=3000/%d/2"%int((jacks_date + relativedelta.relativedelta(day=1, months=+1, days=-1)).strftime("%d"))
+        cell_list[34-1].value = "=3000/%d/2"%int((jacks_date + dateutil.relativedelta.relativedelta(day=1, months=+1, days=-1)).strftime("%d"))
         cell_list[36-1].value = "=sum(g34,g29,g26,g23)*0.165012146"
         cell_list[39-1].value = "=SUM(g12:g20,g23,g26,g29:g38)"
         cell_list[40-1].value = "=if(now()>G1,g10-g39,0)"
@@ -1198,7 +1191,7 @@ def build_weekly_sheet(date):
         cell_list[26-1].value = "=h25*2.13"
         cell_list[29-1].value = "=h28*5.5"
         cell_list[32-1].value = "=h31*8"
-        cell_list[34-1].value = "=3000/%d/2"%int((jacks_date + relativedelta.relativedelta(day=1, months=+1, days=-1)).strftime("%d"))
+        cell_list[34-1].value = "=3000/%d/2"%int((jacks_date + dateutil.relativedelta.relativedelta(day=1, months=+1, days=-1)).strftime("%d"))
         cell_list[36-1].value = "=sum(h34,h29,h26,h23)*0.165012146"
         cell_list[39-1].value = "=SUM(h12:h20,h23,h26,h29:h38)"
         cell_list[40-1].value = "=if(now()>H1,h10-h39,0)"
@@ -1345,7 +1338,7 @@ def build_weekly_sheet(date):
 def build_month_sheet(date=False):
     global CALLS
     if not date:date = datetime.today()
-    first_day = date + relativedelta.relativedelta(months=1)
+    first_day = date + dateutil.relativedelta.relativedelta(months=1)
     first_day = first_day.replace(day=1)
 
     day_of_week = first_day.strftime('%A').lower()
@@ -1365,13 +1358,13 @@ def build_month_sheet(date=False):
     if first_spreadsheet_letter.lower() != 'h':weekly_sheets[first_spreadsheet.id] = [first_spreadsheet_letter,'H']
     else:weekly_sheets[first_spreadsheet.id] = [first_spreadsheet_letter]
 
-    next_week = (first_day + relativedelta.relativedelta(weekday=relativedelta.SU(-1)))+ timedelta(days=7)
+    next_week = (first_day + dateutil.relativedelta.relativedelta(weekday=relativedelta.SU(-1)))+ timedelta(days=7)
     print "Creating weekly sheets"
     while next_week:
         print "Calls: ",CALLS
-        if next_week < (first_day + relativedelta.relativedelta(months=1)):
+        if next_week < (first_day + dateutil.relativedelta.relativedelta(months=1)):
             sheet = build_weekly_sheet(next_week)
-            if (next_week + timedelta(days=7)) < (first_day + relativedelta.relativedelta(months=1)):
+            if (next_week + timedelta(days=7)) < (first_day + dateutil.relativedelta.relativedelta(months=1)):
                 weekly_sheets[sheet.id] = ['I']
                 next_week = next_week + timedelta(days=7)
             else:
@@ -1452,7 +1445,7 @@ def build_month_sheet(date=False):
     cell_list[14-1].value = entertainment
     cell_list[15-1].value = last_year_total
     cell_list[16-1].value = "=B15*1.1"
-    cell_list[17-1].value = "=ifs(today()<date(%d,%d,1),day(EOMONTH(date(%d,%d,1),0)),today()>=date(%d,%d,1),0,today()<date(%d,%d,1),day(EOMONTH(date(%d,%d,1),0))-day(today()))"%(int(first_day.strftime("%Y")),int(first_day.strftime("%m")),int(first_day.strftime("%Y")),int(first_day.strftime("%m")),int((first_day+relativedelta.relativedelta(months=1)).strftime("%Y")),int((first_day+relativedelta.relativedelta(months=1)).strftime("%m")),int((first_day+relativedelta.relativedelta(months=1)).strftime("%Y")),int((first_day+relativedelta.relativedelta(months=1)).strftime("%m")),int(first_day.strftime("%Y")),int(first_day.strftime("%m")))
+    cell_list[17-1].value = "=ifs(today()<date(%d,%d,1),day(EOMONTH(date(%d,%d,1),0)),today()>=date(%d,%d,1),0,today()<date(%d,%d,1),day(EOMONTH(date(%d,%d,1),0))-day(today()))"%(int(first_day.strftime("%Y")),int(first_day.strftime("%m")),int(first_day.strftime("%Y")),int(first_day.strftime("%m")),int((first_day+dateutil.relativedelta.relativedelta(months=1)).strftime("%Y")),int((first_day+dateutil.relativedelta.relativedelta(months=1)).strftime("%m")),int((first_day+dateutil.relativedelta.relativedelta(months=1)).strftime("%Y")),int((first_day+dateutil.relativedelta.relativedelta(months=1)).strftime("%m")),int(first_day.strftime("%Y")),int(first_day.strftime("%m")))
     cell_list[18-1].value = "=(B16-B8)/B17"
     wsheet.update_cells(cell_list, value_input_option='USER_ENTERED')
     CALLS += 2

@@ -47,8 +47,8 @@ def get_sales():
 
     try:
         payments = square_api.get_payments(current=True)
-    except:
-        return "Square is fucking up. Try again"
+    except Exception as e:
+        return "Square is fucking up. Try again: %s" % str(e)
 
     try:
         drawers = square_api.get_cash_drawer()
