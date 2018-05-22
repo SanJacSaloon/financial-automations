@@ -25,7 +25,7 @@ location_ids = secrets["square"]["location_ids"]
 homepath     = secrets["general"]["home_path"]
 
 args = sys.argv
-report_date = (datetime.datetime.today()-timedelta(days=1)).strftime("%Y-%m-%d")
+report_date = (datetime.datetime.today()-datetime.timedelta(days=1)).strftime("%Y-%m-%d")
 if len(args) > 1: report_date = args[1]
 filename = "%s.txt"%report_date
 fh = open(homepath+filename, 'w')
@@ -132,7 +132,7 @@ def populate_database(date):
   except: pass
   while date < datetime.datetime.today():
     daily_sales(date)
-    date = date + timedelta(days=1)
+    date = date + datetime.timedelta(days=1)
 
 # Helper function to convert cent-based money amounts to dollars and cents
 def format_money(amount):
@@ -253,12 +253,12 @@ def get_cash_drawer(date=False):
   global log
 
   if not date:
-    reportdate = datetime.datetime.today()-timedelta(days=1)
+    reportdate = datetime.datetime.today()-datetime.timedelta(days=1)
     end = datetime.datetime.today()
     end = end.strftime("%Y-%m-%dT04:00:00-06:00")
   else:
     reportdate = datetime.datetime.strptime(date,"%Y-%m-%d")
-    end = (reportdate+timedelta(days=1)).strftime("%Y-%m-%dT04:00:00-06:00")
+    end = (reportdate+datetime.timedelta(days=1)).strftime("%Y-%m-%dT04:00:00-06:00")
   begin = reportdate.strftime("%Y-%m-%dT08:00:00-06:00")
 
 
@@ -311,7 +311,7 @@ def get_cash_drawer(date=False):
   for drawer in drawers:
     if drawer['id'] in seen_drawer_ids: continue
 
-    if (datetime.datetime.strptime(drawer['opened_at'].replace("Z",''),"%Y-%m-%dT%H:%M:%S")-timedelta(hours=6)) < datetime.datetime.strptime(begin[:-6],"%Y-%m-%dT%H:%M:%S"): continue
+    if (datetime.datetime.strptime(drawer['opened_at'].replace("Z",''),"%Y-%m-%dT%H:%M:%S")-datetime.timedelta(hours=6)) < datetime.datetime.strptime(begin[:-6],"%Y-%m-%dT%H:%M:%S"): continue
     seen_drawer_ids.add(drawer['id'])
     unique_drawers.append(drawer)
   connection.close()
@@ -323,17 +323,17 @@ def get_payments(date=False,current=False):
 
   # Make sure to URL-encode all parameters
   if not date:
-    reportdate = datetime.datetime.today()-timedelta(days=1)
+    reportdate = datetime.datetime.today()-datetime.timedelta(days=1)
     end = datetime.datetime.today()
     end = end.strftime("%Y-%m-%dT04:00:00-06:00")
   else:
     try:reportdate = datetime.datetime.strptime(date,"%Y-%m-%d")
     except: reportdate = date
-    end = (reportdate+timedelta(days=1)).strftime("%Y-%m-%dT04:00:00-06:00")
+    end = (reportdate+datetime.timedelta(days=1)).strftime("%Y-%m-%dT04:00:00-06:00")
   if current:
     if not date:
         if int(time.strftime("%H")) < 4:
-            begin = (datetime.datetime.today()-timedelta(days=1)).strftime("%Y-%m-%dT08:00:00-06:00")
+            begin = (datetime.datetime.today()-datetime.timedelta(days=1)).strftime("%Y-%m-%dT08:00:00-06:00")
         else: begin = datetime.datetime.today().strftime("%Y-%m-%dT08:00:00-06:00")
     else:
         begin = date + "T08:00:00-06:00"
@@ -404,17 +404,17 @@ def get_transactions(date=False,current=False):
 
   # Make sure to URL-encode all parameters
   if not date:
-    reportdate = datetime.datetime.today()-timedelta(days=1)
+    reportdate = datetime.datetime.today()-datetime.timedelta(days=1)
     end = datetime.datetime.today()
     end = end.strftime("%Y-%m-%dT04:00:00-06:00")
   else:
     try:reportdate = datetime.datetime.strptime(date,"%Y-%m-%d")
     except:reportdate = date
-    end = (reportdate+timedelta(days=1)).strftime("%Y-%m-%dT04:00:00-06:00")
+    end = (reportdate+datetime.timedelta(days=1)).strftime("%Y-%m-%dT04:00:00-06:00")
   if current:
     if not date:
         if int(time.strftime("%H")) < 4:
-            begin = (datetime.datetime.today()-timedelta(days=1)).strftime("%Y-%m-%dT08:00:00-06:00")
+            begin = (datetime.datetime.today()-datetime.timedelta(days=1)).strftime("%Y-%m-%dT08:00:00-06:00")
             end = datetime.datetime.today()
             end = end.strftime("%Y-%m-%dT04:00:00-06:00")
         else:
@@ -763,16 +763,16 @@ def weekly_sales(date,report=False,recursive=False):
   global log
   if not date:date = datetime.datetime.today()
   original_date = date
-  date = date - timedelta(days=7)
+  date = date - datetime.timedelta(days=7)
   day = 0
   weekly_total = {}
   names = []
   full_report = ''
   while day < 7:
-    if (date+timedelta(days=day)).strftime("%Y-%m-%d") >= date.today().strftime("%Y-%m-%d"):
+    if (date+datetime.timedelta(days=day)).strftime("%Y-%m-%d") >= date.today().strftime("%Y-%m-%d"):
       day+=1
       continue
-    money = get_row('daily',(date+timedelta(days=day)).strftime("%Y-%m-%d"))
+    money = get_row('daily',(date+datetime.timedelta(days=day)).strftime("%Y-%m-%d"))
 
     for item in money:
       if item in weekly_total.keys():
@@ -798,7 +798,7 @@ def weekly_sales(date,report=False,recursive=False):
 
 def monthly_sales(date,recursive=False):
   global log
-  if not date: date = datetime.datetime.today() - timedelta(days=1)
+  if not date: date = datetime.datetime.today() - datetime.timedelta(days=1)
   date = date.replace(day=1)
   month = int(date.strftime("%m"))
   sdate = date
@@ -806,11 +806,11 @@ def monthly_sales(date,recursive=False):
   monthly_total = {}
   full_report = ""
 
-  while int((date+timedelta(days=day)).strftime("%m")) == month:
-    if (date+timedelta(days=day)).strftime("%Y-%m-%d") >= date.today().strftime("%Y-%m-%d"):
+  while int((date+datetime.timedelta(days=day)).strftime("%m")) == month:
+    if (date+datetime.timedelta(days=day)).strftime("%Y-%m-%d") >= date.today().strftime("%Y-%m-%d"):
       day+=1
       continue
-    money = get_row('daily',(date+timedelta(days=day)).strftime("%Y-%m-%d"))
+    money = get_row('daily',(date+datetime.timedelta(days=day)).strftime("%Y-%m-%d"))
 
     for item in money:
       if item in monthly_total.keys():
@@ -857,7 +857,7 @@ def yearly_sales(date,recursive=False):
         try:yearly_total[item]+=money[item]
         except:yearly_total[item]=money[item]
       else: yearly_total[item] = money[item]
-    date = date + timedelta(days=31)
+    date = date + datetime.timedelta(days=31)
     date = date.replace(day=1)
 
 
@@ -1129,7 +1129,7 @@ if __name__ == '__main__':
       last_year_drawers = []
       ts = time.time()
       log+= "[%s]: %s"%(datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S'),e)
-    date = report_date - timedelta(days=7)
+    date = report_date - datetime.timedelta(days=7)
     fil = open(homepath+"WeekOf_%s.txt"%date.strftime("%Y-%m-%d"),'w')
     fil.write(sales[1])
     fil.close()
@@ -1147,7 +1147,7 @@ if __name__ == '__main__':
       last_year_drawers = []
       ts = time.time()
       log+= "[%s]: %s"%(datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S'),e)
-    sdate = (datetime.datetime.today() - timedelta(days=1)).replace(day=1)
+    sdate = (datetime.datetime.today() - datetime.timedelta(days=1)).replace(day=1)
     fil = open(homepath+"MonthOf_%s.txt"%sdate.strftime("%Y-%m-%d"),'w')
     fil.write(sales[1])
     fil.close()
