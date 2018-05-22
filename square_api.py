@@ -1,7 +1,7 @@
 #!/opt/sjs/bin/python
 
 import dateutil.relativedelta
-import urlparse.urlparse
+import urlparse
 import datetime
 import httplib
 import pymysql
