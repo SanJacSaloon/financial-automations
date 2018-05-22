@@ -1,18 +1,19 @@
 #!/opt/sjs/bin/python
 
 import httplib, urllib, json, locale
-from urlparse import urlparse
 import os,sys
+import pymysql
 import smtplib
 import pickle
+import time
+from urlparse import urlparse
 from datetime import *
 from dateutil.relativedelta import *
-import time
-import google_api
-import pymysql
 
 testing = False
 
+# batteries not included.
+import google_api
 
 homepath ='/home/ec2-user/code/reports/'
 args = sys.argv
@@ -1063,9 +1064,9 @@ if __name__ == '__main__':
   ###########################
   ###########DAILY###########
   ###########################
-  populate_database("2017-01-01")
+
   sales = daily_sales(datetime.strptime(report_date,"%Y-%m-%d"))
-  google_sheets.fill_sales(datetime.strptime(report_date,"%Y-%m-%d"),sales[0])
+  google_api.fill_sales(datetime.strptime(report_date,"%Y-%m-%d"),sales[0])
   ##NOTIFY/WRITE#####################
   fh.write(sales[1])
   email_report(report={'subject':'Report for %s'%report_date,'body':sales[1]})
@@ -1090,7 +1091,7 @@ if __name__ == '__main__':
   ##########MONTHLY##########
   ###########################
   if int(datetime.today().strftime("%d")) == 25:
-    google_sheets.build_month_sheet()
+    google_api.build_month_sheet()
   if int(datetime.today().strftime("%d")) == 1:
     try:sales = monthly_sales(datetime.strptime(report_date,"%Y-%m-%d"))
     except Exception as e:

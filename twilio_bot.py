@@ -3,7 +3,6 @@
 from flask import Flask, Response, request
 from twilio import twiml
 from twilio.rest import TwilioRestClient
-import payments_report
 from datetime import datetime,timedelta
 import locale
 import pickle
@@ -11,6 +10,9 @@ import os
 import item_update
 
 app = Flask(__name__)
+
+# batteries not included.
+import square_api
 
 secrets     = json.loads(open("secrets.json").read())
 account_sid = secrets["twilio"]["account_sid"]
@@ -37,18 +39,18 @@ def format_money(amount):
   return locale.currency(amount / 100.)
 
 def get_sales():
-        try: payments = payments_report.get_payments(current=True)
+        try: payments = square_api.get_payments(current=True)
         except: return "Square is fucking up. Try again"
 
-        try:drawers = payments_report.get_cash_drawer(report_date)
+        try:drawers = square_api.get_cash_drawer(report_date)
         except:drawers = []
-        sales = payments_report.sales_totals(payments,drawers,'')
+        sales = square_api.sales_totals(payments,drawers,'')
         full_report = "SALES:\n"
         full_report += 'San Jac:           ' + format_money(sales['sjs_total'])+'\n'
         full_report += "Jack's:            " + format_money(sales['jacks_total'])+'\n'
         full_report += 'Total:             ' + format_money(sales['jacks_total']+sales['sjs_total'])+'\n'
         total_tips = int(sales['jacks_tips'])+int(sales['sjs_tips'])
-        try: transactions = payments_report.print_transactions_report(payments_report.get_transactions(current=True))
+        try: transactions = square_api.print_transactions_report(square_api.get_transactions(current=True))
         except: transactions = int(-111)
         full_report += "Total Transactions:\n" + format_money(transactions-total_tips)+'\n'
         return full_report
@@ -63,12 +65,12 @@ def get_week():
                     "Sat":6}
         date = (datetime.today()-timedelta(days=weekdays[datetime.today().strftime("%a")])).strftime("%Y-%m-%d")
 
-        try: payments = payments_report.get_payments(date=date,current=True)
+        try: payments = square_api.get_payments(date=date,current=True)
         except: return "Square is fucking up. Try again"
 
-        try:drawers = payments_report.get_cash_drawer(report_date)
+        try:drawers = square_api.get_cash_drawer(report_date)
         except:drawers = []
-        sales = payments_report.sales_totals(payments,drawers,'')
+        sales = square_api.sales_totals(payments,drawers,'')
         full_report = "WTD SALES:\n"
         full_report += 'San Jac:           ' + format_money(sales['sjs_total'])+'\n'
         full_report += "Jack's:            " + format_money(sales['jacks_total'])+'\n'
@@ -114,7 +116,7 @@ def inbound_sms():
         send_sms("Done Processing",number)
     elif 'report' in inbound_message.lower():
         send_sms("Processing report...",number)
-        os.system("python /home/ec2-user/code/payments_report.py")
+        os.system("python /home/ec2-user/code/square_api.py")
         send_sms("Done Processing",number)
     else:
         response.message("Hi! All I understand for now is: \n'sales':Current Sales\n'wtd':Week to date sales\n'mtd':Month to date sales\n'ytd': Year to date sales\n'increase':Increase prices by $1\n'decrease':Decrease prices by $1\n'restore':Restore default prices\n'report':Generate the sales report")
