@@ -1,3 +1,4 @@
+#!/opt/sjs/bin/python
 import httplib2
 import os
 import locale

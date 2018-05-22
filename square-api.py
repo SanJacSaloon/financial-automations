@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/opt/sjs/bin/python
 
 import httplib, urllib, json, locale
 from urlparse import urlparse
