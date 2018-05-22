@@ -9,7 +9,6 @@ import locale
 import json
 import time
 import sys
-import os
 
 from urlparse import urlparse
 from datetime import *
@@ -64,7 +63,7 @@ def update_item_price(amount):
             time.sleep(10)
             count = 0
         price = 0
-        variation_id = ''
+        # variation_id = ''
         for n in i['variations']:
             try:price = int(n['price_money']['amount']+amount)
             except:
@@ -133,7 +132,7 @@ def populate_database(date):
   try: date = datetime.strptime(date,"%Y-%m-%d")
   except: pass
   while date < datetime.today():
-    sales = daily_sales(date)
+    daily_sales(date)
     date = date + timedelta(days=1)
 
 # Helper function to convert cent-based money amounts to dollars and cents
@@ -410,7 +409,7 @@ def get_transactions(date=False,current=False):
   global log
   global full_report
 
-  count = 0
+  # count = 0
 
   # Make sure to URL-encode all parameters
   if not date:
@@ -851,7 +850,7 @@ def yearly_sales(date,recursive=False):
   date = date.replace(month=1)
 
   sdate = date
-  month = 0
+  # month = 0
   yearly_total = {}
 
   while int(date.strftime("%m")) < datetime.today().strftime("%m"):
@@ -859,7 +858,7 @@ def yearly_sales(date,recursive=False):
       break
     money = get_row('monthly',date.strftime("%Y-%m-%d"))
     if not money:
-      tmp = populate_database(date)
+      populate_database(date)
       money = get_row('monthly',date.strftime("%Y-%m-%d"))
     for item in money:
       if item in yearly_total.keys():
@@ -888,7 +887,7 @@ def yearly_sales(date,recursive=False):
 def get_month():
   global log
   date = datetime.today()
-  sdate = date
+  # sdate = date
   date = date.replace(day=1)
   month_total = monthly_sales(date)[0]
 
@@ -903,7 +902,7 @@ def get_year(custom_date=False):
   global log
   if not custom_date: date = datetime.today()
   else: date = custom_date
-  sdate = date
+  # sdate = date
   date = date.replace(day=1)
   date = date.replace(month=1)
   year_total = yearly_sales(date)[0]
@@ -1018,7 +1017,7 @@ class Daily(dict):
                 result = database("SELECT * FROM daily WHERE id = %s"%int(self['id']))[0]
                 for k in result:
                     self[k] = result[k]
-                date_format = "%Y-%m-%d"
+                # date_format = "%Y-%m-%d"
                 #self['date'] = self['date'].strftime(date_format)
 
     def insert(self):
@@ -1037,7 +1036,7 @@ class Daily(dict):
         for key in self.keys():
           values += "%s='%s',"%(key,self[key])
         values = values[:-1]
-        u = database("UPDATE daily set %s WHERE id=%s"%(values,self['id']))
+        database("UPDATE daily set %s WHERE id=%s"%(values,self['id']))
 
 class Weekly(dict):
     def __init__(self,week_id=False):
@@ -1047,7 +1046,7 @@ class Weekly(dict):
                 result = database("SELECT * FROM weekly WHERE id = %s"%int(self['id']))[0]
                 for k in result:
                     self[k] = result[k]
-                date_format = "%Y-%m-%d"
+                # date_format = "%Y-%m-%d"
                 #self['date'] = self['date'].strftime(date_format)
 
     def insert(self):
@@ -1058,14 +1057,14 @@ class Weekly(dict):
         values = str(self.values())
         values = values.replace('[','(')
         values = values.replace(']',')')
-        i = database("INSERT INTO weekly %s VALUES %s"%(keys,values))
+        database("INSERT INTO weekly %s VALUES %s"%(keys,values))
 
     def update(self):
         values = ""
         for key in self.keys():
           values += "%s='%s',"%(key,self[key])
         values = values[:-1]
-        u = database("UPDATE weekly set %s WHERE id=%s"%(values,self['id']))
+        database("UPDATE weekly set %s WHERE id=%s"%(values,self['id']))
 
 class Monthly(dict):
     def __init__(self,month_id=False):
@@ -1075,7 +1074,7 @@ class Monthly(dict):
                 result = database("SELECT * FROM monthly WHERE id = %s"%int(self['id']))[0]
                 for k in result:
                     self[k] = result[k]
-                date_format = "%Y-%m-%d"
+                # date_format = "%Y-%m-%d"
                 #self['date'] = self['date'].strftime(date_format)
 
     def insert(self):
@@ -1086,14 +1085,14 @@ class Monthly(dict):
         values = str(self.values())
         values = values.replace('[','(')
         values = values.replace(']',')')
-        i = database("INSERT INTO monthly %s VALUES %s"%(keys,values))
+        database("INSERT INTO monthly %s VALUES %s"%(keys,values))
 
     def update(self):
         values = ""
         for key in self.keys():
           values += "%s='%s',"%(key,self[key])
         values = values[:-1]
-        u = database("UPDATE monthly set %s WHERE id=%s"%(values,self['id']))
+        database("UPDATE monthly set %s WHERE id=%s"%(values,self['id']))
 
 class Yearly(dict):
     def __init__(self,yearly_id=False):
@@ -1103,7 +1102,7 @@ class Yearly(dict):
                 result = database("SELECT * FROM yearly WHERE id = %s"%int(self['id']))[0]
                 for k in result:
                     self[k] = result[k]
-                date_format = "%Y-%m-%d"
+                # date_format = "%Y-%m-%d"
                 #self['date'] = self['date'].strftime(date_format)
 
     def insert(self):
@@ -1114,14 +1113,14 @@ class Yearly(dict):
         values = str(self.values())
         values = values.replace('[','(')
         values = values.replace(']',')')
-        i = database("INSERT INTO yearly %s VALUES %s"%(keys,values))
+        database("INSERT INTO yearly %s VALUES %s"%(keys,values))
 
     def update(self):
         values = ""
         for key in self.keys():
           values += "%s='%s',"%(key,self[key])
         values = values[:-1]
-        u = database("UPDATE yearly set %s WHERE id=%s"%(values,self['id']))
+        database("UPDATE yearly set %s WHERE id=%s"%(values,self['id']))
 
 if __name__ == '__main__':
   ###########################

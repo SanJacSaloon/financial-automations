@@ -7,6 +7,7 @@ from datetime    import datetime,timedelta
 
 import locale
 import pickle
+import json
 import os
 
 # instantiate our flask app.
@@ -40,22 +41,36 @@ def send_sms(message,to):
 def format_money(amount):
   return locale.currency(amount / 100.)
 
-def get_sales():
-        try: payments = square_api.get_payments(current=True)
-        except: return "Square is fucking up. Try again"
 
-        try:drawers = square_api.get_cash_drawer(report_date)
-        except:drawers = []
-        sales = square_api.sales_totals(payments,drawers,'')
-        full_report = "SALES:\n"
-        full_report += 'San Jac:           ' + format_money(sales['sjs_total'])+'\n'
-        full_report += "Jack's:            " + format_money(sales['jacks_total'])+'\n'
-        full_report += 'Total:             ' + format_money(sales['jacks_total']+sales['sjs_total'])+'\n'
-        total_tips = int(sales['jacks_tips'])+int(sales['sjs_tips'])
-        try: transactions = square_api.print_transactions_report(square_api.get_transactions(current=True))
-        except: transactions = int(-111)
-        full_report += "Total Transactions:\n" + format_money(transactions-total_tips)+'\n'
-        return full_report
+
+def get_sales():
+
+    try:
+        payments = square_api.get_payments(current=True)
+    except:
+        return "Square is fucking up. Try again"
+
+    try:
+        drawers = square_api.get_cash_drawer()
+    except:
+        drawers = []
+
+    sales = square_api.sales_totals(payments,drawers,'')
+
+    full_report  = "SALES:\n"
+    full_report += 'San Jac:           ' + format_money(sales['sjs_total'])+'\n'
+    full_report += "Jack's:            " + format_money(sales['jacks_total'])+'\n'
+    full_report += 'Total:             ' + format_money(sales['jacks_total']+sales['sjs_total'])+'\n'
+    total_tips   = int(sales['jacks_tips'])+int(sales['sjs_tips'])
+
+    try:
+        transactions = square_api.print_transactions_report(square_api.get_transactions(current=True))
+    except:
+        transactions = int(-111)
+
+    full_report += "Total Transactions:\n" + format_money(transactions-total_tips)+'\n'
+
+    return full_report
 
 def get_week():
         weekdays = {"Sun":0,
@@ -70,7 +85,7 @@ def get_week():
         try: payments = square_api.get_payments(date=date,current=True)
         except: return "Square is fucking up. Try again"
 
-        try:drawers = square_api.get_cash_drawer(report_date)
+        try:drawers = square_api.get_cash_drawer()
         except:drawers = []
         sales = square_api.sales_totals(payments,drawers,'')
         full_report = "WTD SALES:\n"

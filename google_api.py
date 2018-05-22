@@ -1,5 +1,5 @@
 #!/opt/sjs/bin/python
-import httplib2
+
 import os
 import locale
 
@@ -14,7 +14,6 @@ from oauth2client import tools
 from oauth2client.file import Storage
 
 import gspread
-from gspread.models import Spreadsheet
 
 import json
 
@@ -296,7 +295,7 @@ def create_google_spreadsheet(title, share_domains=False):
             )
 
             req.execute()
-    file = drive_api.files().update(fileId=spread_id,addParents=PARENT_FOLDER_ID[0],fields='id,parents').execute()
+    drive_api.files().update(fileId=spread_id,addParents=PARENT_FOLDER_ID[0],fields='id,parents').execute()
     spread = open_google_spreadsheet(spread_id)
     CALLS += 3
     return spread
@@ -313,7 +312,7 @@ def fill_sales(date,total):
     sheet = tmp[0]
     row = tmp[1]
     col = tmp[2]
-    col_letter = colnum_string(col=col)
+    colnum_string(col=col)
 
     print_date = date.strftime("%m%d%y")
     ###SAN JAC###
@@ -462,7 +461,7 @@ def test():
     last_week_date = date + timedelta(days=-7)
     last_week_sheet_title="%s-SplitLevel_Operations_Week"%last_week_date.strftime("%m%d%y")
     last_week_sheet = open_google_spreadsheet(spreadsheet_title=last_week_sheet_title)
-    last_week_sheet_id = last_week_sheet.id
+    #last_week_sheet_id = last_week_sheet.id
 
     san_jac_worksheet = last_week_sheet.worksheet("San Jac")
     cell = san_jac_worksheet.cell(3,1)
