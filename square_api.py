@@ -168,8 +168,6 @@ def get_items():
   # For each location...
   for location_id in location_ids:
 
-    #full_report += 'Downloading drawers for location with ID ' + location_id + '...'
-
     request_path = '/v1/' + location_id + '/items'
     more_results = True
 
@@ -254,7 +252,6 @@ def update_item(item_id,item_updates):
 
 def get_cash_drawer(date=False):
   global log
-  global full_report
 
   if not date:
     reportdate = datetime.today()-timedelta(days=1)
@@ -275,8 +272,6 @@ def get_cash_drawer(date=False):
 
   # For each location...
   for location_id in location_ids:
-
-    #full_report += 'Downloading drawers for location with ID ' + location_id + '...'
 
     request_path = '/v1/' + location_id + '/cash-drawer-shifts?' + parameters
     more_results = True
@@ -326,7 +321,7 @@ def get_cash_drawer(date=False):
 # Downloads all of a business's payments
 def get_payments(date=False,current=False):
   global log
-  global full_report
+
   # Make sure to URL-encode all parameters
   if not date:
     reportdate = datetime.today()-timedelta(days=1)
@@ -407,9 +402,6 @@ def print_transactions_report(transactions):
 
 def get_transactions(date=False,current=False):
   global log
-  global full_report
-
-  # count = 0
 
   # Make sure to URL-encode all parameters
   if not date:
@@ -509,7 +501,6 @@ def get_transactions(date=False,current=False):
 # Prints a sales report based on a list of payments
 def sales_totals(payments,drawers,reportd):
   global log
-  global full_report
   total = {}
   categories = []
 
@@ -814,6 +805,7 @@ def monthly_sales(date,recursive=False):
   sdate = date
   day = 0
   monthly_total = {}
+  full_report = ""
 
   while int((date+timedelta(days=day)).strftime("%m")) == month:
     if (date+timedelta(days=day)).strftime("%Y-%m-%d") >= date.today().strftime("%Y-%m-%d"):
@@ -852,6 +844,7 @@ def yearly_sales(date,recursive=False):
   sdate = date
   # month = 0
   yearly_total = {}
+  full_report = ""
 
   while int(date.strftime("%m")) < datetime.today().strftime("%m"):
     if date.strftime("%Y-%m-%d") > date.today().strftime("%Y-%m-%d"):
@@ -988,16 +981,11 @@ def email_report(email=secrets["general"]["smtp_to"],report=False):
 
   fromaddr = secrets["general"]["smtp_from"]
   toaddrs  = email
-  if not report:
-    msg = "\r\n".join([
-    "From: %s"%fromaddr,
-    "To: %s"%toaddrs,
-    "Subject: Report for %s"%report_date,"",full_report])
-  else:
-    msg = "\r\n".join([
-    "From: %s"%fromaddr,
-    "To: %s"%toaddrs,
-    "Subject: %s"%(report['subject']),"",report['body']])
+
+  msg = "\r\n".join([
+  "From: %s"%fromaddr,
+  "To: %s"%toaddrs,
+  "Subject: %s"%(report['subject']),"",report['body']])
   username = secrets["google"]["username"]
   password = secrets["google"]["password"]
 
