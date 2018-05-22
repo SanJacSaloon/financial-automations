@@ -24,7 +24,7 @@ def check_app():
     return Response("It works!"), 200
 
 # Uses the locale to format currency amounts correctly
-locale.setlocale(locale.LC_ALL, '')
+locale.setlocale( locale.LC_ALL, 'en_CA.UTF-8' )
 
 def send_sms(message,to):
     client = TwilioRestClient(account_sid, auth_token)
