@@ -1,21 +1,31 @@
 #!/opt/sjs/bin/python
 
-import httplib, urllib, json, locale
-import os,sys
+import httplib
 import pymysql
 import smtplib
+import urllib
 import pickle
+import locale
+import json
 import time
+import sys
+import os
+
 from urlparse import urlparse
 from datetime import *
 from dateutil.relativedelta import *
 
-testing = False
-
 # batteries not included.
 import google_api
 
-homepath ='/home/ec2-user/code/reports/'
+# enable testing
+testing = False
+
+# pull secrets.
+secrets      = json.loads(open("secrets.json").read())
+location_ids = secrets["square"]["location_ids"]
+homepath     = secrets["general"]["home_path"]
+
 args = sys.argv
 report_date = (datetime.today()-timedelta(days=1)).strftime("%Y-%m-%d")
 if len(args) > 1: report_date = args[1]
@@ -23,8 +33,6 @@ filename = "%s.txt"%report_date
 fh = open(homepath+filename, 'w')
 log = open(homepath+"log.txt", 'rb').read()
 
-secrets = json.loads(open("secrets.json").read())
-location_ids = secrets["square"]["location_ids"]
 
 # Your application's personal access token.
 # Get this from your application dashboard (https://connect.squareup.com/apps)
@@ -921,11 +929,12 @@ def transactions(date = False,current=False):
       total += amount
   fh.close()
 
-def email_report(email='howdy@sanjacsaloon.com',report=False):
+def email_report(email=secrets["general"]["smtp_to"],report=False):
   global log
-  if testing: email = 'logan@sanjacsaloon.com'
+  if testing:
+    email = secrets["general"]["smtp_to_test"]
 
-  fromaddr = 'sanjacsaloon@gmail.com'
+  fromaddr = secrets["general"]["smtp_from"]
   toaddrs  = email
   if not report:
     msg = "\r\n".join([
@@ -937,8 +946,9 @@ def email_report(email='howdy@sanjacsaloon.com',report=False):
     "From: %s"%fromaddr,
     "To: %s"%toaddrs,
     "Subject: %s"%(report['subject']),"",report['body']])
-  username = 'sanjacsaloon@gmail.com'
-  password = '9gYp3MSHxQlG'
+  username = secrets["google"]["username"]
+  password = secrets["google"]["password"]
+
   try:
     server = smtplib.SMTP('smtp.gmail.com:587')
     server.starttls()

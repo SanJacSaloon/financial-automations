@@ -116,7 +116,7 @@ def inbound_sms():
         send_sms("Done Processing",number)
     elif 'report' in inbound_message.lower():
         send_sms("Processing report...",number)
-        os.system("python /home/ec2-user/code/square_api.py")
+        os.system("/opt/sjs/financial-automations/square_api.py")
         send_sms("Done Processing",number)
     else:
         response.message("Hi! All I understand for now is: \n'sales':Current Sales\n'wtd':Week to date sales\n'mtd':Month to date sales\n'ytd': Year to date sales\n'increase':Increase prices by $1\n'decrease':Decrease prices by $1\n'restore':Restore default prices\n'report':Generate the sales report")
