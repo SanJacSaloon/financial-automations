@@ -8,7 +8,7 @@ import pickle
 from datetime import *
 from dateutil.relativedelta import *
 import time
-import google_sheets
+import google_api
 import pymysql
 
 testing = False
