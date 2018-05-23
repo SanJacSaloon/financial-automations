@@ -1419,16 +1419,18 @@ if __name__ == '__main__':
 
     sales = daily_sales(datetime.datetime.strptime(report_date, "%Y-%m-%d"))
     google_api.fill_sales(datetime.datetime.strptime(report_date, "%Y-%m-%d"), sales[0])
-    fh.write(sales[1])
     email_report(report={'subject':'Report for %s' % report_date, 'body':sales[1]})
+    fh.write(sales[1])
 
     ###########################
     ###########WEEKLY##########
     ###########################
 
     if 'sun' in datetime.datetime.today().strftime("%a").lower():
+
         try:
             sales = weekly_sales(datetime.datetime.strptime(report_date, "%Y-%m-%d"))
+
         except Exception as e:
             last_year_drawers = []
             ts   = time.time()
@@ -1448,9 +1450,12 @@ if __name__ == '__main__':
 
     if int(datetime.datetime.today().strftime("%d")) == 25:
         google_api.build_month_sheet()
+
     if int(datetime.datetime.today().strftime("%d")) == 1:
+
         try:
             sales = monthly_sales(datetime.datetime.strptime(report_date, "%Y-%m-%d"))
+
         except Exception as e:
             last_year_drawers = []
             ts   = time.time()
@@ -1466,12 +1471,14 @@ if __name__ == '__main__':
 
     try:
         print get_month()
+
     except Exception as e:
         ts   = time.time()
         log += "[%s]: %s"%(datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S'), e)
 
     try:
         print get_year()
+
     except Exception as e:
         ts   = time.time()
         log += "[%s]: %s" % (datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S'), e)
