@@ -147,10 +147,10 @@ def last_year_sales(month=False,week=False):
         CALLS += 4
     if week:
         date = datetime.strptime(month,"%B-%Y")
-        date = date + dateutil.relativedelta.relativedelta(weekday=relativedelta.WE(1))
+        date = date + dateutil.relativedelta.relativedelta(weekday=dateutil.relativedelta.relativedelta.WE(1))
         name = date + dateutil.relativedelta.relativedelta(years=-1)
         if name.strftime("%A") != "Sunday":
-            name = name + dateutil.relativedelta.relativedelta(weekday=relativedelta.SU(-1))
+            name = name + dateutil.relativedelta.relativedelta(weekday=dateutil.relativedelta.relativedelta.SU(-1))
         name = "%s-SplitLevel_Operations_Week"%name.strftime("%m%d%y")
         sheet = open_google_spreadsheet(spreadsheet_title=name)
         wsheet = sheet.sheet1
@@ -163,7 +163,7 @@ def last_year_sales(month=False,week=False):
 def find_date_cell(date,spreadsheet=False):
     if spreadsheet:sheet = spreadsheet
     else:
-        last_sun = date + dateutil.relativedelta.relativedelta(weekday=relativedelta.SU(-1))
+        last_sun = date + dateutil.relativedelta.relativedelta(weekday=dateutil.relativedelta.relativedelta.SU(-1))
         name = "%s-SplitLevel_Operations_Week"%last_sun.strftime("%m%d%y")
         sheet = open_google_spreadsheet(spreadsheet_title=name)
     wsheet = sheet.worksheet("San Jac")
@@ -360,7 +360,7 @@ def fill_sales(date,total):
 
     sheet = open_google_spreadsheet(spreadsheet_title="Averages")
     if date.strftime("%A").lower() != "sunday":
-            date = date + dateutil.relativedelta.relativedelta(weekday=relativedelta.SU(-1))
+            date = date + dateutil.relativedelta.relativedelta(weekday=dateutil.relativedelta.relativedelta.SU(-1))
     tmp = find_date_cell(date,spreadsheet=sheet)
     row = tmp[1]
     ###SAN JAC###
@@ -450,7 +450,7 @@ def test():
     global CALLS
     date=datetime.today()
     if date.strftime("%A").lower() != "sunday":
-            date = date + dateutil.relativedelta.relativedelta(weekday=relativedelta.SU(-1))
+            date = date + dateutil.relativedelta.relativedelta(weekday=dateutil.relativedelta.relativedelta.SU(-1))
     last_week_date = date + timedelta(days=-7)
     last_week_sheet_title="%s-SplitLevel_Operations_Week"%last_week_date.strftime("%m%d%y")
     last_week_sheet = open_google_spreadsheet(spreadsheet_title=last_week_sheet_title)
@@ -466,7 +466,7 @@ def test():
 def build_weekly_sheet(date):
     global CALLS
     if date.strftime("%A").lower() != "sunday":
-            date = date + dateutil.relativedelta.relativedelta(weekday=relativedelta.SU(-1))
+            date = date + dateutil.relativedelta.relativedelta(weekday=dateutil.relativedelta.relativedelta.SU(-1))
     last_week_date = date + timedelta(days=-7)
     last_week_sheet_title="%s-SplitLevel_Operations_Week"%last_week_date.strftime("%m%d%y")
     last_week_sheet = open_google_spreadsheet(spreadsheet_title=last_week_sheet_title)
@@ -1358,7 +1358,7 @@ def build_month_sheet(date=False):
     if first_spreadsheet_letter.lower() != 'h':weekly_sheets[first_spreadsheet.id] = [first_spreadsheet_letter,'H']
     else:weekly_sheets[first_spreadsheet.id] = [first_spreadsheet_letter]
 
-    next_week = (first_day + dateutil.relativedelta.relativedelta(weekday=relativedelta.SU(-1)))+ timedelta(days=7)
+    next_week = (first_day + dateutil.relativedelta.relativedelta(weekday=dateutil.relativedelta.relativedelta.SU(-1)))+ timedelta(days=7)
     print "Creating weekly sheets"
     while next_week:
         print "Calls: ",CALLS
