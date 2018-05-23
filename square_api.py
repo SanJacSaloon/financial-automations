@@ -37,7 +37,7 @@ secrets      = json.loads(open("/opt/sjs/secrets.json").read())
 location_ids = secrets["square"]["location_ids"]
 homepath     = secrets["general"]["home_path"]
 
-# calculate report date automatically. @LOGAN?
+# calculate report date automatically. @LOGAN?-[Logan]:correct
 report_date = (datetime.datetime.today() - datetime.timedelta(days=1)).strftime("%Y-%m-%d")
 
 # allow for CLI override.
