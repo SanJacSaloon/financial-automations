@@ -129,10 +129,10 @@ def get_week ():
 # I'M PICKLE RIIIIICK!
 # TODO: remove pickle rick.
 def return_month ():
-    return pickle.load(open("month.p", "rb"))
+    return pickle.load(open("/opt/sjs/financial-automations/month.p", "rb"))
 
 def return_year ():
-    return pickle.load(open("year.p", "rb"))
+    return pickle.load(open("/opt/sjs/financial-automations/year.p", "rb"))
 
 
 ########################################################################################################################
