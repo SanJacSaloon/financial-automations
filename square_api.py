@@ -1480,6 +1480,5 @@ if __name__ == '__main__':
     ########WRITE LOG##########
     ###########################
 
-
-    with open(homepath + "log.txt", 'w') as fh:
+    with open (homepath + "log.txt", 'w') as fh:
         fh.write(log)
