@@ -16,7 +16,7 @@ from oauth2client.file import Storage
 
 # If modifying these scopes, delete your previously saved credentials
 # at ~/.credentials/sheets.googleapis.com-python-quickstart.json
-secrets            = json.loads(open("secrets.json").read())
+secrets            = json.loads(open("/opt/sjs/secrets.json").read())
 SCOPES             = ['https://www.googleapis.com/auth/spreadsheets','https://www.googleapis.com/auth/drive']
 CLIENT_SECRET_FILE = 'client_secret.json'
 APPLICATION_NAME   = 'Google Sheets API Python Quickstart'
