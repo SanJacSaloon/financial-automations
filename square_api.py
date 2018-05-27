@@ -985,7 +985,7 @@ def weekly_sales (date, report=False, recursive=False):
     full_report   = ""
 
     while day < 7:
-        if (date+datetime.timedelta(days=day)).strftime("%Y-%m-%d") >= date.today().strftime("%Y-%m-%d"):
+        if (date+datetime.timedelta(days=day)).strftime("%Y-%m-%d") >= datetime.datetime.today().strftime("%Y-%m-%d"):
             day += 1
             continue
         money = get_row("daily", (date+datetime.timedelta(days=day)).strftime("%Y-%m-%d"))
@@ -1428,13 +1428,7 @@ if __name__ == '__main__':
 
     if 'sun' in datetime.datetime.today().strftime("%a").lower():
 
-        try:
-            sales = weekly_sales(datetime.datetime.strptime(report_date, "%Y-%m-%d"))
-
-        except Exception as e:
-            last_year_drawers = []
-            ts   = time.time()
-            log += "[%s]: %s"%(datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S'), e)
+        sales = weekly_sales(datetime.datetime.strptime(report_date, "%Y-%m-%d"))
 
         date = datetime.datetime.strptime(report_date, "%Y-%m-%d") - datetime.timedelta(days=7)
         fil  = open(homepath+"WeekOf_%s.txt" % date.strftime("%Y-%m-%d"), 'w')
