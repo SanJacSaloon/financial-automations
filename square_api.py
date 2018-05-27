@@ -1426,7 +1426,7 @@ if __name__ == '__main__':
     ###########WEEKLY##########
     ###########################
 
-    if 'sun' in datetime.datetime.strptime(report_date, "%Y-%m-%d").strftime("%a").lower():
+    if 'sat' in datetime.datetime.strptime(report_date, "%Y-%m-%d").strftime("%a").lower():
 
         sales = weekly_sales(datetime.datetime.strptime(report_date, "%Y-%m-%d"))
 
