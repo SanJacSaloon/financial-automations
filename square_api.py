@@ -844,7 +844,7 @@ def fill_db (reportd, total, timeframe):
             print "Found Row"
 
         else:
-            d = weekly()
+            d = Weekly()
 
     elif "month" in timeframe:
         monthly = get_row("monthly", reportd)
