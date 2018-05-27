@@ -1430,7 +1430,6 @@ if __name__ == '__main__':
 
         sales = weekly_sales(datetime.datetime.strptime(report_date, "%Y-%m-%d"))
 
-        date = datetime.datetime.strptime(report_date, "%Y-%m-%d") - datetime.timedelta(days=7)
         date = datetime.datetime.strptime(report_date, "%Y-%m-%d") - datetime.timedelta(days=6)
         fil  = open(homepath+"WeekOf_%s.txt" % date.strftime("%Y-%m-%d"), 'w')
         fil.write(sales[1])
