@@ -1,7 +1,7 @@
 #!/opt/sjs/bin/python
 
 """
-Runs nightly at 4am, after tabs have been closed via cron:
+Runs nightly at 4am CST, after tabs have been closed via cron:
 
     $ cat /etc/cron.d/sjs_nightly_financials_report
     0 4 * * * ec2-user /opt/sjs/financial-automations/square_api.py
@@ -82,7 +82,7 @@ def update_item_price (amount):
         except:
             pass
 
-        # @LOGAN? why do we do this sleep?
+        # Sleep is needed to avoid square timeout
         if count >= 20:
             time.sleep(10)
             count = 0
@@ -106,7 +106,7 @@ def update_item_price (amount):
 ########################################################################################################################
 def save_item_prices (name):
     """
-    @LOGAN? what's this for?
+    This saves a backup of the prices in case something goes wrong and we need to restore the prices
     """
 
     items      = get_items()
