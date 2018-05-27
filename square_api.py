@@ -1449,7 +1449,7 @@ if __name__ == '__main__':
 
         sales = monthly_sales(datetime.datetime.strptime(report_date, "%Y-%m-%d"))
 
-        sdate = (datetime.datetime.strptime(report_date, "%Y-%m-%d").replace(day=1)
+        sdate = datetime.datetime.strptime(report_date, "%Y-%m-%d").replace(day=1)
         fil   = open(homepath+"MonthOf_%s.txt" % sdate.strftime("%Y-%m-%d"), 'w')
         fil.write(sales[1])
         fil.close()
