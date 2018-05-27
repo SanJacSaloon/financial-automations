@@ -1436,7 +1436,7 @@ if __name__ == '__main__':
             ts   = time.time()
             log += "[%s]: %s"%(datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S'), e)
 
-        date = report_date - datetime.timedelta(days=7)
+        date = datetime.datetime.strptime(report_date, "%Y-%m-%d") - datetime.timedelta(days=7)
         fil  = open(homepath+"WeekOf_%s.txt" % date.strftime("%Y-%m-%d"), 'w')
         fil.write(sales[1])
         fil.close()
