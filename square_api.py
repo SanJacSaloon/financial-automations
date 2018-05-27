@@ -37,7 +37,7 @@ secrets      = json.loads(open("/opt/sjs/secrets.json").read())
 location_ids = secrets["square"]["location_ids"]
 homepath     = secrets["general"]["home_path"]
 
-# calculate report date automatically. @LOGAN?-[Logan]:correct
+# calculate report date automatically
 report_date = (datetime.datetime.today() - datetime.timedelta(days=1)).strftime("%Y-%m-%d")
 
 # allow for CLI override.
@@ -68,7 +68,7 @@ sql_pw   = secrets["sql"]["password"]
 ########################################################################################################################
 def update_item_price (amount):
     """
-    @LOGAN? what's this for?
+    This code runs to update the prices of each item by the given amount (100 increases by $1 -100 lowers by $1
     """
 
     save_item_prices("Pre-Price-Update_%s" % datetime.datetime.today().strftime("%Y-%m-%d"))
