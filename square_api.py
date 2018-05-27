@@ -976,10 +976,10 @@ def weekly_sales (date, report=False, recursive=False):
     global log
 
     if not date:
-        date = datetime.datetime.today()
+        date = datetime.datetime.today()-datetime.timedelta(days=1)
 
     original_date = date
-    date          = date - datetime.timedelta(days=7)
+    date          = date - datetime.timedelta(days=6)
     day           = 0
     weekly_total  = {}
     full_report   = ""
@@ -1426,11 +1426,12 @@ if __name__ == '__main__':
     ###########WEEKLY##########
     ###########################
 
-    if 'sun' in datetime.datetime.today().strftime("%a").lower():
+    if 'sun' in datetime.datetime.strptime(report_date, "%Y-%m-%d").strftime("%a").lower():
 
         sales = weekly_sales(datetime.datetime.strptime(report_date, "%Y-%m-%d"))
 
         date = datetime.datetime.strptime(report_date, "%Y-%m-%d") - datetime.timedelta(days=7)
+        date = datetime.datetime.strptime(report_date, "%Y-%m-%d") - datetime.timedelta(days=6)
         fil  = open(homepath+"WeekOf_%s.txt" % date.strftime("%Y-%m-%d"), 'w')
         fil.write(sales[1])
         fil.close()
