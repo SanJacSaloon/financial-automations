@@ -26,7 +26,7 @@ import sys
 import google_api
 
 # enable testing
-testing = True
+testing = False
 
 # Uses the locale to format currency amounts correctly.
 # NOTE: this took a touch of trial and error.
@@ -1013,7 +1013,7 @@ def weekly_sales (date, report=False, recursive=False):
         #### LAST YEAR ####
         full_report += "==LAST YEAR WEEKLY SALES REPORT==\n"
         last_year_report_date = original_date + dateutil.relativedelta.relativedelta(years=-1, weekday=original_date.weekday())
-        #full_report += weekly_sales(last_year_report_date,recursive=True)[1]
+        full_report += weekly_sales(last_year_report_date,recursive=True)[1]
 
     else:
         return weekly_total, report_string(weekly_total)
