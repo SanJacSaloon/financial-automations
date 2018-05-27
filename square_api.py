@@ -26,7 +26,7 @@ import sys
 import google_api
 
 # enable testing
-testing = False
+testing = True
 
 # Uses the locale to format currency amounts correctly.
 # NOTE: this took a touch of trial and error.
