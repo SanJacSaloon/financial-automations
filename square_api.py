@@ -1446,17 +1446,11 @@ if __name__ == '__main__':
     if int(datetime.datetime.today().strftime("%d")) == 25:
         google_api.build_month_sheet()
 
-    if int(datetime.datetime.today().strftime("%d")) == 1:
+    if int((datetime.datetime.strptime(report_date, "%Y-%m-%d")+datetime.timedelta(days=1)).strftime("%d")) == 1:
 
-        try:
-            sales = monthly_sales(datetime.datetime.strptime(report_date, "%Y-%m-%d"))
+        sales = monthly_sales(datetime.datetime.strptime(report_date, "%Y-%m-%d"))
 
-        except Exception as e:
-            last_year_drawers = []
-            ts   = time.time()
-            log += "[%s]: %s" % (datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S'), e)
-
-        sdate = (datetime.datetime.today() - datetime.timedelta(days=1)).replace(day=1)
+        sdate = (datetime.datetime.strptime(report_date, "%Y-%m-%d").replace(day=1)
         fil   = open(homepath+"MonthOf_%s.txt" % sdate.strftime("%Y-%m-%d"), 'w')
         fil.write(sales[1])
         fil.close()
