@@ -365,7 +365,10 @@ def get_cash_drawer (date=False):
         end        = end.strftime("%Y-%m-%dT04:00:00-06:00")
 
     else:
-        reportdate = datetime.datetime.strptime(date,"%Y-%m-%d")
+        try:
+            reportdate = datetime.datetime.strptime(date,"%Y-%m-%d")
+        except:
+            reportdate = date
         end        = (reportdate+datetime.timedelta(days=1)).strftime("%Y-%m-%dT04:00:00-06:00")
 
     # calculate beginning.
