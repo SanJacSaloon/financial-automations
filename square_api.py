@@ -196,7 +196,7 @@ def populate_database (date):
 
     # @LOGAN? why this default date?
     if not date:
-        date = "2018-05-01"
+        date = "2017-01-01"
 
     try:
         date = datetime.datetime.strptime(date, "%Y-%m-%d")
