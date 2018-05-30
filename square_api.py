@@ -26,7 +26,7 @@ import sys
 import google_api
 
 # enable testing
-testing = True
+testing = False
 
 # Uses the locale to format currency amounts correctly.
 # NOTE: this took a touch of trial and error.
@@ -927,13 +927,12 @@ def daily_sales (date):
     full_report = "==%s SALES REPORT==\n" % date.strftime("%a, %b %-d %Y")
     payments    = get_payments(date)
 
-    #try:
-    drawers = get_cash_drawer(date)
-    print drawers
-    #except Exception as e:
-    #    drawers = []
-    #    ts      = time.time()
-    #    log    += "[%s]: %s" % (datetime.datetime.fromtimestamp(ts).strftime("%Y-%m-%d %H:%M:%S"), e)
+    try:
+        drawers = get_cash_drawer(date)
+    except Exception as e:
+        drawers = []
+        ts      = time.time()
+        log    += "[%s]: %s" % (datetime.datetime.fromtimestamp(ts).strftime("%Y-%m-%d %H:%M:%S"), e)
 
     try:
         reportdate = datetime.datetime.strptime(date,"%Y-%m-%d")
