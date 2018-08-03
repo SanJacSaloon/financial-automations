@@ -1274,7 +1274,7 @@ def build_weekly_sheet(date):
 
         ###CHECKS###
         print "[%s]: Populating Checks worksheet"%print_date
-        checks_worksheet = sheet.add_worksheet("Checks Written",50,12)
+        checks_worksheet = sheet.add_worksheet("Checks Written",100,12)
         checks_worksheet.update_cell(1,1,"Checks:")
         cell_list = checks_worksheet.range("a2:h2")
         cell_list[1-1].value = "Date Written"
@@ -1318,7 +1318,7 @@ def build_weekly_sheet(date):
         tfs_cash = '=sum(IMPORTRANGE("%s","San Jac!F70:H70"))+sum(IMPORTRANGE("%s","Jack'%(last_week_sheet_id,last_week_sheet_id)
         tfs_cash+= "'"+'s!F70:H70"))'
         cell_list[4-1].value = tfs_cash
-        balance = "=sum(B2:B4)+sum('San Jac'!I70:I71)+sum('Jack''s'!I70:I71)-sum('Checks Written'!D3:D41)-sum('Debit Card Charges'!C3:C50)"
+        balance = "=sum(B2:B4)+sum('San Jac'!I70:I71)+sum('Jack''s'!I70:I71)-sum('Checks Written'!D3:D90)-sum('Debit Card Charges'!C3:C50)"
         cell_list[5-1].value = balance
         net_profit = "=sumif('San Jac'!B3:H3,"+'">0"'+",'San Jac'!B63:H63)+sumif('Jack''s'!B3:H3,"+'">0"'+",'Jack''s'!B63:H63)"
         cell_list[6-1].value = net_profit
