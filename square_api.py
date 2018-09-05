@@ -964,6 +964,7 @@ def get_recent_sales_worst(date,duration):
     sjs_worst = min(sjs)
     jacks_worst = min(jacks)
     return (sjs_worst,jacks_worst)
+
 #######################################################################################################################
 def daily_sales (date):
     """
@@ -1011,7 +1012,23 @@ def daily_sales (date):
     full_report    += '==%s SALES REPORT==\n'%last_year_report_date.strftime("%a, %b %-d %Y")
     last_year_sales = sales_totals(last_year_payments,last_year_drawers,last_year_report_date)
     full_report    += report_string(last_year_sales)
-
+    full_report    += "\n"
+    full_report    += "===RECENT COMPARISONS===\n"
+    full_report    += "     =San Jac=\n"
+    full_report    += "3 Week Average:             " + format_money(sales['sjs_total'] - get_recent_average(reportdate,3)[0])+ '('+ format_money(get_recent_average(reportdate,3)[0])+ ')'  + "\n"
+    full_report    += "3 Month Average:             " + format_money(sales['sjs_total'] - get_recent_average(reportdate,12)[0])+ '('+ format_money(get_recent_average(reportdate,12)[0])+ ')'     + "\n"
+    full_report    += "6 Month Best:             " + format_money(sales['sjs_total'] - get_recent_sales_best(reportdate,26)[0])+ '('+ format_money(get_recent_sales_best(reportdate,26)[0])+ ')'     + "\n"
+    full_report    += "6 Month Worst:             " + format_money(sales['sjs_total'] - get_recent_sales_worst(reportdate,26)[0])+ '('+ format_money(get_recent_sales_worst(reportdate,26)[0])+ ')'     + "\n"
+    full_report    += "12 Month Best:             " + format_money(sales['sjs_total'] - get_recent_sales_worst(reportdate,52)[0])+ '('+ format_money(get_recent_sales_worst(reportdate,52)[0])+ ')'     + "\n"
+    full_report    += "12 Month Worst:             " + format_money(sales['sjs_total'] - get_recent_sales_worst(reportdate,52)[0])+ '('+ format_money(get_recent_sales_worst(reportdate,52)[0])+ ')'     + "\n"
+    full_report    += "\n"
+    full_report    += "     =Jack's=\n"
+    full_report    += "3 Week Average:             " + format_money(sales['jacks_total'] - get_recent_average(reportdate,3)[1])+ '('+ format_money(get_recent_average(reportdate,3)[1])+ ')'  + "\n"
+    full_report    += "3 Month Average:             " + format_money(sales['jacks_total'] - get_recent_average(reportdate,12)[1])+ '('+ format_money(get_recent_average(reportdate,12)[1])+ ')'     + "\n"
+    full_report    += "6 Month Best:             " + format_money(sales['jacks_total'] - get_recent_sales_best(reportdate,26)[1])+ '('+ format_money(get_recent_sales_best(reportdate,26)[1])+ ')'     + "\n"
+    full_report    += "6 Month Worst:             " + format_money(sales['jacks_total'] - get_recent_sales_worst(reportdate,26)[1])+ '('+ format_money(get_recent_sales_worst(reportdate,26)[1])+ ')'     + "\n"
+    full_report    += "12 Month Best:             " + format_money(sales['jacks_total'] - get_recent_sales_worst(reportdate,52)[1])+ '('+ format_money(get_recent_sales_worst(reportdate,52)[1])+ ')'     + "\n"
+    full_report    += "12 Month Worst:             " + format_money(sales['jacks_total'] - get_recent_sales_worst(reportdate,52)[1])+ '('+ format_money(get_recent_sales_worst(reportdate,52)[1])+ ')'     + "\n"
     # @LOGAN? add some comments please.
     reportd = reportdate.strftime("%Y-%m-%d")
     fill_db(reportd,sales, "day")
