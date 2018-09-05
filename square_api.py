@@ -956,7 +956,9 @@ def get_recent_sales_best(date,duration):
 def get_recent_sales_worst(date,duration):
     sales = get_recent_sales(date,duration)
     sjs = sales[0]
+    sjs.remove(0)
     jacks = sales[1]
+    jacks.remove(0)
     sjs_worst = min(sjs)
     jacks_worst = min(jacks)
     return (sjs_worst,jacks_worst)
