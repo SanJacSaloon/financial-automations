@@ -927,7 +927,9 @@ def get_recent_sales(date,duration):
         else:
             return
         sjs_sales.append(d['sjs_total'])
+        print date,d['sjs_total']
         jacks_sales.append(d['jacks_total'])
+        print date,d['jacks_total']
         date = date-datetime.timedelta(weeks=1)
         week += 1
     return (sjs_sales,jacks_sales)
