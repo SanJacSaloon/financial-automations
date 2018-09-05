@@ -1013,20 +1013,22 @@ def daily_sales (date):
     full_report    += "\n"
     full_report    += "===RECENT COMPARISONS===\n"
     full_report    += "     =San Jac=\n"
-    full_report    += "3 Week Average:             " + format_money(sales['sjs_total'] - get_recent_average(reportdate,3)[0])+ '('+ format_money(get_recent_average(reportdate,3)[0])+ ')'  + "\n"
-    full_report    += "3 Month Average:             " + format_money(sales['sjs_total'] - get_recent_average(reportdate,12)[0])+ '('+ format_money(get_recent_average(reportdate,12)[0])+ ')'     + "\n"
-    full_report    += "6 Month Best:             " + format_money(sales['sjs_total'] - get_recent_sales_best(reportdate,26)[0])+ '('+ format_money(get_recent_sales_best(reportdate,26)[0])+ ')'     + "\n"
-    full_report    += "6 Month Worst:             " + format_money(sales['sjs_total'] - get_recent_sales_worst(reportdate,26)[0])+ '('+ format_money(get_recent_sales_worst(reportdate,26)[0])+ ')'     + "\n"
-    full_report    += "12 Month Best:             " + format_money(sales['sjs_total'] - get_recent_sales_best(reportdate,52)[0])+ '('+ format_money(get_recent_sales_best(reportdate,52)[0])+ ')'     + "\n"
-    full_report    += "12 Month Worst:             " + format_money(sales['sjs_total'] - get_recent_sales_worst(reportdate,52)[0])+ '('+ format_money(get_recent_sales_worst(reportdate,52)[0])+ ')'     + "\n"
+    full_report    += "                   %-10s %-10s %-10s\n"%(date.strftime("%a, %b %-d %Y"),"value","Difference")\n"
+    full_report    += "3 Week Average:    %-10s %-10s %-10s\n"%(format_money(sales['sjs_total']),format_money(get_recent_average(reportdate,3)[0]),format_money(sales['sjs_total'] - get_recent_average(reportdate,3)[0]))
+    full_report    += "3 Month Average:   %-10s %-10s %-10s\n"%(format_money(sales['sjs_total']),format_money(get_recent_average(reportdate,12)[0]),format_money(sales['sjs_total'] - get_recent_average(reportdate,12)[0]))
+    full_report    += "6 Month Best:      %-10s %-10s %-10s\n"%(format_money(sales['sjs_total']),format_money(get_recent_sales_best(reportdate,26)[0]),format_money(sales['sjs_total'] - get_recent_sales_best(reportdate,26)[0]))
+    full_report    += "6 Month Worst:     %-10s %-10s %-10s\n"%(format_money(sales['sjs_total']),format_money(get_recent_sales_worst(reportdate,26)[0]),format_money(sales['sjs_total'] - get_recent_sales_worst(reportdate,26)[0]))
+    full_report    += "12 Month Best:     %-10s %-10s %-10s\n"%(format_money(sales['sjs_total']),format_money(get_recent_sales_best(reportdate,52)[0]),format_money(sales['sjs_total'] - get_recent_sales_best(reportdate,52)[0]))
+    full_report    += "12 Month Worst:    %-10s %-10s %-10s\n"%(format_money(sales['sjs_total']),format_money(get_recent_sales_worst(reportdate,52)[0]),format_money(sales['sjs_total'] - get_recent_sales_worst(reportdate,52)[0]))
     full_report    += "\n"
     full_report    += "     =Jack's=\n"
-    full_report    += "3 Week Average:             " + format_money(sales['jacks_total'] - get_recent_average(reportdate,3)[1])+ '('+ format_money(get_recent_average(reportdate,3)[1])+ ')'  + "\n"
-    full_report    += "3 Month Average:             " + format_money(sales['jacks_total'] - get_recent_average(reportdate,12)[1])+ '('+ format_money(get_recent_average(reportdate,12)[1])+ ')'     + "\n"
-    full_report    += "6 Month Best:             " + format_money(sales['jacks_total'] - get_recent_sales_best(reportdate,26)[1])+ '('+ format_money(get_recent_sales_best(reportdate,26)[1])+ ')'     + "\n"
-    full_report    += "6 Month Worst:             " + format_money(sales['jacks_total'] - get_recent_sales_worst(reportdate,26)[1])+ '('+ format_money(get_recent_sales_worst(reportdate,26)[1])+ ')'     + "\n"
-    full_report    += "12 Month Best:             " + format_money(sales['jacks_total'] - get_recent_sales_best(reportdate,52)[1])+ '('+ format_money(get_recent_sales_best(reportdate,52)[1])+ ')'     + "\n"
-    full_report    += "12 Month Worst:             " + format_money(sales['jacks_total'] - get_recent_sales_worst(reportdate,52)[1])+ '('+ format_money(get_recent_sales_worst(reportdate,52)[1])+ ')'     + "\n"
+    full_report    += "                   %-10s %-10s %-10s\n"%(date.strftime("%a, %b %-d %Y"),"value","Difference")\n"
+    full_report    += "3 Week Average:    %-10s %-10s %-10s\n"%(format_money(sales['jacks_total']),format_money(get_recent_average(reportdate,3)[1]),format_money(sales['jacks_total'] - get_recent_average(reportdate,3)[1]))
+    full_report    += "3 Month Average:   %-10s %-10s %-10s\n"%(format_money(sales['jacks_total']),format_money(get_recent_average(reportdate,12)[1]),format_money(sales['jacks_total'] - get_recent_average(reportdate,12)[1]))
+    full_report    += "6 Month Best:      %-10s %-10s %-10s\n"%(format_money(sales['jacks_total']),format_money(get_recent_sales_best(reportdate,26)[1]),format_money(sales['jacks_total'] - get_recent_sales_best(reportdate,26)[1]))
+    full_report    += "6 Month Worst:     %-10s %-10s %-10s\n"%(format_money(sales['jacks_total']),format_money(get_recent_sales_worst(reportdate,26)[1]),format_money(sales['jacks_total'] - get_recent_sales_worst(reportdate,26)[1]))
+    full_report    += "12 Month Best:     %-10s %-10s %-10s\n"%(format_money(sales['jacks_total']),format_money(get_recent_sales_best(reportdate,52)[1]),format_money(sales['jacks_total'] - get_recent_sales_best(reportdate,52)[1]))
+    full_report    += "12 Month Worst:    %-10s %-10s %-10s\n"%(format_money(sales['jacks_total']),format_money(get_recent_sales_worst(reportdate,52)[1]),format_money(sales['jacks_total'] - get_recent_sales_worst(reportdate,52)[1]))
     # @LOGAN? add some comments please.
     reportd = reportdate.strftime("%Y-%m-%d")
     fill_db(reportd,sales, "day")
