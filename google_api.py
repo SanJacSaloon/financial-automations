@@ -407,7 +407,7 @@ def update_annual_sheet(year):
     oc = "=sum(B6:B7)"
     merch = ""
     entertainment = ""
-    print sheets
+
     for sheet_id in sheets:
         gs_sjs += '+sum(IMPORTRANGE("%s","Sheet1!B1"))'%sheet_id
         gs_jacks += '+sum(IMPORTRANGE("%s","Sheet1!B2"))'%sheet_id

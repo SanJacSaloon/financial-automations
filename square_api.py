@@ -1029,6 +1029,7 @@ def daily_sales (date):
     full_report    += "6 Month Worst:     %-10s %-10s %-10s\n"%(format_money(sales['jacks_total']),format_money(get_recent_sales_worst(reportdate,26)[1]),format_money(sales['jacks_total'] - get_recent_sales_worst(reportdate,26)[1]))
     full_report    += "12 Month Best:     %-10s %-10s %-10s\n"%(format_money(sales['jacks_total']),format_money(get_recent_sales_best(reportdate,52)[1]),format_money(sales['jacks_total'] - get_recent_sales_best(reportdate,52)[1]))
     full_report    += "12 Month Worst:    %-10s %-10s %-10s\n"%(format_money(sales['jacks_total']),format_money(get_recent_sales_worst(reportdate,52)[1]),format_money(sales['jacks_total'] - get_recent_sales_worst(reportdate,52)[1]))
+
     # @LOGAN? add some comments please.
     reportd = reportdate.strftime("%Y-%m-%d")
     fill_db(reportd,sales, "day")
