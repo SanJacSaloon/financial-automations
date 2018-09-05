@@ -915,8 +915,50 @@ def fill_db (reportd, total, timeframe):
 
     return d
 
+### input dates and duration(in weeks)
+def get_recent_sales(date,duration):
+    week = 0
+    sjs_sales = []
+    jacks_sales = []
+    while week < duration:
+        daily  = get_row("daily", date.strftime("%Y-%m-%d"))
+        if daily:
+            d      = Daily(daily["id"])
+        else:
+            return
+        sjs_sales.append(d['sjs_total'])
+        jacks_sales.append(d['jacks_total'])
+        date = date-datetime.timedelta(weeks=1)
+        week += 1
+    return (sjs_sales,jacks_sales)
 
-########################################################################################################################
+### input dates and duration(in weeks)
+def get_recent_average(date,duration):
+    sales = get_recent_sales(date,duration)
+    sjs = sales[0]
+    jacks = sales[1]
+    sjs_average = sum(sjs)/len(sjs)
+    jacks_average = sum(jacks)/len(jacks)
+    return (sjs_average,jacks_average)
+
+### input dates and duration(in weeks)
+def get_recent_sales_best(date,duration):
+    sales = get_recent_sales(date,duration)
+    sjs = sales[0]
+    jacks = sales[1]
+    sjs_best = max(sjs)
+    jacks_best = max(jacks)
+    return (sjs_best,jacks_best)
+
+### input dates and duration(in weeks)
+def get_recent_sales_worst(date,duration):
+    sales = get_recent_sales(date,duration)
+    sjs = sales[0]
+    jacks = sales[1]
+    sjs_worst = min(sjs)
+    jacks_worst = min(jacks)
+    return (sjs_worst,jacks_worst)
+#######################################################################################################################
 def daily_sales (date):
     """
     @LOGAN? what's this for?
