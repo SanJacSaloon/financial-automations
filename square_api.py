@@ -922,12 +922,10 @@ def get_recent_sales(date,duration):
     jacks_sales = []
     while week < duration:
         daily = get_row("daily", date.strftime("%Y-%m-%d"))
-        print daily
         if daily:
             d      = Daily(daily["id"])
         else:
             return
-        print d
         sjs_sales.append(d['sjs_total'])
         jacks_sales.append(d['jacks_total'])
         date = date-datetime.timedelta(weeks=1)
@@ -1013,6 +1011,10 @@ def daily_sales (date):
     last_year_sales = sales_totals(last_year_payments,last_year_drawers,last_year_report_date)
     full_report    += report_string(last_year_sales)
     full_report    += "\n"
+
+    reportd = reportdate.strftime("%Y-%m-%d")
+    fill_db(reportd,sales, "day")
+    
     full_report    += "===RECENT COMPARISONS===\n"
     full_report    += "     =San Jac=\n"
     full_report    += "%s  %-20s %-15s %-15s\n"%("                              ",date.strftime("%a, %b %-d %Y"),"Value","Difference")
@@ -1032,9 +1034,6 @@ def daily_sales (date):
     full_report    += "%s    %-25s %-15s %-15s\n"%("    12 Month Best:",format_money(sales['jacks_total']),format_money(get_recent_sales_best(reportdate,52)[1]),format_money(sales['jacks_total'] - get_recent_sales_best(reportdate,52)[1]))
     full_report    += "%s    %-25s %-15s %-15s\n"%(" 12 Month Worst:",format_money(sales['jacks_total']),format_money(get_recent_sales_worst(reportdate,52)[1]),format_money(sales['jacks_total'] - get_recent_sales_worst(reportdate,52)[1]))
 
-    # @LOGAN? add some comments please.
-    reportd = reportdate.strftime("%Y-%m-%d")
-    fill_db(reportd,sales, "day")
     return sales, full_report
 
 
