@@ -921,12 +921,13 @@ def get_recent_sales(date,duration):
     sjs_sales = []
     jacks_sales = []
     while week < duration:
-        print date.strftime("%Y-%m-%d")
-        daily  = get_row("daily", date.strftime("%Y-%m-%d"))
+        daily = get_row("daily", date.strftime("%Y-%m-%d"))
+        print daily
         if daily:
             d      = Daily(daily["id"])
         else:
             return
+        print d
         sjs_sales.append(d['sjs_total'])
         jacks_sales.append(d['jacks_total'])
         date = date-datetime.timedelta(weeks=1)
