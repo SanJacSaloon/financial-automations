@@ -93,7 +93,7 @@ def colnum_string(col=False,day=False):
     else: return
 
 def last_sunday_of_month(month):
-    year = 2018
+    year = datetime.now().year
     last_sunday = max(week[-1] for week in calendar.monthcalendar(year, month))
     last_sunday = '{}-{}-{:2}'.format(year, calendar.month_abbr[month], last_sunday)
     last_sunday = datetime.strptime(last_sunday,"%Y-%b-%d")
@@ -380,7 +380,8 @@ def update_annual_sheet(year):
         try:sheets.append(open_google_spreadsheet(spreadsheet_title=date.strftime("%B-%Y")).id)
         except:break
         date = date + dateutil.relativedelta.relativedelta(months=1)
-    sheet = open_google_spreadsheet(spreadsheet_title="2018")
+    spreadsheet_title = datetime.strptime(year,"%Y").strftime("%Y")
+    sheet = open_google_spreadsheet(spreadsheet_title=spreadsheet_title)
     worksheet = sheet.worksheet("Overview")
     cell_list = worksheet.range("A1:A15")
     cell_list[1].value = "Gross Sales: San Jac"
