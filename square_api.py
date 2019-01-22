@@ -1352,14 +1352,14 @@ def email_report (email=secrets["general"]["smtp_to"], report=False):
     toaddrs  = email
     msg      = "\r\n".join(["From: %s" % fromaddr, "To: %s" % toaddrs, "Subject: %s"%(report['subject']), "", report["body"]])
 
-    try:
-        server = smtplib.SMTP("smtp.gmail.com:587")
-        server.starttls()
-        server.login(username,password)
-        server.sendmail(fromaddr, toaddrs, msg)
-        server.quit()
-    except:
-        log += "\n%s: Failed to send report" % datetime.datetime.today().strftime("%Y-%m-%d:%H:%M")
+    #try:
+    server = smtplib.SMTP("smtp.gmail.com:587")
+    server.starttls()
+    server.login(username,password)
+    server.sendmail(fromaddr, toaddrs, msg)
+    server.quit()
+    #except:
+    #    log += "\n%s: Failed to send report" % datetime.datetime.today().strftime("%Y-%m-%d:%H:%M")
 
 
 ########################################################################################################################
