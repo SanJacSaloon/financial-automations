@@ -1295,6 +1295,23 @@ def report_string (total):
     return_string += "Net cash:          " + format_money(total["jacks_cash"] + (total["jacks_paidout"] - total["jacks_tip_credit"])+total["jacks_tip_credit"]*.025) + "\n"
     return_string += "Unknown Device:    " + format_money(total["unknown"])   + "\n"
     return_string += "\n"
+    return_string += "\n"
+    return_string += "    =TAX INFO=\n"
+    return_string += "--MIXED BEVERAGE GROSS RECEIPTS--\n"
+    return_string += "Complimentary Drinks:" + format_money(total["sjs_dcounts"]+total["jacks_dcounts"]) + "\n"
+    return_string += "Gross Liquor:        " + format_money(total["sjs_liquor"]+total["jacks_liquor"]) + "\n"
+    return_string += "Gross Wine:          " + format_money(total["sjs_wine"]+total["jacks_wine"]) + "\n"
+    return_string += "Gross Beer:          " + format_money(total["sjs_beer"]+total["jacks_beer"]) + "\n"
+    return_string += "Total Gross Taxable: " + format_money(total["sjs_liquor"]+total["jacks_liquor"]+total["sjs_wine"]+total["jacks_wine"]+total["sjs_beer"]+total["jacks_beer"]) + "\n"
+    return_string += "--MIXED BEVERAGE SALES--\n"
+    return_string += "Total Sales:         " + format_money(total["sjs_total"]+total["jacks_total"]) + "\n"
+    return_string += "Taxable Sales:       " + format_money(total["sjs_liquor"]+total["jacks_liquor"]+total["sjs_wine"]+total["jacks_wine"]+total["sjs_beer"]+total["jacks_beer"]) + "\n"
+    return_string += "--SALES AND USE--\n"
+    return_string += "Total Sales:         " + format_money(total["sjs_total"]+total["jacks_total"]) + "\n"
+    return_string += "Taxable Sales:       " + format_money(total["sjs_retail"]+total["jacks_retail"]+total["sjs_nonalc"]+total["jacks_nonalc"]) + "\n"
+    return_string += "Taxable Purchases:   " + format_money((total["sjs_dcounts"]+total["jacks_dcounts"])*.2) + "\n"
+
+    
     return return_string
 
 
