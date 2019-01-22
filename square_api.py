@@ -1139,6 +1139,10 @@ def monthly_sales (date, recursive=False):
         full_report += monthly_sales(last_year_report_date,recursive=True)
 
         ######TAXES######
+        non_alc = (monthly_total["sjs_retail"]+monthly_total["jacks_retail"]+monthly_total["sjs_nonalc"]+monthly_total["jacks_nonalc"])
+        total_alc = (monthly_total["sjs_liquor"]+monthly_total["jacks_liquor"]+monthly_total["sjs_wine"]+monthly_total["jacks_wine"]+monthly_total["sjs_beer"]+monthly_total["jacks_beer"])
+        other_sales = (monthly_total["sjs_total"]+monthly_total["jacks_total"])-non_alc-total_alc
+        print format_money(other_sales)
         full_report += "\n"
         full_report += "    =TAX INFO=\n"
         full_report += "--MIXED BEVERAGE GROSS RECEIPTS--\n"
@@ -1146,13 +1150,13 @@ def monthly_sales (date, recursive=False):
         full_report += "Gross Liquor:        " + format_money((monthly_total["sjs_liquor"]+monthly_total["jacks_liquor"])*.87) + "\n"
         full_report += "Gross Wine:          " + format_money((monthly_total["sjs_wine"]+monthly_total["jacks_wine"])*.87) + "\n"
         full_report += "Gross Beer:          " + format_money((monthly_total["sjs_beer"]+monthly_total["jacks_beer"])*.87) + "\n"
-        full_report += "Total Gross Taxable: " + format_money((monthly_total["sjs_liquor"]+monthly_total["jacks_liquor"]+monthly_total["sjs_wine"]+monthly_total["jacks_wine"]+monthly_total["sjs_beer"]+monthly_total["jacks_beer"])*.87) + "\n"
+        full_report += "Total Gross Taxable: " + format_money(total_alc*.87) + "\n"
         full_report += "--MIXED BEVERAGE SALES--\n"
-        full_report += "Total Sales:         " + format_money(((monthly_total["sjs_retail"]+monthly_total["jacks_retail"]+monthly_total["sjs_nonalc"]+monthly_total["jacks_nonalc"])*.9175)+((monthly_total["sjs_liquor"]+monthly_total["jacks_liquor"]+monthly_total["sjs_wine"]+monthly_total["jacks_wine"]+monthly_total["sjs_beer"]+monthly_total["jacks_beer"])*.87)) + "\n"
+        full_report += "Total Sales:         " + format_money((non_alc*.9175)+(total_alc*.87)+other_sales) + "\n"
         full_report += "Taxable Sales:       " + format_money((monthly_total["sjs_liquor"]+monthly_total["jacks_liquor"]+monthly_total["sjs_wine"]+monthly_total["jacks_wine"]+monthly_total["sjs_beer"]+monthly_total["jacks_beer"])*.87) + "\n"
         full_report += "--SALES AND USE--\n"
-        full_report += "Total Sales:         " + format_money(((monthly_total["sjs_retail"]+monthly_total["jacks_retail"]+monthly_total["sjs_nonalc"]+monthly_total["jacks_nonalc"])*.9175)+((monthly_total["sjs_liquor"]+monthly_total["jacks_liquor"]+monthly_total["sjs_wine"]+monthly_total["jacks_wine"]+monthly_total["sjs_beer"]+monthly_total["jacks_beer"])*.87)) + "\n"
-        full_report += "Taxable Sales:       " + format_money((monthly_total["sjs_retail"]+monthly_total["jacks_retail"]+monthly_total["sjs_nonalc"]+monthly_total["jacks_nonalc"])*.9175) + "\n"
+        full_report += "Total Sales:         " + format_money((non_alc*.9175)+(total_alc*.87)+other_sales) + "\n"
+        full_report += "Taxable Sales:       " + format_money(non_alc*.9175) + "\n"
         full_report += "Taxable Purchases:   " + format_money(((monthly_total["sjs_dcounts"]+monthly_total["jacks_dcounts"])*.87)*.2) + "\n"
 
     else:
