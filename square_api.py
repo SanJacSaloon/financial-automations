@@ -1138,6 +1138,23 @@ def monthly_sales (date, recursive=False):
         last_year_report_date = sdate + dateutil.relativedelta.relativedelta(years=-1)
         full_report += monthly_sales(last_year_report_date,recursive=True)
 
+        ######TAXES######
+        full_report += "\n"
+        full_report += "    =TAX INFO=\n"
+        full_report += "--MIXED BEVERAGE GROSS RECEIPTS--\n"
+        full_report += "Complimentary Drinks:" + format_money(monthly_total["sjs_dcounts"]+monthly_total["jacks_dcounts"]) + "\n"
+        full_report += "Gross Liquor:        " + format_money(monthly_total["sjs_liquor"]+monthly_total["jacks_liquor"]) + "\n"
+        full_report += "Gross Wine:          " + format_money(monthly_total["sjs_wine"]+monthly_total["jacks_wine"]) + "\n"
+        full_report += "Gross Beer:          " + format_money(monthly_total["sjs_beer"]+monthly_total["jacks_beer"]) + "\n"
+        full_report += "Total Gross Taxable: " + format_money(monthly_total["sjs_liquor"]+monthly_total["jacks_liquor"]+monthly_total["sjs_wine"]+monthly_total["jacks_wine"]+monthly_total["sjs_beer"]+monthly_total["jacks_beer"]) + "\n"
+        full_report += "--MIXED BEVERAGE SALES--\n"
+        full_report += "Total Sales:         " + format_money(monthly_total["sjs_total"]+monthly_total["jacks_total"]) + "\n"
+        full_report += "Taxable Sales:       " + format_money(monthly_total["sjs_liquor"]+monthly_total["jacks_liquor"]+monthly_total["sjs_wine"]+monthly_total["jacks_wine"]+monthly_total["sjs_beer"]+monthly_total["jacks_beer"]) + "\n"
+        full_report += "--SALES AND USE--\n"
+        full_report += "Total Sales:         " + format_money(monthly_total["sjs_total"]+monthly_total["jacks_total"]) + "\n"
+        full_report += "Taxable Sales:       " + format_money(monthly_total["sjs_retail"]+monthly_total["jacks_retail"]+monthly_total["sjs_nonalc"]+monthly_total["jacks_nonalc"]) + "\n"
+        full_report += "Taxable Purchases:   " + format_money((monthly_total["sjs_dcounts"]+monthly_total["jacks_dcounts"])*.2) + "\n"
+
     else:
         return report_string(monthly_total)
 
@@ -1295,21 +1312,21 @@ def report_string (total):
     return_string += "Net cash:          " + format_money(total["jacks_cash"] + (total["jacks_paidout"] - total["jacks_tip_credit"])+total["jacks_tip_credit"]*.025) + "\n"
     return_string += "Unknown Device:    " + format_money(total["unknown"])   + "\n"
     return_string += "\n"
-    return_string += "\n"
-    return_string += "    =TAX INFO=\n"
-    return_string += "--MIXED BEVERAGE GROSS RECEIPTS--\n"
-    return_string += "Complimentary Drinks:" + format_money(total["sjs_dcounts"]+total["jacks_dcounts"]) + "\n"
-    return_string += "Gross Liquor:        " + format_money(total["sjs_liquor"]+total["jacks_liquor"]) + "\n"
-    return_string += "Gross Wine:          " + format_money(total["sjs_wine"]+total["jacks_wine"]) + "\n"
-    return_string += "Gross Beer:          " + format_money(total["sjs_beer"]+total["jacks_beer"]) + "\n"
-    return_string += "Total Gross Taxable: " + format_money(total["sjs_liquor"]+total["jacks_liquor"]+total["sjs_wine"]+total["jacks_wine"]+total["sjs_beer"]+total["jacks_beer"]) + "\n"
-    return_string += "--MIXED BEVERAGE SALES--\n"
-    return_string += "Total Sales:         " + format_money(total["sjs_total"]+total["jacks_total"]) + "\n"
-    return_string += "Taxable Sales:       " + format_money(total["sjs_liquor"]+total["jacks_liquor"]+total["sjs_wine"]+total["jacks_wine"]+total["sjs_beer"]+total["jacks_beer"]) + "\n"
-    return_string += "--SALES AND USE--\n"
-    return_string += "Total Sales:         " + format_money(total["sjs_total"]+total["jacks_total"]) + "\n"
-    return_string += "Taxable Sales:       " + format_money(total["sjs_retail"]+total["jacks_retail"]+total["sjs_nonalc"]+total["jacks_nonalc"]) + "\n"
-    return_string += "Taxable Purchases:   " + format_money((total["sjs_dcounts"]+total["jacks_dcounts"])*.2) + "\n"
+    #return_string += "\n"
+    #return_string += "    =TAX INFO=\n"
+    #return_string += "--MIXED BEVERAGE GROSS RECEIPTS--\n"
+    #return_string += "Complimentary Drinks:" + format_money(total["sjs_dcounts"]+total["jacks_dcounts"]) + "\n"
+    #return_string += "Gross Liquor:        " + format_money(total["sjs_liquor"]+total["jacks_liquor"]) + "\n"
+    #return_string += "Gross Wine:          " + format_money(total["sjs_wine"]+total["jacks_wine"]) + "\n"
+    #return_string += "Gross Beer:          " + format_money(total["sjs_beer"]+total["jacks_beer"]) + "\n"
+    #return_string += "Total Gross Taxable: " + format_money(total["sjs_liquor"]+total["jacks_liquor"]+total["sjs_wine"]+total["jacks_wine"]+total["sjs_beer"]+total["jacks_beer"]) + "\n"
+    #return_string += "--MIXED BEVERAGE SALES--\n"
+    #return_string += "Total Sales:         " + format_money(total["sjs_total"]+total["jacks_total"]) + "\n"
+    #return_string += "Taxable Sales:       " + format_money(total["sjs_liquor"]+total["jacks_liquor"]+total["sjs_wine"]+total["jacks_wine"]+total["sjs_beer"]+total["jacks_beer"]) + "\n"
+    #return_string += "--SALES AND USE--\n"
+    #return_string += "Total Sales:         " + format_money(total["sjs_total"]+total["jacks_total"]) + "\n"
+    #return_string += "Taxable Sales:       " + format_money(total["sjs_retail"]+total["jacks_retail"]+total["sjs_nonalc"]+total["jacks_nonalc"]) + "\n"
+    #return_string += "Taxable Purchases:   " + format_money((total["sjs_dcounts"]+total["jacks_dcounts"])*.2) + "\n"
 
     
     return return_string
@@ -1352,14 +1369,14 @@ def email_report (email=secrets["general"]["smtp_to"], report=False):
     toaddrs  = email
     msg      = "\r\n".join(["From: %s" % fromaddr, "To: %s" % toaddrs, "Subject: %s"%(report['subject']), "", report["body"]])
 
-    #try:
-    server = smtplib.SMTP("smtp.gmail.com:587")
-    server.starttls()
-    server.login(username,password)
-    server.sendmail(fromaddr, toaddrs, msg)
-    server.quit()
-    #except:
-    #    log += "\n%s: Failed to send report" % datetime.datetime.today().strftime("%Y-%m-%d:%H:%M")
+    try:
+        server = smtplib.SMTP("smtp.gmail.com:587")
+        server.starttls()
+        server.login(username,password)
+        server.sendmail(fromaddr, toaddrs, msg)
+        server.quit()
+    except:
+        log += "\n%s: Failed to send report" % datetime.datetime.today().strftime("%Y-%m-%d:%H:%M")
 
 
 ########################################################################################################################
@@ -1507,7 +1524,6 @@ if __name__ == '__main__':
     sales = daily_sales(datetime.datetime.strptime(report_date, "%Y-%m-%d"))
     google_api.fill_sales(datetime.datetime.strptime(report_date, "%Y-%m-%d"), sales[0])
     email_report(report={'subject':'Report for %s' % report_date, 'body':sales[1]})
-    time.sleep(4)
     fh.write(sales[1])
 
     ###########################
