@@ -1507,6 +1507,7 @@ if __name__ == '__main__':
     sales = daily_sales(datetime.datetime.strptime(report_date, "%Y-%m-%d"))
     google_api.fill_sales(datetime.datetime.strptime(report_date, "%Y-%m-%d"), sales[0])
     email_report(report={'subject':'Report for %s' % report_date, 'body':sales[1]})
+    time.sleep(4)
     fh.write(sales[1])
 
     ###########################
