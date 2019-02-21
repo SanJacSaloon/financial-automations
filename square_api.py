@@ -1236,9 +1236,9 @@ def yearly_sales (date, recursive=False):
         fill_db(sdate.strftime("%Y-%m-%d"), yearly_total, "yearly")
 
         #### LAST YEAR ####
-        full_report += "==LAST YEAR SALES REPORT==\n"
-        last_year_report_date = sdate + dateutil.relativedelta.relativedelta(years=-1)
-        full_report += yearly_sales(last_year_report_date,recursive=True)
+        #full_report += "==LAST YEAR SALES REPORT==\n"
+        #last_year_report_date = sdate + dateutil.relativedelta.relativedelta(years=-1)
+        #full_report += yearly_sales(last_year_report_date,recursive=True)
     else:
         return report_string(yearly_total)
 
