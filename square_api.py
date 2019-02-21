@@ -1211,11 +1211,10 @@ def yearly_sales (date, recursive=False):
         yearly_total = {}
         full_report  = ""
 
-        while sdate.strftime("%Y-%m-%d") != (sdate + dateutil.relativedelta.relativedelta(days=1)).strftime("%Y-%m-%d"):
+        while sdate.strftime("%Y-%m-%d") != (date + dateutil.relativedelta.relativedelta(days=1)).strftime("%Y-%m-%d"):
 
             money = get_row("monthly",sdate.strftime("%Y-%m-%d"))
-            print sdate
-            print money
+
             for item in money:
                 if item in yearly_total.keys():
                     try:
