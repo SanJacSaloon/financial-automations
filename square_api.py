@@ -1176,47 +1176,69 @@ def yearly_sales (date, recursive=False):
     if not date:
         date = datetime.datetime.today()
 
-    date         = date.replace(day=1)
-    date         = date.replace(month=1)
-    sdate        = date
-    yearly_total = {}
-    full_report  = ""
+        date         = date.replace(day=1)
+        date         = date.replace(month=1)
+        sdate        = date
+        yearly_total = {}
+        full_report  = ""
 
-    while int(date.strftime("%m")) < datetime.datetime.today().strftime("%m"):
+        while int(date.strftime("%m")) < datetime.datetime.today().strftime("%m"):
 
-        if date.strftime("%Y-%m-%d") > date.today().strftime("%Y-%m-%d"):
-            break
+            if date.strftime("%Y-%m-%d") > date.today().strftime("%Y-%m-%d"):
+                break
 
-        money = get_row("monthly",date.strftime("%Y-%m-%d"))
-
-        if not money:
-            populate_database(date)
             money = get_row("monthly",date.strftime("%Y-%m-%d"))
 
-        for item in money:
-            if item in yearly_total.keys():
-                try:
-                    yearly_total[item]+=money[item]
-                except:
-                    yearly_total[item]=money[item]
-            else:
-                yearly_total[item] = money[item]
+            if not money:
+                populate_database(date)
+                money = get_row("monthly",date.strftime("%Y-%m-%d"))
 
-        date = date + datetime.timedelta(days=31)
-        date = date.replace(day=1)
+            for item in money:
+                if item in yearly_total.keys():
+                    try:
+                        yearly_total[item]+=money[item]
+                    except:
+                        yearly_total[item]=money[item]
+                else:
+                    yearly_total[item] = money[item]
 
+            date = date + datetime.timedelta(days=31)
+            date = date.replace(day=1)
+
+    else:
+        sdate         = date.replace(day=1)
+        sdate         = sdate.replace(month=1)
+        yearly_total = {}
+        full_report  = ""
+
+        while sdate.strftime("%Y-%m-%d") != (sdate + dateutil.relativedelta.relativedelta(days=1)).strftime("%Y-%m-%d")):
+
+            money = get_row("monthly",sdate.strftime("%Y-%m-%d"))
+
+            for item in money:
+                if item in yearly_total.keys():
+                    try:
+                        yearly_total[item]+=money[item]
+                    except:
+                        yearly_total[item]=money[item]
+                else:
+                    yearly_total[item] = money[item]
+
+            sdate = sdate + datetime.timedelta(days=31)
+            sdate = sdate.replace(day=1)
+            
     if not recursive:
         # create the report.
-        full_report = "==MONTHLY SALES REPORT==\n"
+        full_report = "==YEARLY SALES REPORT==\n"
         full_report += report_string(yearly_total)
 
         # fill the database.
         fill_db(sdate.strftime("%Y-%m-%d"), yearly_total, "yearly")
 
         #### LAST YEAR ####
-        full_report += "==LAST YEAR MONTHLY SALES REPORT==\n"
+        full_report += "==LAST YEAR SALES REPORT==\n"
         last_year_report_date = sdate + dateutil.relativedelta.relativedelta(years=-1)
-        full_report += monthly_sales(last_year_report_date,recursive=True)
+        full_report += yearly_sales(last_year_report_date,recursive=True)
     else:
         return report_string(yearly_total)
 
@@ -1547,7 +1569,19 @@ if __name__ == '__main__':
         fil.write(sales[1])
         fil.close()
 
-        email = {'subject':'Month of %s'%sdate.strftime("%Y-%m-%d"), 'body':sales[1]}
+        email = {'subject':'Month of %s'%sdate.strftime("%Y-%m"), 'body':sales[1]}
+        email_report(report=email)
+        
+    if int((datetime.datetime.strptime(report_date, "%Y-%m-%d")+datetime.timedelta(days=1)).strftime("%Y-%m-%d")) == "2019-01-01":
+
+        sales = yearly_sales(datetime.datetime.strptime(report_date, "%Y-%m-%d"))
+
+        sdate = datetime.datetime.strptime(report_date, "%Y-%m-%d").replace(day=1)
+        fil   = open(homepath+"YearOf_%s.txt" % sdate.strftime("%Y"), 'w')
+        fil.write(sales[1])
+        fil.close()
+
+        email = {'subject':'Year of %s'%sdate.strftime("%Y"), 'body':sales[1]}
         email_report(report=email)
 
     try:
