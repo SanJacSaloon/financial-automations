@@ -1211,7 +1211,7 @@ def yearly_sales (date, recursive=False):
         yearly_total = {}
         full_report  = ""
 
-        while sdate.strftime("%Y-%m-%d") != (date + dateutil.relativedelta.relativedelta(days=1)).strftime("%Y-%m-%d"):
+        while int(sdate.strftime("%Y")) < int((date + dateutil.relativedelta.relativedelta(days=1)).strftime("%Y-%m-%d").strftime("%Y")):
 
             money = get_row("monthly",sdate.strftime("%Y-%m-%d"))
 
