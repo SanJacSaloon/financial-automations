@@ -1572,7 +1572,7 @@ if __name__ == '__main__':
         email = {'subject':'Month of %s'%sdate.strftime("%Y-%m"), 'body':sales[1]}
         email_report(report=email)
         
-    if int((datetime.datetime.strptime(report_date, "%Y-%m-%d")+datetime.timedelta(days=1)).strftime("%Y-%m-%d")) == "2019-01-01":
+    if (datetime.datetime.strptime(report_date, "%Y-%m-%d")+datetime.timedelta(days=1)).strftime("%Y-%m-%d") == "2019-01-01":
 
         sales = yearly_sales(datetime.datetime.strptime(report_date, "%Y-%m-%d"))
 
