@@ -649,6 +649,7 @@ def calculate_sin_discount(amount, quantity, item):
         if tmp == it['name'].lower():
             price = it['variations'][0]['price_money']['amount']
         elif tmp in it['name'].lower():
+            if 'jack' in tmp: continue
             price = it['variations'][0]['price_money']['amount']
         
     if not price: 
