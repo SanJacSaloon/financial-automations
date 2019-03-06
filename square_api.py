@@ -1378,6 +1378,8 @@ def report_string (total):
     return_string += "Net cash:          " + format_money(total["jacks_cash"] + (total["jacks_paidout"] - total["jacks_tip_credit"])+total["jacks_tip_credit"]*.025) + "\n"
     return_string += "Unknown Device:    " + format_money(total["unknown"])   + "\n"
     return_string += "\n"
+    return_string += "\n"
+    return_string += "Discount Percentage:" + format_money((-1*(total["sjs_dcounts"]-total["jacks_dcounts"])/(total["sjs_total"]+total["jacks_total"]))*100)
 
     
     return return_string
