@@ -652,6 +652,13 @@ def calculate_sin_discount(amount, quantity, item):
         else:
             price = '800'
     discount = (int(amount)*quantity)-(int(price)*quantity)
+    print "*"*20
+    print amount
+    print quantity
+    print item
+    print discount
+    print "*"*20
+    time.sleep(1)
     return discount
 
         
@@ -732,8 +739,8 @@ def sales_totals(payments,drawers,reportd):
                     amount   = 0
                     amount  += payment["itemizations"][i]["single_quantity_money"]["amount"]*int(float(payment["itemizations"][i]["quantity"]))
 
-                    if "sin " in category.lower():
-                        discount = calculate_sin_discount(payment["itemizations"][i]["single_quantity_money"]["amount"],int(float(payment["itemizations"][i]["quantity"])),payment["itemizations"][i]['name'],categories)
+                    if "sin " in payment["itemizations"][i]['name'].lower():
+                        discount = calculate_sin_discount(payment["itemizations"][i]["single_quantity_money"]["amount"],int(float(payment["itemizations"][i]["quantity"])),payment["itemizations"][i]['name'])
                         total["sjs_dcounts"] += discount
 
                     for d in xrange(len(payment["itemizations"][i]["discounts"])):
@@ -791,8 +798,8 @@ def sales_totals(payments,drawers,reportd):
                     amount   = 0
                     amount  += payment["itemizations"][i]["single_quantity_money"]["amount"] * int(float(payment["itemizations"][i]["quantity"]))
 
-                    if "sin " in category.lower():
-                        discount = calculate_sin_discount(payment["itemizations"][i]["single_quantity_money"]["amount"],int(float(payment["itemizations"][i]["quantity"])),payment["itemizations"][i]['name'],categories)
+                    if "sin " in payment["itemizations"][i]['name'].lower():
+                        discount = calculate_sin_discount(payment["itemizations"][i]["single_quantity_money"]["amount"],int(float(payment["itemizations"][i]["quantity"])),payment["itemizations"][i]['name'])
                         total["jacks_dcounts"] += discount
 
                     for d in xrange(len(payment["itemizations"][i]["discounts"])):
