@@ -655,12 +655,6 @@ def calculate_sin_discount(amount, quantity, item):
     if not price: 
         price = '800'
     discount = (int(amount)*quantity)-(int(price)*quantity)
-    print "*"*20
-    print amount
-    print quantity
-    print item
-    print discount
-    print "*"*20
     return discount
 
         
