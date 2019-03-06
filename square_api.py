@@ -26,7 +26,7 @@ import sys
 import google_api
 
 # enable testing
-testing = False
+testing = True
 
 # Uses the locale to format currency amounts correctly.
 # NOTE: this took a touch of trial and error.
@@ -628,6 +628,12 @@ def get_transactions (date=False, current=False):
 
     return unique_transactions
 
+def calculate_sin_discount(amount, item, categories):
+    items = get_items()
+    for i in items:
+        print i
+        time.sleep(5)
+
 
 ########################################################################################################################
 def sales_totals(payments,drawers,reportd):
@@ -675,6 +681,7 @@ def sales_totals(payments,drawers,reportd):
     total["sjs_cash"]         = 0
     total["jacks_cash"]       = 0
     total["unknown"]          = 0
+    
 
     # @LOGAN? add some comments please.
     # add appropriate values to each cumulative variable.
@@ -709,6 +716,8 @@ def sales_totals(payments,drawers,reportd):
 
                     if category not in categories:
                         categories.append(category)
+                    if "sin " in category.lower():
+                        discount = calculate_sin_discount(amount,category.lower(),categories)
 
                     if "beer" in category.lower():
                         total["sjs_total"]       = total["sjs_total"]   + amount
