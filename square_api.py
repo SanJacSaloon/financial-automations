@@ -632,7 +632,7 @@ def calculate_sin_discount(amount, item, categories):
     items = get_items()
     price = 0
     for it in items:
-        price = it['variations']['price_money']['amount']
+        price = it['variations'][0]['price_money']['amount']
         print it
         print price
         time.sleep(5)
