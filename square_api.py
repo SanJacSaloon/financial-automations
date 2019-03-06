@@ -628,14 +628,33 @@ def get_transactions (date=False, current=False):
 
     return unique_transactions
 
-def calculate_sin_discount(amount, item, categories):
+def calculate_sin_discount(amount, quantity, item):
     items = get_items()
     price = 0
     for it in items:
-        price = it['variations'][0]['price_money']['amount']
-        print it
-        print price
-        time.sleep(5)
+        tmp = item.lower().replace('sin ','')
+        if 'dom beer' in tmp:
+            tmp = 'bud light'
+        if 'draft' in tmp:
+            tmp = 'hans pils'
+        if 'imp beer' in tmp:
+            tmp = 'dos xx'
+        if 'jack' in tmp:
+            tmp = 'jack daniels'
+        if 'well' in tmp:
+            tmp = 'well rum'
+        if 'espolon' in tmp:
+            tmp = 'espolon silver'
+        if tmp == it['name'].lower():
+            price = it['variations'][0]['price_money']['amount']
+        elif tmp in it['name'].lower():
+            price = it['variations'][0]['price_money']['amount']
+        else:
+            price = '800'
+    discount = (int(amount)*quantity)-(int(price)*quantity)
+    return discount
+
+        
 
 
 ########################################################################################################################
@@ -713,14 +732,16 @@ def sales_totals(payments,drawers,reportd):
                     amount   = 0
                     amount  += payment["itemizations"][i]["single_quantity_money"]["amount"]*int(float(payment["itemizations"][i]["quantity"]))
 
+                    if "sin " in category.lower():
+                        discount = calculate_sin_discount(payment["itemizations"][i]["single_quantity_money"]["amount"],int(float(payment["itemizations"][i]["quantity"])),payment["itemizations"][i]['name'],categories)
+                        total["sjs_dcounts"] += discount
+
                     for d in xrange(len(payment["itemizations"][i]["discounts"])):
                         amount += payment["itemizations"][i]["discounts"][d]["applied_money"]["amount"]
                         total["sjs_dcounts"] += payment["itemizations"][i]["discounts"][d]["applied_money"]["amount"]
 
                     if category not in categories:
                         categories.append(category)
-                    if "sin " in category.lower():
-                        discount = calculate_sin_discount(amount,category.lower(),categories)
 
                     if "beer" in category.lower():
                         total["sjs_total"]       = total["sjs_total"]   + amount
@@ -769,6 +790,10 @@ def sales_totals(payments,drawers,reportd):
                     category = payment["itemizations"][i]["item_detail"]["category_name"]
                     amount   = 0
                     amount  += payment["itemizations"][i]["single_quantity_money"]["amount"] * int(float(payment["itemizations"][i]["quantity"]))
+
+                    if "sin " in category.lower():
+                        discount = calculate_sin_discount(payment["itemizations"][i]["single_quantity_money"]["amount"],int(float(payment["itemizations"][i]["quantity"])),payment["itemizations"][i]['name'],categories)
+                        total["jacks_dcounts"] += discount
 
                     for d in xrange(len(payment["itemizations"][i]["discounts"])):
                         amount += payment["itemizations"][i]["discounts"][d]["applied_money"]["amount"]
