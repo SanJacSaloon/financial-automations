@@ -632,8 +632,8 @@ def calculate_sin_discount(amount, item, categories):
     items = get_items()
     price = 0
     for it in items:
-        for i in xrange(len(payment["itemizations"])):
-            price = it["itemizations"][i]["single_quantity_money"]["amount"]*int(float(payment["itemizations"][i]["quantity"]))
+        for i in xrange(len(it["itemizations"])):
+            price = it["itemizations"][i]["single_quantity_money"]["amount"]*int(float(it["itemizations"][i]["quantity"]))
         print it
         print price
         time.sleep(5)
