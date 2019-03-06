@@ -630,27 +630,29 @@ def get_transactions (date=False, current=False):
 
 def calculate_sin_discount(amount, quantity, item):
     items = get_items()
-    price = 0
+    price = False
     for it in items:
+        if price: continue
         tmp = item.lower().replace('sin ','')
         if 'dom beer' in tmp:
-            tmp = 'bud light'
-        if 'draft' in tmp:
+            tmp = 'budweiser'
+        elif 'draft' in tmp:
             tmp = 'hans pils'
-        if 'imp beer' in tmp:
+        elif 'imp beer' in tmp:
             tmp = 'dos xx'
-        if 'jack' in tmp:
+        elif 'jack' in tmp:
             tmp = 'jack daniels'
-        if 'well' in tmp:
+        elif 'well' in tmp:
             tmp = 'well rum'
-        if 'espolon' in tmp:
+        elif 'espolon' in tmp:
             tmp = 'espolon silver'
         if tmp == it['name'].lower():
             price = it['variations'][0]['price_money']['amount']
         elif tmp in it['name'].lower():
             price = it['variations'][0]['price_money']['amount']
-        else:
-            price = '800'
+        
+    if not price: 
+        price = '800'
     discount = (int(amount)*quantity)-(int(price)*quantity)
     print "*"*20
     print amount
@@ -658,7 +660,6 @@ def calculate_sin_discount(amount, quantity, item):
     print item
     print discount
     print "*"*20
-    time.sleep(1)
     return discount
 
         
