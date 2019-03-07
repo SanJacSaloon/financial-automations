@@ -693,6 +693,8 @@ def sales_totals(payments,drawers,reportd):
     total["jacks_comps"]      = 0
     total["sjs_dcounts"]      = 0
     total["jacks_dcounts"]    = 0
+    total["sjs_spills"]      = 0
+    total["jacks_spills"]    = 0
     total["sjs_total"]        = 0
     total["jacks_total"]      = 0
     total["sjs_credit"]       = 0
@@ -742,7 +744,8 @@ def sales_totals(payments,drawers,reportd):
                         total["sjs_dcounts"] += discount
 
                     for d in xrange(len(payment["itemizations"][i]["discounts"])):
-                        if 'spill' in payment["itemizations"][i]["discounts"][d]['name'].lower(): continue
+                        if 'spill' in payment["itemizations"][i]["discounts"][d]['name'].lower(): 
+                            total["sjs_spills"] += payment["itemizations"][i]["discounts"][d]["applied_money"]["amount"]
                         amount += payment["itemizations"][i]["discounts"][d]["applied_money"]["amount"]
                         total["sjs_comps"] += payment["itemizations"][i]["discounts"][d]["applied_money"]["amount"]
 
@@ -802,7 +805,8 @@ def sales_totals(payments,drawers,reportd):
                         total["jacks_dcounts"] += discount
 
                     for d in xrange(len(payment["itemizations"][i]["discounts"])):
-                        if 'spill' in payment["itemizations"][i]["discounts"][d]['name'].lower(): continue
+                        if 'spill' in payment["itemizations"][i]["discounts"][d]['name'].lower():
+                            total["jacks_spills"] += payment["itemizations"][i]["discounts"][d]["applied_money"]["amount"]
                         amount += payment["itemizations"][i]["discounts"][d]["applied_money"]["amount"]
                         total["jacks_comps"] += payment["itemizations"][i]["discounts"][d]["applied_money"]["amount"]
 
@@ -953,6 +957,8 @@ def fill_db (reportd, total, timeframe):
     d["unknown"]          = total["unknown"]
     d["sjs_comps"]        = total["sjs_comps"]
     d["jacks_comps"]      = total["jacks_comps"]
+    d["sjs_spills"]       = total["sjs_spills"]
+    d["jacks_spills"]     = total["jacks_spills"]
 
     if update:
         d.update()
@@ -1353,6 +1359,7 @@ def report_string (total):
     return_string += "Refunds:           " + format_money(total["sjs_refunds"]) + "\n"
     return_string += "Comps:             " + format_money(total["sjs_comps"]) + "\n"
     return_string += "Discounts:         " + format_money(total["sjs_dcounts"]) + "\n"
+    return_string += "Spills:            " + format_money(total["sjs_spills"]) + "\n"
     return_string += "\n"
     return_string += "Cash In:           " + format_money(total["sjs_cash"])              + "\n"
     return_string += "Paid Out:          " + format_money(total["sjs_paidout"])           + "\n"
@@ -1378,6 +1385,7 @@ def report_string (total):
     return_string += "Refunds:           " + format_money(total["jacks_refunds"]) + "\n"
     return_string += "Comps:             " + format_money(total["jacks_comps"]) + "\n"
     return_string += "Discounts:         " + format_money(total["jacks_dcounts"]) + "\n"
+    return_string += "Spills:            " + format_money(total["jacks_spills"]) + "\n"
     return_string += "\n"
     return_string += "Cash In:           " + format_money(total["jacks_cash"])              + "\n"
     return_string += "Paid Out:          " + format_money(total["jacks_paidout"])           + "\n"
