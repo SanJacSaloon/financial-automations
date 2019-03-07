@@ -1387,7 +1387,11 @@ def report_string (total):
     return_string += "Unknown Device:    " + format_money(total["unknown"])   + "\n"
     return_string += "\n"
     return_string += "\n"
-    return_string += "Discount Percentage: %.02f"%((-1.0*(total["sjs_dcounts"]-total["jacks_dcounts"]-total["sjs_comps"]-total["jacks_comps"])/(total["sjs_total"]+total["jacks_total"]))*100)
+    total_discount = -1.0*(total["sjs_dcounts"]-total["jacks_dcounts"]-total["sjs_comps"]-total["jacks_comps"])
+    print "Total Discount: ",total_discount
+    total_sales = total["sjs_total"]+total["jacks_total"]
+    print "Total Sales: ",total_sales
+    return_string += "Discount Percentage: %.02f"%((total_discount/total_sales)*100)
     return_string += "\n"
     return_string += "\n"
 
