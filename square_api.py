@@ -1441,6 +1441,14 @@ def email_report (email=secrets["general"]["smtp_to"], report=False):
     except:
         log += "\n%s: Failed to send report" % datetime.datetime.today().strftime("%Y-%m-%d:%H:%M")
 
+########################################################################################################################
+def rerun_numbers(starting_date):
+    report_date = starting_date
+    while datetime.datetime.strptime(report_date, "%Y-%m-%d") <= datetime.datetime.today():
+        sales = daily_sales(datetime.datetime.strptime(report_date, "%Y-%m-%d"))
+        google_api.fill_sales(datetime.datetime.strptime(report_date, "%Y-%m-%d"), sales[0])
+        report_date = datetime.datetime.strptime(report_date, "%Y-%m-%d") + datetime.timedelta(days=1)
+        report_date = datetime.datetime.strftime(report_date, "%Y-%m-%d")
 
 ########################################################################################################################
 class Daily (dict):
