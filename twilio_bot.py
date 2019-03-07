@@ -119,7 +119,7 @@ def get_week ():
         sales = square_api.sales_totals(payments, drawers, "")
         total_discount = -1.0*(sales["sjs_dcounts"]+sales["jacks_dcounts"]+sales["sjs_comps"]+sales["jacks_comps"])
         total_sales = sales["sjs_total"]+sales["jacks_total"]
-        try:discount_percentage = "%.02f%"%((total_discount/total_sales)*100)
+        try:discount_percentage = "%.02f"%((total_discount/total_sales)*100)
         except:discount_percentage = "Error"
     
         full_report = "WTD SALES:\n"
@@ -159,7 +159,6 @@ def inbound_sms():
         send_sms(get_sales(),number)
 
     elif "wtd" in inbound_message.lower():
-        response.message("Retrieving WTD Sales")
         send_sms(get_week(),number)
 
     elif "mtd" in inbound_message.lower():
