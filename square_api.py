@@ -26,7 +26,7 @@ import sys
 import google_api
 
 # enable testing
-testing = True
+testing = False
 
 # Uses the locale to format currency amounts correctly.
 # NOTE: this took a touch of trial and error.
@@ -1387,18 +1387,11 @@ def report_string (total):
     return_string += "Unknown Device:    " + format_money(total["unknown"])   + "\n"
     return_string += "\n"
     return_string += "\n"
-    print total["sjs_dcounts"]
-    print total["jacks_dcounts"]
-    print total["sjs_comps"]
-    print total["jacks_comps"]
     total_discount = -1.0*(total["sjs_dcounts"]+total["jacks_dcounts"]+total["sjs_comps"]+total["jacks_comps"])
-    print "Total Discount: ",total_discount
     total_sales = total["sjs_total"]+total["jacks_total"]
-    print "Total Sales: ",total_sales
-    discount_percentage = "%.02f"%((total_discount/total_sales)*100)
-    print "Discount Percentage: %s"%discount_percentage
-    time.sleep(5)
-    return_string += "Discount Percentage: %.02f"%((total_discount/total_sales)*100)
+    try:discount_percentage = "%.02f"%((total_discount/total_sales)*100)
+    except:discount_percentage = "Error"
+    return_string += "Discount Percentage: %s"%discount_percentage
     return_string += "\n"
     return_string += "\n"
 
