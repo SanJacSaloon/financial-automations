@@ -742,6 +742,7 @@ def sales_totals(payments,drawers,reportd):
                         total["sjs_dcounts"] += discount
 
                     for d in xrange(len(payment["itemizations"][i]["discounts"])):
+                        if 'spill' in payment["itemizations"][i]["discounts"][d]['name'].lower(): continue
                         amount += payment["itemizations"][i]["discounts"][d]["applied_money"]["amount"]
                         total["sjs_comps"] += payment["itemizations"][i]["discounts"][d]["applied_money"]["amount"]
 
@@ -801,6 +802,7 @@ def sales_totals(payments,drawers,reportd):
                         total["jacks_dcounts"] += discount
 
                     for d in xrange(len(payment["itemizations"][i]["discounts"])):
+                        if 'spill' in payment["itemizations"][i]["discounts"][d]['name'].lower(): continue
                         amount += payment["itemizations"][i]["discounts"][d]["applied_money"]["amount"]
                         total["jacks_comps"] += payment["itemizations"][i]["discounts"][d]["applied_money"]["amount"]
 
