@@ -26,7 +26,7 @@ import sys
 import google_api
 
 # enable testing
-testing = False
+testing = True
 
 # Uses the locale to format currency amounts correctly.
 # NOTE: this took a touch of trial and error.
@@ -689,6 +689,8 @@ def sales_totals(payments,drawers,reportd):
     total["jacks_alcohol"]    = 0
     total["sjs_nonalc"]       = 0
     total["jacks_nonalc"]     = 0
+    total["sjs_comps"]        = 0
+    total["jacks_comps"]      = 0
     total["sjs_dcounts"]      = 0
     total["jacks_dcounts"]    = 0
     total["sjs_total"]        = 0
@@ -741,7 +743,7 @@ def sales_totals(payments,drawers,reportd):
 
                     for d in xrange(len(payment["itemizations"][i]["discounts"])):
                         amount += payment["itemizations"][i]["discounts"][d]["applied_money"]["amount"]
-                        total["sjs_dcounts"] += payment["itemizations"][i]["discounts"][d]["applied_money"]["amount"]
+                        total["sjs_comps"] += payment["itemizations"][i]["discounts"][d]["applied_money"]["amount"]
 
                     if category not in categories:
                         categories.append(category)
@@ -800,7 +802,7 @@ def sales_totals(payments,drawers,reportd):
 
                     for d in xrange(len(payment["itemizations"][i]["discounts"])):
                         amount += payment["itemizations"][i]["discounts"][d]["applied_money"]["amount"]
-                        total["jacks_dcounts"] += payment["itemizations"][i]["discounts"][d]["applied_money"]["amount"]
+                        total["jacks_comps"] += payment["itemizations"][i]["discounts"][d]["applied_money"]["amount"]
 
                     if category not in categories:
                         categories.append(category)
@@ -947,6 +949,8 @@ def fill_db (reportd, total, timeframe):
     d["jacks_tip_credit"] = total["jacks_tip_credit"]
     d["sjs_tip_credit"]   = total["sjs_tip_credit"]
     d["unknown"]          = total["unknown"]
+    d["sjs_comps"]        = total["sjs_comps"]
+    d["jacks_comps"]      = total["jacks_comps"]
 
     if update:
         d.update()
@@ -1186,7 +1190,7 @@ def monthly_sales (date, recursive=False):
         full_report += "\n"
         full_report += "    =TAX INFO=\n"
         full_report += "--MIXED BEVERAGE GROSS RECEIPTS--\n"
-        full_report += "Complimentary Drinks:" + format_money((monthly_total["sjs_dcounts"]+monthly_total["jacks_dcounts"])*.87) + "\n"
+        full_report += "Complimentary Drinks:" + format_money((monthly_total["sjs_comps"]+monthly_total["jacks_comps"])*.87) + "\n"
         full_report += "Gross Liquor:        " + format_money((monthly_total["sjs_liquor"]+monthly_total["jacks_liquor"])*.87) + "\n"
         full_report += "Gross Wine:          " + format_money((monthly_total["sjs_wine"]+monthly_total["jacks_wine"])*.87) + "\n"
         full_report += "Gross Beer:          " + format_money((monthly_total["sjs_beer"]+monthly_total["jacks_beer"])*.87) + "\n"
@@ -1197,7 +1201,7 @@ def monthly_sales (date, recursive=False):
         full_report += "--SALES AND USE--\n"
         full_report += "Total Sales:         " + format_money((non_alc*.9175)+(total_alc*.87)+other_sales) + "\n"
         full_report += "Taxable Sales:       " + format_money(non_alc*.9175) + "\n"
-        full_report += "Taxable Purchases:   " + format_money(((monthly_total["sjs_dcounts"]+monthly_total["jacks_dcounts"])*.87)*.2) + "\n"
+        full_report += "Taxable Purchases:   " + format_money(((monthly_total["sjs_comps"]+monthly_total["jacks_comps"])*.87)*.2) + "\n"
 
     else:
         return report_string(monthly_total)
@@ -1345,6 +1349,7 @@ def report_string (total):
     return_string += "Processing Fees:   " + format_money(total["sjs_credit"] * .025) + "\n"
     return_string += "\n"
     return_string += "Refunds:           " + format_money(total["sjs_refunds"]) + "\n"
+    return_string += "Comps:             " + format_money(total["sjs_comps"]) + "\n"
     return_string += "Discounts:         " + format_money(total["sjs_dcounts"]) + "\n"
     return_string += "\n"
     return_string += "Cash In:           " + format_money(total["sjs_cash"])              + "\n"
@@ -1369,6 +1374,7 @@ def report_string (total):
     return_string += "Processing Fees:   " + format_money(total["jacks_credit"]   * .025) + "\n"
     return_string += "\n"
     return_string += "Refunds:           " + format_money(total["jacks_refunds"]) + "\n"
+    return_string += "Comps:             " + format_money(total["jacks_comps"]) + "\n"
     return_string += "Discounts:         " + format_money(total["jacks_dcounts"]) + "\n"
     return_string += "\n"
     return_string += "Cash In:           " + format_money(total["jacks_cash"])              + "\n"
@@ -1379,7 +1385,7 @@ def report_string (total):
     return_string += "Unknown Device:    " + format_money(total["unknown"])   + "\n"
     return_string += "\n"
     return_string += "\n"
-    return_string += "Discount Percentage: %.02f"%((-1.0*(total["sjs_dcounts"]-total["jacks_dcounts"])/(total["sjs_total"]+total["jacks_total"]))*100)
+    return_string += "Discount Percentage: %.02f"%((-1.0*(total["sjs_dcounts"]-total["jacks_dcounts"]-total["sjs_comps"]-total["jacks_comps"])/(total["sjs_total"]+total["jacks_total"]))*100)
     return_string += "\n"
     return_string += "\n"
 
