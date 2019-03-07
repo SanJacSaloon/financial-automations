@@ -117,11 +117,16 @@ def get_week ():
             drawers = []
 
         sales = square_api.sales_totals(payments, drawers, "")
-
+        total_discount = -1.0*(sales["sjs_dcounts"]+sales["jacks_dcounts"]+sales["sjs_comps"]+sales["jacks_comps"])
+        total_sales = sales["sjs_total"]+sales["jacks_total"]
+        try:discount_percentage = "%.02f%"%((total_discount/total_sales)*100)
+        except:discount_percentage = "Error"
+    
         full_report = "WTD SALES:\n"
         full_report += "San Jac:           " + format_money(sales["sjs_total"])   + "\n"
         full_report += "Jack's:            " + format_money(sales["jacks_total"]) + "\n"
         full_report += "Total:             " + format_money(sales["jacks_total"]  + sales["sjs_total"]) + "\n"
+        full_report += "Discount Percentage: %s"%discount_percentage
 
         return full_report
 
@@ -154,7 +159,8 @@ def inbound_sms():
         send_sms(get_sales(),number)
 
     elif "wtd" in inbound_message.lower():
-        response.message(get_week())
+        response.message("Retrieving WTD Sales")
+        send_sms(get_week(),number)
 
     elif "mtd" in inbound_message.lower():
         response.message(return_month())
