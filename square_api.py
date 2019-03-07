@@ -1391,12 +1391,13 @@ def report_string (total):
     print total["jacks_dcounts"]
     print total["sjs_comps"]
     print total["jacks_comps"]
-    total_discount = -1.0*(total["sjs_dcounts"]-total["jacks_dcounts"]-total["sjs_comps"]-total["jacks_comps"])
+    total_discount = -1.0*(total["sjs_dcounts"]+total["jacks_dcounts"]+total["sjs_comps"]+total["jacks_comps"])
     print "Total Discount: ",total_discount
     total_sales = total["sjs_total"]+total["jacks_total"]
     print "Total Sales: ",total_sales
     discount_percentage = "%.02f"%((total_discount/total_sales)*100)
     print "Discount Percentage: %s"%discount_percentage
+    time.sleep(5)
     return_string += "Discount Percentage: %.02f"%((total_discount/total_sales)*100)
     return_string += "\n"
     return_string += "\n"
@@ -1454,7 +1455,7 @@ def email_report (email=secrets["general"]["smtp_to"], report=False):
 ########################################################################################################################
 def rerun_numbers(starting_date):
     report_date = starting_date
-    while datetime.datetime.strptime(report_date, "%Y-%m-%d") < datetime.datetime.today():
+    while datetime.datetime.strptime(report_date, "%Y-%m-%d") < datetime.datetime.today("%Y-%m-%d"):
         sales = daily_sales(datetime.datetime.strptime(report_date, "%Y-%m-%d"))
         google_api.fill_sales(datetime.datetime.strptime(report_date, "%Y-%m-%d"), sales[0])
         report_date = datetime.datetime.strptime(report_date, "%Y-%m-%d") + datetime.timedelta(days=1)
