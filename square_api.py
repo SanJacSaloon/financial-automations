@@ -177,7 +177,7 @@ def update_item_price (amount):
             continue
         if i.id == 'QSBZSC5VJA2C2ASQ5TQVJXO5':
             print "Skipping",item_data.name 
-            items.pop(count)
+            items.remove(i)
             continue
         if item_data.product_type.lower() != "regular":
             print "Skipping",item_data.name
