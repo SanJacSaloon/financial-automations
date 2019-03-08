@@ -70,6 +70,8 @@ def update_item_price (amount):
     """
     This code runs to update the prices of each item by the given amount (100 increases by $1 -100 lowers by $1
     """
+    idempotency_key = 0
+    pickle.dump(idempotency_key, open("/opt/sjs/financial-automations/idempotency_key.p", "wb"))
 
     save_item_prices("Pre-Price-Update_%s" % datetime.datetime.today().strftime("%Y-%m-%d"))
     items = get_items()
