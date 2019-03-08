@@ -247,8 +247,8 @@ def save_item_prices (name):
         variation_id = ""
 
         item_data = i.item_data
-        name = i.item_data.name
-
+        itemname = i.item_data.name
+        print itemname
         #print item.to_dict()
         #var = CatalogItemVariation(item.item_variation_data())
         var = item_data.variations
@@ -264,7 +264,7 @@ def save_item_prices (name):
             "price"        : price,
             "variation_id" : variation_id,
             "item_id"      : i.id,
-            "item_name"    : name,
+            "item_name"    : itemname,
         }
 
     pickle.dump(save_items, open("/opt/sjs/financial-automations/%s.p" % name, "wb"))
