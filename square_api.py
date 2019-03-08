@@ -174,7 +174,10 @@ def update_item_price (amount):
                 continue
         except:
             pass
+        print type(i)
+        print i.object.item_data.name
         
+        print i.item_data.name
         item_data = i.item_data
 
         #print item.to_dict()
