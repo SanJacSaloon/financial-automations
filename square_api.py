@@ -188,6 +188,7 @@ def update_item_price (amount):
                     name= n['variations']['name'],
                     pricing_type='FIXED_PRICING',
                     price_money=Money(int(n['variations']['price_money']['amount'])+amount, 'USD')
+                    )
                 )
             )
 
@@ -203,7 +204,7 @@ def update_item_price (amount):
             )
         )
         break
-        
+
     body = BatchUpsertCatalogObjectsRequest(
         idempotency_key=idempotency_key,
         batches=[CatalogObjectBatch(objects)]
