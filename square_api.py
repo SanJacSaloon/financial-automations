@@ -70,8 +70,67 @@ def update_item_price (amount):
     """
     This code runs to update the prices of each item by the given amount (100 increases by $1 -100 lowers by $1
     """
-    idempotency_key = 0
-    pickle.dump(idempotency_key, open("/opt/sjs/financial-automations/idempotency_key.p", "wb"))
+    """
+    ITEM OBJECT
+    {
+        u'category': 
+            {
+                u'id': u'3KH3JCBYYOFWEIFG7VUVHAG4', 
+                u'name': u'Vodka'
+             }, 
+        u'name': u'Deep Eddy Lemon', 
+        u'variations': [
+            {
+                u'ordinal': 1, 
+                u'name': u'', 
+                u'pricing_type': u'FIXED_PRICING', 
+                u'item_id': u'BTSIJNC7ZKLZ53OPJYOMVRDN', 
+                u'price_money': 
+                    {
+                        u'amount': 800, 
+                        u'currency_code': u'USD'
+                    }, 
+                u'track_inventory': True, 
+                u'id': u'LTNZXXUDBVJM4XSPESS2BLL6', 
+                u'inventory_alert_type': u'NONE'
+            }
+            ], 
+        u'available_for_pickup': False, 
+        u'available_online': False, 
+        u'visibility': u'PRIVATE', 
+        u'fees': [
+            {
+                u'inclusion_type': u'INCLUSIVE', 
+                u'name': u'Sales Tax', 
+                u'applies_to_custom_amounts': True, 
+                u'adjustment_type': u'TAX', 
+                u'enabled': True, 
+                u'rate': u'0.0825', 
+                u'calculation_phase': u'FEE_SUBTOTAL_PHASE', 
+                u'type': u'US_SALES_TAX', 
+                u'id': u'3YQ6JIF447RW6L2E2J7S6RR7'
+            }, 
+            {
+                u'inclusion_type': u'INCLUSIVE', 
+                u'name': u'Alcohol Sales Tax', 
+                u'applies_to_custom_amounts': True, 
+                u'adjustment_type': u'TAX', 
+                u'enabled': True, 
+                u'rate': u'0.067', 
+                u'calculation_phase': u'FEE_SUBTOTAL_PHASE', 
+                u'type': u'US_SALES_TAX', 
+                u'id': u'Q7QKJC4RLTBAL3IHKDROESOM'
+            }], 
+        u'category_id': u'3KH3JCBYYOFWEIFG7VUVHAG4', 
+        u'type': u'NORMAL', 
+        u'id': u'BTSIJNC7ZKLZ53OPJYOMVRDN', 
+        u'master_image': 
+            {
+                u'url': u'https://images-production-f.squarecdn.com/kIiDFWrUgN5kARrjZRe9zXps2X8=/https://square-production.s3.amazonaws.com/files/bd9e5c3ce5512cf5df1c9a561d037fea18967c3c/original.jpeg', 
+                u'id': u'778289B7-724B-406E-BD97-0269C287A1F1'
+            }
+    }
+    """
 
     save_item_prices("Pre-Price-Update_%s" % datetime.datetime.today().strftime("%Y-%m-%d"))
     items = get_items()
@@ -82,36 +141,56 @@ def update_item_price (amount):
     pickle.dump(idempotency_key, open("/opt/sjs/financial-automations/idempotency_key.p", "wb"))
     request = {}
     request["idempotency_key"] = "%s"%idempotency_key
-    batches = [{}]
-    objects = [{}]
+    
+    objects = []
 
-
+    items = items[0]
     for i in items:
         print i
-        time.sleep(10)
+        
         try:
             if "retail" in i["category"]["name"].lower():
                 continue
         except:
             pass
-
+        
+        object = {}
+        object["type"] = "ITEM"
+        object["id"] = i["id"]
+        object["present_at_all_locations"] = true
+        variations = []
         price = 0
 
         for n in i["variations"]:
-            try:
-                price = int(n["price_money"]["amount"]+amount)
-            except:
-                print "-" * 20
-                print i
-                print "-" * 20
-                continue
+            variations.append(
+            {
+                u'ordinal': n['ordinal'], 
+                u'name': n['name'], 
+                u'pricing_type': n['pricing_type'], 
+                u'item_id': n['item_id'], 
+                u'price_money': 
+                    {
+                        u'amount': int(n['price_money']['amount'])+amount, 
+                        u'currency_code': u'USD'
+                    }, 
+                u'track_inventory': True, 
+                u'id': n['id'], 
+                u'inventory_alert_type': u'NONE'
+            }
+            ) 
+            
+        object["variations"] = variations
 
-            update_variation(i["id"], n["id"], "{'price_money':{'amount':%s,'currency_code': 'USD'}}" % price)
+    batches = [{"objects":objects}]
 
-        count += 1
+    #update_variation(i["id"], n["id"], "{'price_money':{'amount':%s,'currency_code': 'USD'}}" % price)
+    response = update_variation(batches)
+    print response
+    return response
+
 
 ########################################################################################################################
-def update_variation (item_id, variation_id, variation_updates):
+def update_variation (variation_updates):
     """
     @LOGAN? what's this for?
     """
@@ -125,16 +204,16 @@ def update_variation (item_id, variation_id, variation_updates):
 
     response      = connection.getresponse()
     response_body = json.loads(response.read())
-
+    resp = ""
     if response.status == 200:
         connection.close()
         return response_body
 
     else:
-        print "Item update failed"
-        print json.dumps(response_body, sort_keys=True, indent=2, separators=(",", ": "))
+        resp += "Item update failed\n"
+        resp += json.dumps(response_body, sort_keys=True, indent=2, separators=(",", ": "))
         connection.close()
-        return None
+        return resp
 
 ########################################################################################################################
 def save_item_prices (name):
