@@ -183,8 +183,10 @@ def update_item_price (amount):
         for v in var:
             variation_data = v.item_variation_data
             price_money = variation_data.price_money
-            print price_money
-            price_money.amount = int(price_money.amount)+amount
+            try:
+                price_money.amount = int(price_money.amount)+amount
+            except:
+                pass
         #objects.append(item)
 
     body = BatchUpsertCatalogObjectsRequest(
