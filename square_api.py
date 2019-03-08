@@ -186,13 +186,10 @@ def update_item_price (amount):
                 continue
         except:
             pass
-        #item = CatalogObject(api_instance.retrieve_catalog_object(object_id=i['id']))
-        item = api_instance.retrieve_catalog_object(object_id=i['id'])
-        print type(item)
-        item.object()
-        #print item.to_dict()
-        #var = CatalogItemVariation(item.item_variation_data())
-        var = item.item_variation_data()
+        item = CatalogObject(api_instance.retrieve_catalog_object(object_id=i['id']))
+        print item.to_dict()
+        print item.swagger_types
+        var = CatalogItemVariation(item.swagger_types['item_variation_data'])
         print var
         mon = Money(var.price_money())
         print mon
