@@ -21,6 +21,20 @@ import locale
 import json
 import time
 import sys
+import squareconnect
+from squareconnect.rest import ApiException
+from squareconnect.apis.locations_api import LocationsApi
+
+# create an instance of the Location API class
+api_instance = LocationsApi()
+# setup authorization
+api_instance.api_client.configuration.access_token = secrets["square"]["access_token"]
+try:
+    # ListLocations
+    api_response = api_instance.list_locations()
+    print (api_response.locations)
+except ApiException as e:
+    print ('Exception when calling LocationApi->list_locations: %s\n' % e)
 
 # batteries not included.
 import google_api
@@ -185,7 +199,7 @@ def update_item_price (amount):
     batches = [{"objects":objects}]
 
     #update_variation(i["id"], n["id"], "{'price_money':{'amount':%s,'currency_code': 'USD'}}" % price)
-    response = update_variation(objects)
+    response = update_variation(batches)
     print response
     return response
 
