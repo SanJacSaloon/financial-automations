@@ -230,9 +230,12 @@ def update_variation (variation_updates):
     prepared = req.prepare()
     pretty_print_POST(prepared)
 
-    connection.request("POST", url, request_body, request_headers)
+    req = requests.post("http://connect.squareup.com/v2/catalog/batch-upsert", data=json.dumps(request_body), headers=request_headers)
+    response = req.text
+    print response
+    #connection.request("POST", url, request_body, request_headers)
 
-    response      = connection.getresponse()
+    #response      = connection.getresponse()
     response_body = json.loads(response.read())
     resp = ""
     if response.status == 200:
