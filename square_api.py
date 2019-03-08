@@ -185,7 +185,7 @@ def update_item_price (amount):
     batches = [{"objects":objects}]
 
     #update_variation(i["id"], n["id"], "{'price_money':{'amount':%s,'currency_code': 'USD'}}" % price)
-    response = update_variation(batches)
+    response = update_variation(objects)
     print response
     return response
 
