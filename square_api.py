@@ -161,7 +161,7 @@ def update_item_price (amount):
     api_instance = CatalogApi()
     api_instance.api_client.configuration.access_token = secrets["square"]["access_token"]
 
-    save_item_prices("Pre-Price-Update_%s" % datetime.datetime.today().strftime("%Y-%m-%d"))
+    #save_item_prices("Pre-Price-Update_%s" % datetime.datetime.today().strftime("%Y-%m-%d"))
     items = get_items()
 
     idempotency_key = int(pickle.load(open("/opt/sjs/financial-automations/idempotency_key.p", "rb")))
