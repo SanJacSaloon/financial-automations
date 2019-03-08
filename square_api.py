@@ -157,19 +157,31 @@ def update_item_price (amount):
             }
     }
     """
+    api_instance = CatalogApi()
+    api_instance.api_client.configuration.access_token = secrets["square"]["access_token"]
 
     save_item_prices("Pre-Price-Update_%s" % datetime.datetime.today().strftime("%Y-%m-%d"))
     items = get_items()
     count = 0
+    ids = []
+    for i in items:
+        try:
+            if "retail" in i["category"]["name"].lower():
+                continue
+        except:
+            pass
+        ids.append(i['id'])
+    objects = api_instance.batch_retrieve_catalog_objects(BatchRetrieveCatalogObjectsRequest(object_ids=ids,include_related_objects=False))
+
+
 
     idempotency_key = int(pickle.load(open("/opt/sjs/financial-automations/idempotency_key.p", "rb")))
     idempotency_key += 1
     pickle.dump(idempotency_key, open("/opt/sjs/financial-automations/idempotency_key.p", "wb"))
-    request = {}
-    request["idempotency_key"] = "%s"%idempotency_key
     
-    objects = []
-
+    for o in objects:
+        print o
+    '''
     for i in items:
         try:
             if "retail" in i["category"]["name"].lower():
@@ -210,9 +222,11 @@ def update_item_price (amount):
         idempotency_key=str(idempotency_key),
         batches=[CatalogObjectBatch(objects)]
     )
-    response = update_variation(body)
+    
+    response = api_instance.batch_upsert_catalog_objects(variation_updates)
+    print response
     return response
-
+    '''
 
 ########################################################################################################################
 def update_variation (variation_updates):
@@ -221,10 +235,7 @@ def update_variation (variation_updates):
     """
 
     global log
-    api_instance = CatalogApi()
-    api_instance.api_client.configuration.access_token = secrets["square"]["access_token"]
-    response = api_instance.batch_upsert_catalog_objects(variation_updates)
-    print response
+    
     '''
     connection   = httplib.HTTPSConnection("connect.squareup.com")
     request_body = variation_updates
