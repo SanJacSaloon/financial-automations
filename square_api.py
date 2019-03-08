@@ -144,7 +144,6 @@ def update_item_price (amount):
     
     objects = []
 
-    items = items[0]
     for i in items:
         print i
         
@@ -180,6 +179,9 @@ def update_item_price (amount):
             ) 
             
         object["variations"] = variations
+        print object
+        objects.append(object)
+        time.sleep(10)
 
     batches = [{"objects":objects}]
 
