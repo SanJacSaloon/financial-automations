@@ -167,7 +167,7 @@ def update_item_price (amount):
     idempotency_key = int(pickle.load(open("/opt/sjs/financial-automations/idempotency_key.p", "rb")))
     idempotency_key += 1
     pickle.dump(idempotency_key, open("/opt/sjs/financial-automations/idempotency_key.p", "wb"))
-
+    count = 0
     for i in items:
         
         item_data = i.item_data
@@ -186,9 +186,9 @@ def update_item_price (amount):
             price_money = variation_data.price_money
             try:
                 price_money.amount = int(price_money.amount)+amount
+                count += 1
             except:
-                print item_data.name
-                print price_money
+                pass
         #objects.append(item)
 
     body = BatchUpsertCatalogObjectsRequest(
@@ -196,6 +196,8 @@ def update_item_price (amount):
         batches=[CatalogObjectBatch(items)]
     )
     print "Going"
+    print len(items)
+    print count
     time.sleep(20)
     response = api_instance.batch_upsert_catalog_objects(body)
     print "Successfully updated prices"
