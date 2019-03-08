@@ -145,8 +145,6 @@ def update_item_price (amount):
     objects = []
 
     for i in items:
-        print i
-        
         try:
             if "retail" in i["category"]["name"].lower():
                 continue
@@ -188,7 +186,6 @@ def update_item_price (amount):
 
     #update_variation(i["id"], n["id"], "{'price_money':{'amount':%s,'currency_code': 'USD'}}" % price)
     response = update_variation(batches)
-    print response
     return response
 
 
@@ -203,6 +200,7 @@ def update_variation (variation_updates):
     request_body = str(variation_updates)
     #url          = "/v1/" + location_ids[0] + "/items/" + item_id + "/variations/" + variation_id
     url          = "/v2/catalog/batch-upsert"
+    print request_body
     connection.request("POST", url, request_body, request_headers)
 
     response      = connection.getresponse()
