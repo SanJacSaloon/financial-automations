@@ -221,8 +221,7 @@ def update_variation (variation_updates):
     #url          = "/v1/" + location_ids[0] + "/items/" + item_id + "/variations/" + variation_id
     url          = "/v2/catalog/batch-upsert"
     print request_body
-    request_headers = 
-    {
+    request_headers = {
         "Authorization" : "Bearer " + access_token,
         "Accept"        : "application/json",
         "Content-Type"  : "application/json",
