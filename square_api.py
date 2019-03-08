@@ -163,18 +163,6 @@ def update_item_price (amount):
 
     save_item_prices("Pre-Price-Update_%s" % datetime.datetime.today().strftime("%Y-%m-%d"))
     items = get_items()
-    '''
-    ids = []
-    for i in items:
-        try:
-            if "retail" in i["category"]["name"].lower():
-                continue
-        except:
-            pass
-        ids.append(i['id'])
-    objects = api_instance.batch_retrieve_catalog_objects(BatchRetrieveCatalogObjectsRequest(object_ids=ids,include_related_objects=False))
-    print objects
-    '''
 
     idempotency_key = int(pickle.load(open("/opt/sjs/financial-automations/idempotency_key.p", "rb")))
     idempotency_key += 1
@@ -200,41 +188,7 @@ def update_item_price (amount):
             price_money = variation_data.price_money
             price_money.amount = int(price_money.amount)+amount
         objects.append(item)
-        break
-        '''
 
-        mon = Money(var.price_money())
-        print mon
-        print item['variations'][0]["item_variation_data"]['price_money']['amount']
-        variations = []
-        
-        for n in i["variations"]:
-            variations.append(CatalogObject(
-                type='ITEM_VARIATION',
-                id= n['id'],
-                present_at_all_locations=True,
-                item_variation_data=CatalogItemVariation(
-                    item_id= n['item_id'],
-                    name= n['name'],
-                    pricing_type='FIXED_PRICING',
-                    price_money=Money(int(n['price_money']['amount'])+amount, 'USD')
-                    )
-                )
-            )
-
-        objects.append(CatalogObject(
-            type = "ITEM",
-            id = i["id"],
-            present_at_all_locations = True,
-            item_data=CatalogItem(
-                name=i['name'],
-                category_id=i['category_id'],
-                variations=variations
-                )
-            )
-        )
-        break
-        '''
     body = BatchUpsertCatalogObjectsRequest(
         idempotency_key=str(idempotency_key),
         batches=[CatalogObjectBatch(objects)]
