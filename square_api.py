@@ -176,9 +176,9 @@ def update_item_price (amount):
             pass
         
         item_data = i.item_data
-        if 'logo tee' in item_data.name.lower():
-            print i
-            time.sleep(20)
+        if item_data.category_id == 'HWXUT7NC7CMYTQML76MIXU7F':
+            print item_data.name
+            continue
         if item_data.product_type.lower() != "regular": 
             continue
         #print item.to_dict()
