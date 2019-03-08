@@ -1232,15 +1232,13 @@ def yearly_sales (date, recursive=False):
         sdate        = date
         yearly_total = {}
         full_report  = ""
-        print date
+
         while int(date.strftime("%m")) < datetime.datetime.today().strftime("%m"):
 
             if date.strftime("%Y-%m-%d") > date.today().strftime("%Y-%m-%d"):
                 break
 
             money = get_row("monthly",date.strftime("%Y-%m-%d"))
-            print date
-            print money
 
             if not money:
                 populate_database(date)
