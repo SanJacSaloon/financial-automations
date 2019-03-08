@@ -167,7 +167,7 @@ def update_item_price (amount):
     idempotency_key = int(pickle.load(open("/opt/sjs/financial-automations/idempotency_key.p", "rb")))
     idempotency_key += 1
     pickle.dump(idempotency_key, open("/opt/sjs/financial-automations/idempotency_key.p", "wb"))
-    objects = []
+    
     for i in items:
         try:
             if "retail" in i["category"]["name"].lower():
@@ -437,8 +437,8 @@ def get_items ():
         ids.append(i["id"])
     objects = api_instance.batch_retrieve_catalog_objects(BatchRetrieveCatalogObjectsRequest(object_ids=ids,include_related_objects=False))
     objects = objects.objects
-    print objects
-    return 
+    
+    return objects
 
 
 ########################################################################################################################
