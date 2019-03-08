@@ -240,7 +240,7 @@ def update_item_price (amount):
         batches=[CatalogObjectBatch(objects)]
     )
     
-    response = api_instance.batch_upsert_catalog_objects(variation_updates)
+    response = api_instance.batch_upsert_catalog_objects(body)
     print response
     return response
     
