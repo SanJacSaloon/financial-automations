@@ -195,9 +195,10 @@ def update_item_price (amount):
         idempotency_key=str(idempotency_key),
         batches=[CatalogObjectBatch(items)]
     )
-    
+    print "Going"
+    time.sleep(20)
     response = api_instance.batch_upsert_catalog_objects(body)
-    print response
+    print "Successfully updated prices"
     return response
     
 
