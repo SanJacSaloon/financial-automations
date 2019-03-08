@@ -175,8 +175,11 @@ def update_item_price (amount):
         if item_data.category_id == 'HWXUT7NC7CMYTQML76MIXU7F':
             print item_data.name
             continue
-
-        if item_data.product_type.lower() != "regular": 
+        if i.id == 'QSBZSC5VJA2C2ASQ5TQVJXO5':
+            print item_data.name 
+            continue
+        if item_data.product_type.lower() != "regular":
+            print item_data.name
             continue
 
         #print item.to_dict()
@@ -196,10 +199,7 @@ def update_item_price (amount):
         idempotency_key=str(idempotency_key),
         batches=[CatalogObjectBatch(items)]
     )
-    print "Going"
-    print len(items)
-    print count
-    time.sleep(20)
+
     response = api_instance.batch_upsert_catalog_objects(body)
     print "Successfully updated prices"
     return response
