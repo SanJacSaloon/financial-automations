@@ -184,10 +184,10 @@ def update_item_price (amount):
                 id= n['id'],
                 present_at_all_locations=True,
                 item_variation_data=CatalogItemVariation(
-                    item_id= n['variations']['item_id'],
-                    name= n['variations']['name'],
+                    item_id= n['item_id'],
+                    name= n['name'],
                     pricing_type='FIXED_PRICING',
-                    price_money=Money(int(n['variations']['price_money']['amount'])+amount, 'USD')
+                    price_money=Money(int(n['price_money']['amount'])+amount, 'USD')
                     )
                 )
             )
