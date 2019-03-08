@@ -257,14 +257,14 @@ def save_item_prices (name):
             price_money = variation_data.price_money
             price = price_money.amount
 
-            variation_id = variation_data["id"]
+            variation_id = v.id
 
         save_items[item["id"]] = \
         {
             "price"        : price,
             "variation_id" : variation_id,
-            "item_id"      : item["id"],
-            "item_name"    : item["name"],
+            "item_id"      : item.id,
+            "item_name"    : item_data.name,
         }
 
     pickle.dump(save_items, open("/opt/sjs/financial-automations/%s.p" % name, "wb"))
