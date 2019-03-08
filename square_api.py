@@ -32,6 +32,7 @@ from squareconnect.models.catalog_item import CatalogItem
 from squareconnect.models.catalog_item_variation import CatalogItemVariation
 from squareconnect.models.money import Money
 from squareconnect.models.batch_upsert_catalog_objects_request import BatchUpsertCatalogObjectsRequest
+from squareconnect.models.batch_retrieve_catalog_objects_request import BatchRetrieveCatalogObjectsRequest
 
 
 # batteries not included.
