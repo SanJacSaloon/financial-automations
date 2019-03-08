@@ -189,6 +189,26 @@ def update_item_price (amount):
     print response
     return response
 
+import requests
+
+def pretty_print_POST(req):
+    """
+    At this point it is completely built and ready
+    to be fired; it is "prepared".
+
+    However pay attention at the formatting used in 
+    this function because it is programmed to be pretty 
+    printed and may differ from the actual request.
+    """
+    print('{}\n{}\n{}\n\n{}'.format(
+        '-----------START-----------',
+        req.method + ' ' + req.url,
+        '\n'.join('{}: {}'.format(k, v) for k, v in req.headers.items()),
+        req.body,
+    ))
+
+
+
 ########################################################################################################################
 def update_variation (variation_updates):
     """
@@ -201,8 +221,17 @@ def update_variation (variation_updates):
     #url          = "/v1/" + location_ids[0] + "/items/" + item_id + "/variations/" + variation_id
     url          = "/v2/catalog/batch-upsert"
     print request_body
+    request_headers = 
+    {
+        "Authorization" : "Bearer " + access_token,
+        "Accept"        : "application/json",
+        "Content-Type"  : "application/json",
+    }
+    req = requests.Request("POST", "http://connect.squareup.com/v2/catalog/batch-upsert", request_body, request_headers)
+    prepared = req.prepare()
+    pretty_print_POST(prepared)
 
-    print connection.request("POST", url, request_body, request_headers)
+    connection.request("POST", url, request_body, request_headers)
 
     response      = connection.getresponse()
     response_body = json.loads(response.read())
