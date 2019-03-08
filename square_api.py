@@ -163,7 +163,7 @@ def update_item_price (amount):
 
     save_item_prices("Pre-Price-Update_%s" % datetime.datetime.today().strftime("%Y-%m-%d"))
     items = get_items()
-    count = 0
+    '''
     ids = []
     for i in items:
         try:
@@ -174,22 +174,22 @@ def update_item_price (amount):
         ids.append(i['id'])
     objects = api_instance.batch_retrieve_catalog_objects(BatchRetrieveCatalogObjectsRequest(object_ids=ids,include_related_objects=False))
     print objects
-
+    '''
 
     idempotency_key = int(pickle.load(open("/opt/sjs/financial-automations/idempotency_key.p", "rb")))
     idempotency_key += 1
     pickle.dump(idempotency_key, open("/opt/sjs/financial-automations/idempotency_key.p", "wb"))
     
-    for o in objects:
-        print o
-    '''
     for i in items:
         try:
             if "retail" in i["category"]["name"].lower():
                 continue
         except:
             pass
-        
+        item = api_instance.retrieve_catalog_object(object_id=i['id'])
+        print item
+        print item['variations']
+        print item['variations'][0]["item_variation_data"]['price_money']['amount']
         variations = []
         
         for n in i["variations"]:
@@ -227,7 +227,7 @@ def update_item_price (amount):
     response = api_instance.batch_upsert_catalog_objects(variation_updates)
     print response
     return response
-    '''
+    
 
 ########################################################################################################################
 def update_variation (variation_updates):
