@@ -176,9 +176,11 @@ def update_item_price (amount):
             pass
         
         item_data = i.item_data
+        if 'logo tee' in item_data.name.lower():
+            print i
+            time.sleep(20)
         if item_data.product_type.lower() != "regular": 
-            print item_data.name
-            print item_data.product_type
+            continue
         #print item.to_dict()
         #var = CatalogItemVariation(item.item_variation_data())
         var = item_data.variations
