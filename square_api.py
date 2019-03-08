@@ -257,7 +257,7 @@ def save_item_prices (name):
 
             variation_id = v.id
 
-        save_items[item["id"]] = \
+        save_items[i["id"]] = \
         {
             "price"        : price,
             "variation_id" : variation_id,
