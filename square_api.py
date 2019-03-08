@@ -441,6 +441,7 @@ def get_items ():
     for i in unique_items:
         if i["id"] == 'QSBZSC5VJA2C2ASQ5TQVJXO5': continue
         ids.append(i["id"])
+    print len(ids)
     objects = api_instance.batch_retrieve_catalog_objects(BatchRetrieveCatalogObjectsRequest(object_ids=ids,include_related_objects=False))
     objects = objects.objects
     
