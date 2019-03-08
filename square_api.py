@@ -134,6 +134,31 @@ def save_item_prices (name):
 
     pickle.dump(save_items, open("/opt/sjs/financial-automations/%s.p" % name, "wb"))
 
+########################################################################################################################
+def update_variation (item_id, variation_id, variation_updates):
+    """
+    @LOGAN? what's this for?
+    """
+
+    global log
+    connection   = httplib.HTTPSConnection("connect.squareup.com")
+    request_body = str(variation_updates)
+    url          = "/v1/" + location_ids[0] + "/items/" + item_id + "/variations/" + variation_id
+
+    connection.request("POST", url, request_body, request_headers)
+
+    response      = connection.getresponse()
+    response_body = json.loads(response.read())
+
+    if response.status == 200:
+        connection.close()
+        return response_body
+
+    else:
+        print "Item update failed"
+        print json.dumps(response_body, sort_keys=True, indent=2, separators=(",", ": "))
+        connection.close()
+        return None
 
 ########################################################################################################################
 def restore_item_price (name):
@@ -296,33 +321,6 @@ def get_items ():
 
     connection.close()
     return unique_items
-
-
-########################################################################################################################
-def update_variation (item_id, variation_id, variation_updates):
-    """
-    @LOGAN? what's this for?
-    """
-
-    global log
-    connection   = httplib.HTTPSConnection("connect.squareup.com")
-    request_body = str(variation_updates)
-    url          = "/v1/" + location_ids[0] + "/items/" + item_id + "/variations/" + variation_id
-
-    connection.request("PUT", url, request_body, request_headers)
-
-    response      = connection.getresponse()
-    response_body = json.loads(response.read())
-
-    if response.status == 200:
-        connection.close()
-        return response_body
-
-    else:
-        print "Item update failed"
-        print json.dumps(response_body, sort_keys=True, indent=2, separators=(",", ": "))
-        connection.close()
-        return None
 
 
 ########################################################################################################################
