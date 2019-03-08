@@ -397,66 +397,8 @@ def get_items ():
         ])
     response = api_instance.search_catalog_objects(body)
     items = response.objects
-    '''
-    # The base URL for every Connect API request
-    connection = httplib.HTTPSConnection("connect.squareup.com")
-
-    # For each location...
-    for location_id in location_ids:
-
-        request_path = "/v1/" + location_id + "/items"
-        more_results = True
-
-        # ...as long as there are more drawers to download from the location...
-        while more_results:
-
-            # ...send a GET request to /v1/LOCATION_ID/payments
-            connection.request("GET", request_path, "", request_headers)
-            response = connection.getresponse()
-
-            # Read the response body JSON into the cumulative list of results
-            items = items + json.loads(response.read())
-
-            # Check whether pagination information is included in a response header, indicating more results
-            pagination_header = response.getheader("link", "")
-
-            if "rel='next'" not in pagination_header:
-                more_results = False
-
-            else:
-                # Extract the next batch URL from the header.
-                #
-                # Pagination headers have the following format:
-                # <https://connect.squareup.com/v1/LOCATION_ID/cash-drawer-shifts?batch_token=BATCH_TOKEN>;rel='next'
-                # This line extracts the URL from the angle brackets surrounding it.
-                next_batch_url = urlparse.urlparse(pagination_header.split("<")[1].split(">")[0])
-                request_path   = next_batch_url.path + "?" + next_batch_url.query
-
-    # Remove potential duplicate values from the list of drawers
-    seen_item_ids = set()
-
-    unique_items  = []
-
-    for item in items:
-        if item['id'] in seen_item_ids:
-            continue
-
-        seen_item_ids.add(item['id'])
-        unique_items.append(item)
-
-    connection.close()
-    '''
-    ids = []
     
-    for i in items:
-        if i.id == 'QSBZSC5VJA2C2ASQ5TQVJXO5': continue
-        ids.append(i.id)
-    print len(ids)
-    objects = api_instance.batch_retrieve_catalog_objects(BatchRetrieveCatalogObjectsRequest(object_ids=ids,include_related_objects=True))
-    objects = objects.objects
-    print len(objects)
-    print "*"*20
-    return objects
+    return items
 
 
 ########################################################################################################################
