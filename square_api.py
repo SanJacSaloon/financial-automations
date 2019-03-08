@@ -175,7 +175,11 @@ def update_item_price (amount):
         except:
             pass
         #item = CatalogObject(api_instance.retrieve_catalog_object(object_id=i['id']))
-        item = api_instance.retrieve_catalog_object(object_id=i['id'])
+        try:
+            item = api_instance.retrieve_catalog_object(object_id=i['id'])
+        except: 
+            print "Missed %s"%i['name']
+            continue
 
         item = item.object
         item_data = item.item_data
