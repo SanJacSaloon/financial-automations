@@ -173,16 +173,14 @@ def update_item_price (amount):
         
         item_data = i.item_data
         if item_data.category_id == 'HWXUT7NC7CMYTQML76MIXU7F':
-            print item_data.name
+            print "Skipping",item_data.name
             continue
         if i.id == 'QSBZSC5VJA2C2ASQ5TQVJXO5':
-            print "!!!!"
-            print item_data.name 
-            print "!!!!"
-            items.pop(i)
+            print "Skipping",item_data.name 
+            items.pop(count)
             continue
         if item_data.product_type.lower() != "regular":
-            print item_data.name
+            print "Skipping",item_data.name
             continue
 
         #print item.to_dict()
@@ -196,7 +194,7 @@ def update_item_price (amount):
                 count += 1
             except:
                 pass
-        #objects.append(item)
+        count += 1
 
     body = BatchUpsertCatalogObjectsRequest(
         idempotency_key=str(idempotency_key),
