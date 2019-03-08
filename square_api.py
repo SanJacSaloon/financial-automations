@@ -229,7 +229,7 @@ def update_variation (variation_updates):
     #req = requests.post("http://connect.squareup.com/v2/catalog/batch-upsert", data=json.dumps(request_body), headers=request_headers)
     #response = req.text
     #print response
-    connection.request("POST", url, json.dumps(request_body), request_headers)
+    connection.request("POST", url, str(request_body), request_headers)
 
     response      = connection.getresponse()
     response_body = json.loads(response.read())
