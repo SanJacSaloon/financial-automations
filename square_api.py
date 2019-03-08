@@ -437,6 +437,7 @@ def get_items ():
 
     connection.close()
     ids = []
+    print len(unique_items)
     for i in unique_items:
         if i["id"] == 'QSBZSC5VJA2C2ASQ5TQVJXO5': continue
         ids.append(i["id"])
