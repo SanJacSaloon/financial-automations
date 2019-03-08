@@ -1240,7 +1240,9 @@ def yearly_sales (date, recursive=False):
                 break
 
             money = get_row("monthly",date.strftime("%Y-%m-%d"))
-
+            print date
+            print money
+            
             if not money:
                 populate_database(date)
                 money = get_row("monthly",date.strftime("%Y-%m-%d"))
@@ -1330,7 +1332,7 @@ def get_year (custom_date=False):
     date        = date.replace(day=1)
     date        = date.replace(month=1)
     year_total  = yearly_sales(date)[0]
-    print year_total
+    
     full_report = "YTD SALES:\n"
     full_report += "San Jac:           " + format_money(year_total["sjs_total"])   + "\n"
     full_report += "Jack's:            " + format_money(year_total["jacks_total"]) + "\n"
