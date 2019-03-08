@@ -221,21 +221,17 @@ def update_variation (variation_updates):
     #url          = "/v1/" + location_ids[0] + "/items/" + item_id + "/variations/" + variation_id
     url          = "/v2/catalog/batch-upsert"
     print request_body
-    request_headers = {
-        "Authorization" : "Bearer " + access_token,
-        "Accept"        : "application/json",
-        "Content-Type"  : "application/json",
-    }
-    req = requests.Request("POST","http://connect.squareup.com/v2/catalog/batch-upsert", data=json.dumps(request_body), headers=request_headers)
-    prepared = req.prepare()
-    pretty_print_POST(prepared)
+    
+    #req = requests.Request("POST","http://connect.squareup.com/v2/catalog/batch-upsert", data=json.dumps(request_body), headers=request_headers)
+    #prepared = req.prepare()
+    #pretty_print_POST(prepared)
 
-    req = requests.post("http://connect.squareup.com/v2/catalog/batch-upsert", data=json.dumps(request_body), headers=request_headers)
-    response = req.text
-    print response
-    #connection.request("POST", url, request_body, request_headers)
+    #req = requests.post("http://connect.squareup.com/v2/catalog/batch-upsert", data=json.dumps(request_body), headers=request_headers)
+    #response = req.text
+    #print response
+    connection.request("POST", url, request_body, request_headers)
 
-    #response      = connection.getresponse()
+    response      = connection.getresponse()
     response_body = json.loads(response.read())
     resp = ""
     if response.status == 200:
