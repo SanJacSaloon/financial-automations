@@ -176,7 +176,10 @@ def update_item_price (amount):
             print item_data.name
             continue
         if i.id == 'QSBZSC5VJA2C2ASQ5TQVJXO5':
+            print "!!!!"
             print item_data.name 
+            print "!!!!"
+            items.pop(i)
             continue
         if item_data.product_type.lower() != "regular":
             print item_data.name
