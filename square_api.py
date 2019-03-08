@@ -219,7 +219,7 @@ def update_variation (variation_updates):
     connection   = httplib.HTTPSConnection("connect.squareup.com")
     request_body = str(variation_updates)
     #url          = "/v1/" + location_ids[0] + "/items/" + item_id + "/variations/" + variation_id
-    url          = "/v2/catalog/batch-upsert"
+    url          = "connect.squareup.com/v2/catalog/batch-upsert"
     print request_body
     
     req = requests.Request("POST", url, request_body, request_headers)
