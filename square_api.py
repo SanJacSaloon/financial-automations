@@ -25,6 +25,12 @@ import sys
 import squareconnect
 from squareconnect.rest import ApiException
 from squareconnect.apis.locations_api import LocationsApi
+from squareconnect.apis.catalog_api import CatalogApi
+from squareconnect.models.catalog_object import CatalogObject
+from squareconnect.models.catalog_object_batch import CatalogObjectBatch
+from squareconnect.models.catalog_item import CatalogItem
+from squareconnect.models.catalog_item_variation import CatalogItemVariation
+from squareconnect.models.money import Money
 
 
 # batteries not included.
@@ -47,12 +53,14 @@ api_instance = LocationsApi()
 # setup authorization
 api_instance.api_client.configuration.access_token = secrets["square"]["access_token"]
 
+'''
 try:
     # ListLocations
     api_response = api_instance.list_locations()
     print (api_response.locations)
 except ApiException as e:
     print ('Exception when calling LocationApi->list_locations: %s\n' % e)
+'''
 
 # calculate report date automatically
 report_date = (datetime.datetime.today() - datetime.timedelta(days=1)).strftime("%Y-%m-%d")
@@ -168,62 +176,40 @@ def update_item_price (amount):
         except:
             pass
         
-        object = {}
-        object["type"] = "ITEM"
-        object["id"] = i["id"]
-        object["present_at_all_locations"] = True
         variations = []
-        price = 0
-
+        
         for n in i["variations"]:
-            variations.append(
-            {
-                u'ordinal': n['ordinal'], 
-                u'name': n['name'], 
-                u'pricing_type': n['pricing_type'], 
-                u'item_id': n['item_id'], 
-                u'price_money': 
-                    {
-                        u'amount': int(n['price_money']['amount'])+amount, 
-                        u'currency_code': u'USD'
-                    }, 
-                u'track_inventory': True, 
-                u'id': n['id'], 
-                u'inventory_alert_type': u'NONE'
-            }
-            ) 
-            
-        object["variations"] = variations
-        print object
-        objects.append(object)
-        time.sleep(10)
+            variations.append(CatalogObject(
+                type='ITEM_VARIATION',
+                id= n['id'],
+                present_at_all_locations=True,
+                item_variation_data=CatalogItemVariation(
+                    item_id= n['variations']['item_id'],
+                    name= n['variations']['name'],
+                    pricing_type='FIXED_PRICING',
+                    price_money=Money(int(n['variations']['price_money']['amount'])+amount, 'USD')
+                )
+            )
+
+        objects.append(CatalogObject(
+            type = "ITEM",
+            id = i["id"],
+            present_at_all_locations = True,
+            item_data=CatalogItem(
+                name=i['name'],
+                category_id=i['category_id'],
+                variations=variations
+                )
+            )
+        )
         break
-
-    batches = [{"objects":objects}]
-
-    #update_variation(i["id"], n["id"], "{'price_money':{'amount':%s,'currency_code': 'USD'}}" % price)
-    response = update_variation(batches)
-    print response
+        
+    body = BatchUpsertCatalogObjectsRequest(
+        idempotency_key=idempotency_key,
+        batches=[CatalogObjectBatch(objects)]
+    )
+    response = update_variation(body)
     return response
-
-import requests
-
-def pretty_print_POST(req):
-    """
-    At this point it is completely built and ready
-    to be fired; it is "prepared".
-
-    However pay attention at the formatting used in 
-    this function because it is programmed to be pretty 
-    printed and may differ from the actual request.
-    """
-    print('{}\n{}\n{}\n\n{}'.format(
-        '-----------START-----------',
-        req.method + ' ' + req.url,
-        '\n'.join('{}: {}'.format(k, v) for k, v in req.headers.items()),
-        req.body,
-    ))
-
 
 
 ########################################################################################################################
@@ -233,6 +219,11 @@ def update_variation (variation_updates):
     """
 
     global log
+    api_instance = CatalogApi()
+    api_instance.api_client.configuration.access_token = secrets["square"]["access_token"]
+    response = api.batch_upsert_catalog_objects(variation_updates)
+    print response
+    '''
     connection   = httplib.HTTPSConnection("connect.squareup.com")
     request_body = variation_updates
     #url          = "/v1/" + location_ids[0] + "/items/" + item_id + "/variations/" + variation_id
@@ -260,7 +251,7 @@ def update_variation (variation_updates):
         resp += json.dumps(response_body, sort_keys=True, indent=2, separators=(",", ": "))
         connection.close()
         return resp
-
+    '''
 ########################################################################################################################
 def save_item_prices (name):
     """
