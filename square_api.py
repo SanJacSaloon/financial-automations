@@ -246,21 +246,25 @@ def save_item_prices (name):
     for i in items:
         price        = 0
         variation_id = ""
+        item = i.object
+        item_data = item.item_data
 
-        for n in i["variations"]:
-            try:
-                price = int(n["price_money"]["amount"])
-            except:
-                continue
+        #print item.to_dict()
+        #var = CatalogItemVariation(item.item_variation_data())
+        var = item_data.variations
+        for v in var:
+            variation_data = v.item_variation_data
+            price_money = variation_data.price_money
+            price = price_money.amount
 
-            variation_id = n["id"]
+            variation_id = variation_data["id"]
 
-        save_items[i["id"]] = \
+        save_items[item["id"]] = \
         {
             "price"        : price,
             "variation_id" : variation_id,
-            "item_id"      : i["id"],
-            "item_name"    : i["name"],
+            "item_id"      : item["id"],
+            "item_name"    : item["name"],
         }
 
     pickle.dump(save_items, open("/opt/sjs/financial-automations/%s.p" % name, "wb"))
