@@ -186,7 +186,7 @@ def update_item_price (amount):
                 continue
         except:
             pass
-        item = api_instance.retrieve_catalog_object(object_id=i['id'])
+        item = CatalogObject(api_instance.retrieve_catalog_object(object_id=i['id']))
         print item
         print item['variations']
         print item['variations'][0]["item_variation_data"]['price_money']['amount']
