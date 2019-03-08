@@ -186,7 +186,27 @@ def update_item_price (amount):
 
     #update_variation(i["id"], n["id"], "{'price_money':{'amount':%s,'currency_code': 'USD'}}" % price)
     response = update_variation(batches)
+    print response
     return response
+
+import requests
+
+def pretty_print_POST(req):
+    """
+    At this point it is completely built and ready
+    to be fired; it is "prepared".
+
+    However pay attention at the formatting used in 
+    this function because it is programmed to be pretty 
+    printed and may differ from the actual request.
+    """
+    print('{}\n{}\n{}\n\n{}'.format(
+        '-----------START-----------',
+        req.method + ' ' + req.url,
+        '\n'.join('{}: {}'.format(k, v) for k, v in req.headers.items()),
+        req.body,
+    ))
+
 
 
 ########################################################################################################################
@@ -201,6 +221,11 @@ def update_variation (variation_updates):
     #url          = "/v1/" + location_ids[0] + "/items/" + item_id + "/variations/" + variation_id
     url          = "/v2/catalog/batch-upsert"
     print request_body
+    
+    req = requests.Request("POST", url, request_body, request_headers)
+    prepared = req.prepare()
+    pretty_print_POST(prepared)
+
     connection.request("POST", url, request_body, request_headers)
 
     response      = connection.getresponse()
