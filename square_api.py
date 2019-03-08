@@ -261,7 +261,7 @@ def save_item_prices (name):
         {
             "price"        : price,
             "variation_id" : variation_id,
-            "item_id"      : item.id,
+            "item_id"      : i.id,
             "item_name"    : item_data.name,
         }
 
