@@ -383,7 +383,7 @@ def get_items ():
 
     global log
     items = []
-
+    
     # The base URL for every Connect API request
     connection = httplib.HTTPSConnection("connect.squareup.com")
 
@@ -431,7 +431,13 @@ def get_items ():
         unique_items.append(item)
 
     connection.close()
-    return unique_items
+    ids = []
+    for i in unique_items:
+        ids.append(i["id"])
+    objects = api_instance.batch_retrieve_catalog_objects(BatchRetrieveCatalogObjectsRequest(object_ids=ids,include_related_objects=False))
+    objects = objects.objects
+    print objects
+    return 
 
 
 ########################################################################################################################
