@@ -179,7 +179,7 @@ def update_item_price (amount):
     idempotency_key = int(pickle.load(open("/opt/sjs/financial-automations/idempotency_key.p", "rb")))
     idempotency_key += 1
     pickle.dump(idempotency_key, open("/opt/sjs/financial-automations/idempotency_key.p", "wb"))
-    
+    objects = []
     for i in items:
         try:
             if "retail" in i["category"]["name"].lower():
@@ -194,8 +194,15 @@ def update_item_price (amount):
 
         #print item.to_dict()
         #var = CatalogItemVariation(item.item_variation_data())
-        var = item_data.item_variation_data
-        print var
+        var = item_data.variations
+        for v in var:
+            variation_data = v.item_variation_data
+            price_money = variation_data.price_money
+            price_money.amount = int(price_money.amount)+amount
+        objects.append(item)
+        break
+        '''
+
         mon = Money(var.price_money())
         print mon
         print item['variations'][0]["item_variation_data"]['price_money']['amount']
@@ -227,7 +234,7 @@ def update_item_price (amount):
             )
         )
         break
-
+        '''
     body = BatchUpsertCatalogObjectsRequest(
         idempotency_key=str(idempotency_key),
         batches=[CatalogObjectBatch(objects)]
