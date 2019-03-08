@@ -169,11 +169,6 @@ def update_item_price (amount):
     pickle.dump(idempotency_key, open("/opt/sjs/financial-automations/idempotency_key.p", "wb"))
 
     for i in items:
-        try:
-            if "retail" in i["category"]["name"].lower():
-                continue
-        except:
-            pass
         
         item_data = i.item_data
         if item_data.category_id == 'HWXUT7NC7CMYTQML76MIXU7F':
@@ -182,6 +177,7 @@ def update_item_price (amount):
 
         if item_data.product_type.lower() != "regular": 
             continue
+
         #print item.to_dict()
         #var = CatalogItemVariation(item.item_variation_data())
         var = item_data.variations
@@ -191,7 +187,8 @@ def update_item_price (amount):
             try:
                 price_money.amount = int(price_money.amount)+amount
             except:
-                pass
+                print item_data.name
+                print price_money
         #objects.append(item)
 
     body = BatchUpsertCatalogObjectsRequest(
@@ -256,7 +253,7 @@ def save_item_prices (name):
 
         item_data = i.item_data
         itemname = i.item_data.name
-        print itemname
+
         #print item.to_dict()
         #var = CatalogItemVariation(item.item_variation_data())
         var = item_data.variations
@@ -320,8 +317,6 @@ def database (sql):
 
     cur  = db.cursor(pymysql.cursors.DictCursor)
     sql += ";"
-
-    print sql
 
     cur.execute(sql)
     result = cur.fetchall()
@@ -1317,7 +1312,7 @@ def monthly_sales (date, recursive=False):
         non_alc = (monthly_total["sjs_retail"]+monthly_total["jacks_retail"]+monthly_total["sjs_nonalc"]+monthly_total["jacks_nonalc"])
         total_alc = (monthly_total["sjs_liquor"]+monthly_total["jacks_liquor"]+monthly_total["sjs_wine"]+monthly_total["jacks_wine"]+monthly_total["sjs_beer"]+monthly_total["jacks_beer"])
         other_sales = (monthly_total["sjs_total"]+monthly_total["jacks_total"])-non_alc-total_alc
-        print format_money(other_sales)
+
         full_report += "\n"
         full_report += "    =TAX INFO=\n"
         full_report += "--MIXED BEVERAGE GROSS RECEIPTS--\n"
@@ -1612,7 +1607,7 @@ class Daily (dict):
         values = values.replace('[', '(')
         values = values.replace(']', ')')
 
-        print database("INSERT INTO daily %s VALUES %s" % (keys, values))
+        database("INSERT INTO daily %s VALUES %s" % (keys, values))
 
     def update (self):
         values = ""
@@ -1787,14 +1782,14 @@ if __name__ == '__main__':
         email_report(report=email)
 
     try:
-        print get_month()
+        get_month()
 
     except Exception as e:
         ts   = time.time()
         log += "[%s]: %s"%(datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S'), e)
 
     try:
-        print get_year()
+        get_year()
 
     except Exception as e:
         ts   = time.time()
