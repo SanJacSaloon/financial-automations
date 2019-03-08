@@ -26,17 +26,6 @@ import squareconnect
 from squareconnect.rest import ApiException
 from squareconnect.apis.locations_api import LocationsApi
 
-# create an instance of the Location API class
-api_instance = LocationsApi()
-# setup authorization
-api_instance.api_client.configuration.access_token = secrets["square"]["access_token"]
-
-try:
-    # ListLocations
-    api_response = api_instance.list_locations()
-    print (api_response.locations)
-except ApiException as e:
-    print ('Exception when calling LocationApi->list_locations: %s\n' % e)
 
 # batteries not included.
 import google_api
@@ -52,6 +41,18 @@ locale.setlocale(locale.LC_ALL, "en_CA.UTF-8")
 secrets      = json.loads(open("/opt/sjs/secrets.json").read())
 location_ids = secrets["square"]["location_ids"]
 homepath     = secrets["general"]["home_path"]
+
+# create an instance of the Location API class
+api_instance = LocationsApi()
+# setup authorization
+api_instance.api_client.configuration.access_token = secrets["square"]["access_token"]
+
+try:
+    # ListLocations
+    api_response = api_instance.list_locations()
+    print (api_response.locations)
+except ApiException as e:
+    print ('Exception when calling LocationApi->list_locations: %s\n' % e)
 
 # calculate report date automatically
 report_date = (datetime.datetime.today() - datetime.timedelta(days=1)).strftime("%Y-%m-%d")
