@@ -179,6 +179,7 @@ def update_item_price (amount):
         if item_data.category_id == 'HWXUT7NC7CMYTQML76MIXU7F':
             print item_data.name
             continue
+
         if item_data.product_type.lower() != "regular": 
             continue
         #print item.to_dict()
@@ -439,6 +440,7 @@ def get_items ():
     connection.close()
     ids = []
     for i in unique_items:
+        if i["id"] == 'QSBZSC5VJA2C2ASQ5TQVJXO5': continue
         ids.append(i["id"])
     objects = api_instance.batch_retrieve_catalog_objects(BatchRetrieveCatalogObjectsRequest(object_ids=ids,include_related_objects=False))
     objects = objects.objects
