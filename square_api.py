@@ -21,17 +21,18 @@ import locale
 import json
 import time
 import sys
+
 import squareconnect
 from squareconnect.rest import ApiException
-from squareconnect.apis.locations_api import LocationsApi
+from squareconnect.apis.location_api import LocationApi
 
 # create an instance of the Location API class
-api_instance = LocationsApi()
-# setup authorization
-api_instance.api_client.configuration.access_token = secrets["square"]["access_token"]
+api_instance = LocationApi()
+access_token = secrets["square"]["access_token"]
+
 try:
     # ListLocations
-    api_response = api_instance.list_locations()
+    api_response = api_instance.list_locations(access_token)
     print (api_response.locations)
 except ApiException as e:
     print ('Exception when calling LocationApi->list_locations: %s\n' % e)
