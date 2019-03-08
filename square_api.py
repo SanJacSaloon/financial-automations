@@ -75,17 +75,23 @@ def update_item_price (amount):
     items = get_items()
     count = 0
 
+    idempotency_key = int(pickle.load(open("/opt/sjs/financial-automations/idempotency_key.p", "rb")))
+    idempotency_key += 1
+    pickle.dump(idempotency_key, open("/opt/sjs/financial-automations/idempotency_key.p", "wb"))
+    request = {}
+    request["idempotency_key"] = "%s"%idempotency_key
+    batches = [{}]
+    objects = [{}]
+
+
     for i in items:
+        print i
+        time.sleep(10)
         try:
             if "retail" in i["category"]["name"].lower():
                 continue
         except:
             pass
-
-        # Sleep is needed to avoid square timeout
-        if count >= 20:
-            time.sleep(10)
-            count = 0
 
         price = 0
 
@@ -102,6 +108,31 @@ def update_item_price (amount):
 
         count += 1
 
+########################################################################################################################
+def update_variation (item_id, variation_id, variation_updates):
+    """
+    @LOGAN? what's this for?
+    """
+
+    global log
+    connection   = httplib.HTTPSConnection("connect.squareup.com")
+    request_body = str(variation_updates)
+    #url          = "/v1/" + location_ids[0] + "/items/" + item_id + "/variations/" + variation_id
+    url          = "/v2/catalog/batch-upsert"
+    connection.request("POST", url, request_body, request_headers)
+
+    response      = connection.getresponse()
+    response_body = json.loads(response.read())
+
+    if response.status == 200:
+        connection.close()
+        return response_body
+
+    else:
+        print "Item update failed"
+        print json.dumps(response_body, sort_keys=True, indent=2, separators=(",", ": "))
+        connection.close()
+        return None
 
 ########################################################################################################################
 def save_item_prices (name):
@@ -133,32 +164,6 @@ def save_item_prices (name):
         }
 
     pickle.dump(save_items, open("/opt/sjs/financial-automations/%s.p" % name, "wb"))
-
-########################################################################################################################
-def update_variation (item_id, variation_id, variation_updates):
-    """
-    @LOGAN? what's this for?
-    """
-
-    global log
-    connection   = httplib.HTTPSConnection("connect.squareup.com")
-    request_body = str(variation_updates)
-    url          = "/v1/" + location_ids[0] + "/items/" + item_id + "/variations/" + variation_id
-
-    connection.request("POST", url, request_body, request_headers)
-
-    response      = connection.getresponse()
-    response_body = json.loads(response.read())
-
-    if response.status == 200:
-        connection.close()
-        return response_body
-
-    else:
-        print "Item update failed"
-        print json.dumps(response_body, sort_keys=True, indent=2, separators=(",", ": "))
-        connection.close()
-        return None
 
 ########################################################################################################################
 def restore_item_price (name):
