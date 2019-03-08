@@ -184,7 +184,7 @@ def update_item_price (amount):
             variation_data = v.item_variation_data
             price_money = variation_data.price_money
             price_money.amount = int(price_money.amount)+amount
-        objects.append(item)
+        #objects.append(item)
 
     body = BatchUpsertCatalogObjectsRequest(
         idempotency_key=str(idempotency_key),
