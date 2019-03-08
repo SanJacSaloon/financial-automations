@@ -1308,6 +1308,11 @@ def get_month ():
     full_report += "San Jac:           " + format_money(month_total["sjs_total"])   +"\n"
     full_report += "Jack's:            " + format_money(month_total["jacks_total"]) +"\n"
     full_report += "Total:             " + format_money(month_total["jacks_total"]  + month_total["sjs_total"]) + "\n"
+    total_discount = -1.0*(month_total["sjs_dcounts"]+month_total["jacks_dcounts"]+month_total["sjs_comps"]+month_total["jacks_comps"])
+    total_sales = month_total["sjs_total"]+month_total["jacks_total"]
+    try:discount_percentage = "%.02f"%((total_discount/total_sales)*100)
+    except:discount_percentage = "Error"
+    full_report += "Discount Percentage: %s"%discount_percentage
 
     pickle.dump(full_report, open("/opt/sjs/financial-automations/month.p", "wb"))
     return full_report
@@ -1329,6 +1334,11 @@ def get_year (custom_date=False):
     full_report += "San Jac:           " + format_money(year_total["sjs_total"])   + "\n"
     full_report += "Jack's:            " + format_money(year_total["jacks_total"]) + "\n"
     full_report += "Total:             " + format_money(year_total["jacks_total"]  + year_total["sjs_total"]) + "\n"
+    total_discount = -1.0*(year_total["sjs_dcounts"]+year_total["jacks_dcounts"]+year_total["sjs_comps"]+year_total["jacks_comps"])
+    total_sales = year_total["sjs_total"]+year_total["jacks_total"]
+    try:discount_percentage = "%.02f"%((total_discount/total_sales)*100)
+    except:discount_percentage = "Error"
+    full_report += "Discount Percentage: %s"%discount_percentage
 
     if custom_date:
         return year_total
