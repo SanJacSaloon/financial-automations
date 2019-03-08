@@ -176,7 +176,7 @@ def update_item_price (amount):
             pass
         
         item_data = i.item_data
-        if item_data.product_type.lower() not "regular": 
+        if item_data.product_type.lower() != "regular": 
             print item_data.name
             print item_data.product_type
         #print item.to_dict()
