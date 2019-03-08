@@ -33,6 +33,7 @@ from squareconnect.models.catalog_item_variation import CatalogItemVariation
 from squareconnect.models.money import Money
 from squareconnect.models.batch_upsert_catalog_objects_request import BatchUpsertCatalogObjectsRequest
 from squareconnect.models.batch_retrieve_catalog_objects_request import BatchRetrieveCatalogObjectsRequest
+from squareconnect.models.search_catalog_objects_request import SearchCatalogObjectsRequest
 
 
 # batteries not included.
@@ -386,9 +387,17 @@ def get_items ():
     """
 
     global log
-    items = []
+    
     api_instance = CatalogApi()
     api_instance.api_client.configuration.access_token = secrets["square"]["access_token"]
+
+    body = SearchCatalogObjectsRequest(
+        object_types=[
+            "ITEM"
+        ])
+    response = api_instance.search_catalog_objects(body)
+    items = response.objects
+    '''
     # The base URL for every Connect API request
     connection = httplib.HTTPSConnection("connect.squareup.com")
 
@@ -436,22 +445,15 @@ def get_items ():
         unique_items.append(item)
 
     connection.close()
+    '''
     ids = []
-    objects = []
-    count = 0
-    for i in unique_items:
-        if i["id"] == 'QSBZSC5VJA2C2ASQ5TQVJXO5': continue
-        ids.append(i["id"])
-        count += 1
-        if count == 100:
-            tmp = api_instance.batch_retrieve_catalog_objects(BatchRetrieveCatalogObjectsRequest(object_ids=ids,include_related_objects=False))
-            for o in tmp.objects:
-                objects.append(o)
-            count = 0
-            ids = []
-    print len(unique_items)
-    #objects = api_instance.batch_retrieve_catalog_objects(BatchRetrieveCatalogObjectsRequest(object_ids=ids,include_related_objects=True))
-    #objects = objects.objects
+    
+    for i in items:
+        if i.id == 'QSBZSC5VJA2C2ASQ5TQVJXO5': continue
+        ids.append(i.id)
+    print len(ids)
+    objects = api_instance.batch_retrieve_catalog_objects(BatchRetrieveCatalogObjectsRequest(object_ids=ids,include_related_objects=True))
+    objects = objects.objects
     print len(objects)
     print "*"*20
     return objects
