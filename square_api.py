@@ -226,7 +226,7 @@ def update_variation (variation_updates):
         "Accept"        : "application/json",
         "Content-Type"  : "application/json",
     }
-    req = requests.post("http://connect.squareup.com/v2/catalog/batch-upsert", data=json.dumps(request_body), headers=request_headers)
+    req = requests.Request("POST","http://connect.squareup.com/v2/catalog/batch-upsert", data=json.dumps(request_body), headers=request_headers)
     prepared = req.prepare()
     pretty_print_POST(prepared)
 
