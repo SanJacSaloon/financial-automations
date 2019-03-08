@@ -182,6 +182,7 @@ def update_item_price (amount):
         print object
         objects.append(object)
         time.sleep(10)
+        break
 
     batches = [{"objects":objects}]
 
