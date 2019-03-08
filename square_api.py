@@ -175,8 +175,7 @@ def update_item_price (amount):
         except:
             pass
         
-        item = i.object
-        item_data = item.item_data
+        item_data = i.item_data
 
         #print item.to_dict()
         #var = CatalogItemVariation(item.item_variation_data())
@@ -246,7 +245,6 @@ def save_item_prices (name):
     for i in items:
         price        = 0
         variation_id = ""
-        item = i.object
         item_data = item.item_data
 
         #print item.to_dict()
