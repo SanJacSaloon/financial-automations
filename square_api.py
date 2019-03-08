@@ -1224,7 +1224,6 @@ def yearly_sales (date, recursive=False):
     """
 
     global log
-    print date
     if not date:
         date = datetime.datetime.today()
 
@@ -1325,13 +1324,10 @@ def get_year (custom_date=False):
     global log
 
     if not custom_date:
-        date = datetime.datetime.today()
+        year_total  = yearly_sales(False)[0]
     else:
         date = custom_date
-
-    date        = date.replace(day=1)
-    date        = date.replace(month=1)
-    year_total  = yearly_sales(date)[0]
+        year_total  = yearly_sales(date)[0]
     
     full_report = "YTD SALES:\n"
     full_report += "San Jac:           " + format_money(year_total["sjs_total"])   + "\n"
