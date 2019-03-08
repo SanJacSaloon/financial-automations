@@ -156,7 +156,7 @@ def update_item_price (amount):
         object = {}
         object["type"] = "ITEM"
         object["id"] = i["id"]
-        object["present_at_all_locations"] = true
+        object["present_at_all_locations"] = True
         variations = []
         price = 0
 
