@@ -207,7 +207,7 @@ def update_item_price (amount):
         break
 
     body = BatchUpsertCatalogObjectsRequest(
-        idempotency_key=idempotency_key,
+        idempotency_key=str(idempotency_key),
         batches=[CatalogObjectBatch(objects)]
     )
     response = update_variation(body)
