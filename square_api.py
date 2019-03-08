@@ -383,7 +383,8 @@ def get_items ():
 
     global log
     items = []
-    
+    api_instance = CatalogApi()
+    api_instance.api_client.configuration.access_token = secrets["square"]["access_token"]
     # The base URL for every Connect API request
     connection = httplib.HTTPSConnection("connect.squareup.com")
 
