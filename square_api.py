@@ -223,7 +223,7 @@ def update_variation (variation_updates):
     global log
     api_instance = CatalogApi()
     api_instance.api_client.configuration.access_token = secrets["square"]["access_token"]
-    response = api.batch_upsert_catalog_objects(variation_updates)
+    response = api_instance.batch_upsert_catalog_objects(variation_updates)
     print response
     '''
     connection   = httplib.HTTPSConnection("connect.squareup.com")
