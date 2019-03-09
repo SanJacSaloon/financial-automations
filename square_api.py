@@ -40,7 +40,7 @@ from squareconnect.models.search_catalog_objects_request import SearchCatalogObj
 import google_api
 
 # enable testing
-testing = True
+testing = False
 
 # Uses the locale to format currency amounts correctly.
 # NOTE: this took a touch of trial and error.
