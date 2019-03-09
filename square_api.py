@@ -705,6 +705,18 @@ def calculate_sin_discount(amount, quantity, item,items):
     print item
     price = False
     for it in items:
+        item_data = it.item_data
+        name = item_data.name.lower()
+        var = item_data.variations
+        it_price = 0
+        for v in var:
+            variation_data = v.item_variation_data
+            price_money = variation_data.price_money
+            try:
+                it_price = price_money.amount
+            except:
+                pass
+            if price: break
         if price: continue
         tmp = item.lower().replace('sin ','')
         if 'dom beer' in tmp:
@@ -719,11 +731,11 @@ def calculate_sin_discount(amount, quantity, item,items):
             tmp = 'well rum'
         elif 'espolon' in tmp:
             tmp = 'espolon silver'
-        if tmp == it['name'].lower():
-            price = it['variations'][0]['price_money']['amount']
-        elif tmp in it['name'].lower():
+        if tmp == name:
+            price = it_price
+        elif tmp in name:
             if 'jack' in tmp: continue
-            price = it['variations'][0]['price_money']['amount']
+            price = it_price
         
     if not price: 
         price = '800'
