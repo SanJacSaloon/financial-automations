@@ -702,7 +702,7 @@ def get_transactions (date=False, current=False):
     return unique_transactions
 
 def calculate_sin_discount(amount, quantity, item,items):
-    print item
+
     price = False
     for it in items:
         item_data = it.item_data
@@ -964,9 +964,7 @@ def fill_db (reportd, total, timeframe):
 
         if daily:
             d      = Daily(daily["id"])
-            update = True
-            print "Found Row"
-
+            update = True 
         else:
             d = Daily()
 
@@ -977,8 +975,6 @@ def fill_db (reportd, total, timeframe):
         if weekly:
             d      = Weekly(weekly["id"])
             update = True
-            print "Found Row"
-
         else:
             d = Weekly()
 
@@ -989,8 +985,6 @@ def fill_db (reportd, total, timeframe):
         if monthly:
             d      = Monthly(monthly["id"])
             update = True
-            print "Found Row"
-
         else:
             d = Monthly()
 
@@ -1001,8 +995,6 @@ def fill_db (reportd, total, timeframe):
         if yearly:
             d      = Yearly(yearly["id"])
             update = True
-            print "Found Row"
-
         else:
             d = Yearly()
 
