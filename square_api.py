@@ -347,6 +347,7 @@ def populate_database (date):
 
 ########################################################################################################################
 def format_money (amount):
+    if not amount: return 0
   return locale.currency(amount / 100.0)
 
 
