@@ -1239,7 +1239,9 @@ def monthly_sales (date, recursive=False):
             day += 1
             continue
         money = get_row("daily", (date+datetime.timedelta(days=day)).strftime("%Y-%m-%d"))
-        if not money: continue
+        if not money: 
+            day+= 1
+            continue
         for item in money:
             if item in monthly_total.keys():
                 try:
