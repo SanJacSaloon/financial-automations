@@ -51,11 +51,6 @@ secrets      = json.loads(open("/opt/sjs/secrets.json").read())
 location_ids = secrets["square"]["location_ids"]
 homepath     = secrets["general"]["home_path"]
 
-# create an instance of the Location API class
-api_instance = LocationsApi()
-# setup authorization
-api_instance.api_client.configuration.access_token = secrets["square"]["access_token"]
-
 '''
 try:
     # ListLocations
@@ -388,7 +383,8 @@ def get_items ():
     """
 
     global log
-    
+    #https://github.com/square/connect-python-sdk/blob/master/squareconnect/models
+
     api_instance = CatalogApi()
     api_instance.api_client.configuration.access_token = secrets["square"]["access_token"]
 
