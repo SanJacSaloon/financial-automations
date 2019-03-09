@@ -702,7 +702,7 @@ def get_transactions (date=False, current=False):
     return unique_transactions
 
 def calculate_sin_discount(amount, quantity, item,items):
-    
+    print item
     price = False
     for it in items:
         if price: continue
