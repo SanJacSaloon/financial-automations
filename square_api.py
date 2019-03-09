@@ -1429,6 +1429,9 @@ def get_year (custom_date=False):
 
 ########################################################################################################################
 def report_string (total):
+    for k in total.keys():
+        if not total[k]: 
+            total[k] = 0
     return_string = ""
     return_string += "     =San Jac=\n"
     return_string += "Total:             " + format_money(total["sjs_total"])   + "\n"
