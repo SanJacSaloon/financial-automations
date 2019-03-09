@@ -40,7 +40,7 @@ from squareconnect.models.search_catalog_objects_request import SearchCatalogObj
 import google_api
 
 # enable testing
-testing = False
+testing = True
 
 # Uses the locale to format currency amounts correctly.
 # NOTE: this took a touch of trial and error.
@@ -347,7 +347,7 @@ def populate_database (date):
 
 ########################################################################################################################
 def format_money (amount):
-  if not amount: return "0.00"
+  if not amount: return locale.currency(0)
   return locale.currency(amount / 100.0)
 
 
@@ -1037,7 +1037,9 @@ def fill_db (reportd, total, timeframe):
     d["jacks_comps"]      = total["jacks_comps"]
     d["sjs_spills"]       = total["sjs_spills"]
     d["jacks_spills"]     = total["jacks_spills"]
-
+    for k in d.keys():
+        if not d[k]: 
+            d[k] = 0
     if update:
         d.update()
     else:
