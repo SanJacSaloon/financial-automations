@@ -387,7 +387,9 @@ def get_items ():
     #https://github.com/square/connect-python-sdk/blob/master/squareconnect/models
 
     api_instance = CatalogApi()
-    api_instance.api_client.configuration.access_token = secrets["square"]["access_token"]
+    try:
+        api_instance.api_client.configuration.access_token = secrets["square"]["access_token"]
+    except: pass
 
     body = SearchCatalogObjectsRequest(
         object_types=[
