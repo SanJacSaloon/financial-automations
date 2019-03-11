@@ -1560,7 +1560,7 @@ def rerun_numbers(starting_date):
             print "month"
             sales = monthly_sales(datetime.datetime.strptime(report_date, "%Y-%m-%d"))
 
-        report_date = datetime.datetime.strptime(report_date, "%Y-%m-%d") + datetime.timedelta(days=7)
+        report_date = datetime.datetime.strptime(report_date, "%Y-%m-%d") + datetime.timedelta(days=1)
         report_date = datetime.datetime.strftime(report_date, "%Y-%m-%d")
 
 ########################################################################################################################
