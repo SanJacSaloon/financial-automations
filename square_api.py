@@ -1551,9 +1551,14 @@ def email_report (email=secrets["general"]["smtp_to"], report=False):
 def rerun_numbers(starting_date):
     report_date = starting_date
     while datetime.datetime.date(datetime.datetime.strptime(report_date, "%Y-%m-%d")) < datetime.datetime.date(datetime.datetime.today()):
-        sales = daily_sales(datetime.datetime.strptime(report_date, "%Y-%m-%d"))
-        google_api.fill_sales(datetime.datetime.strptime(report_date, "%Y-%m-%d"), sales[0])
-        report_date = datetime.datetime.strptime(report_date, "%Y-%m-%d") + datetime.timedelta(days=1)
+        #sales = daily_sales(datetime.datetime.strptime(report_date, "%Y-%m-%d"))
+        #google_api.fill_sales(datetime.datetime.strptime(report_date, "%Y-%m-%d"), sales[0])
+        if 'sat' in datetime.datetime.strptime(report_date, "%Y-%m-%d").strftime("%a").lower():
+            sales = weekly_sales(datetime.datetime.strptime(report_date, "%Y-%m-%d"))
+        if int((datetime.datetime.strptime(report_date, "%Y-%m-%d")+datetime.timedelta(days=1)).strftime("%d")) == 1:
+            sales = monthly_sales(datetime.datetime.strptime(report_date, "%Y-%m-%d"))
+
+        report_date = datetime.datetime.strptime(report_date, "%Y-%m-%d") + datetime.timedelta(days=7)
         report_date = datetime.datetime.strftime(report_date, "%Y-%m-%d")
 
 ########################################################################################################################
