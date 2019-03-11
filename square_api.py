@@ -1554,8 +1554,10 @@ def rerun_numbers(starting_date):
         #sales = daily_sales(datetime.datetime.strptime(report_date, "%Y-%m-%d"))
         #google_api.fill_sales(datetime.datetime.strptime(report_date, "%Y-%m-%d"), sales[0])
         if 'sat' in datetime.datetime.strptime(report_date, "%Y-%m-%d").strftime("%a").lower():
+            print "Sat"
             sales = weekly_sales(datetime.datetime.strptime(report_date, "%Y-%m-%d"))
         if int((datetime.datetime.strptime(report_date, "%Y-%m-%d")+datetime.timedelta(days=1)).strftime("%d")) == 1:
+            print "month"
             sales = monthly_sales(datetime.datetime.strptime(report_date, "%Y-%m-%d"))
 
         report_date = datetime.datetime.strptime(report_date, "%Y-%m-%d") + datetime.timedelta(days=7)
