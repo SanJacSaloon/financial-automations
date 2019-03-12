@@ -489,7 +489,7 @@ def test():
         numberFormat=numberFormat(type='currency',pattern='[Red][<0]$###,##0.00;[Black][>=0]$###,##0.00')
         )
     '''
-    format_cell_range(san_jac_worksheet, "B10,B12,B14,B16,B18:B20,B23,B26,B29,B32,B34,B36,B39:B40,B45,B47,B49:B60,B62:B63,B70:B71", calculated)
+    format_cell_ranges(san_jac_worksheet, [("B10",calculated),("B12",calculated),("B14",calculated),("B16",calculated),("B18:B20",calculated),("B23",calculated),("B26",calculated),("B29",calculated),("B32",calculated),("B34",calculated),("B36",calculated),("B39:B40",calculated),("B45",calculated),("B47",calculated),("B49:B60",calculated),("B62:B63",calculated),("B70:B71",calculated)])
     #cell = san_jac_worksheet.cell(3,1)
     #print dir(cell)
     #cell.text_format['bold'] = True
