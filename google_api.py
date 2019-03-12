@@ -28,7 +28,7 @@ CALLS              = 0
 
 ################FORMATS###################
 currency = cellFormat(
-        numberFormat=numberFormat(type='currency',pattern='[Red][<0]$###,##0.00;[Black][>=0]$###,##0.00')
+        numberFormat=numberFormat(type='currency',pattern='[Red][<0]-$###,##0.00;[Black][>=0]$###,##0.00')
         )
 
 percent = cellFormat(
@@ -43,7 +43,7 @@ calculated = cellFormat(
 calculated_currency = cellFormat(
         backgroundColor=color(40, 40, 40),
         textFormat=textFormat(bold=True),
-        numberFormat=numberFormat(type='currency',pattern='[Red][<0]$###,##0.00;[Black][>=0]$###,##0.00')
+        numberFormat=numberFormat(type='currency',pattern='[Red][<0]-$###,##0.00;[Black][>=0]$###,##0.00')
 )
 
 bold = cellFormat(
