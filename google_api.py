@@ -1432,6 +1432,53 @@ def build_weekly_sheet(date):
         overview_worksheet.update_cells(cell_list, value_input_option='USER_ENTERED')
         overview_worksheet.update_title("Overview")
 
+        format_cell_ranges(overview_worksheet,[("A2:A8",bold),
+                                            ("B2:B8",currency),
+                                            ("C8",percent)])
+
+        format_cell_ranges(san_jac_worksheet, [("A3:A73",bold),
+                                                ("B1:I1",bold),
+                                                ("B2:I2",heading),
+                                                ("B3:I20",currency),
+                                                ("B10:I10",calculated_currency),
+                                                ("B23:I23",currency),
+                                                ("B26:I26",currency),
+                                                ("B29:I29",currency),
+                                                ("B32:I45",currency),
+                                                ("B39:I39",calculated_currency),
+                                                ("B40:I40",calculated_currency),
+                                                ("B49:I71",currency),
+                                                ("B62:I62",calculated_currency),
+                                                ("B63:I63",calculated_currency),
+                                                ("B70:I70",calculated_currency),
+                                                ("B71:I71",calculated_currency)])
+
+        format_cell_ranges(jacks_worksheet, [("A3:A73",bold),
+                                                ("B1:I1",bold),
+                                                ("B2:I2",heading),
+                                                ("B3:I20",currency),
+                                                ("B10:I10",calculated_currency),
+                                                ("B23:I23",currency),
+                                                ("B26:I26",currency),
+                                                ("B29:I29",currency),
+                                                ("B32:I45",currency),
+                                                ("B39:I39",calculated_currency),
+                                                ("B40:I40",calculated_currency),
+                                                ("B49:I71",currency),
+                                                ("B62:I62",calculated_currency),
+                                                ("B63:I63",calculated_currency),
+                                                ("B70:I70",calculated_currency),
+                                                ("B71:I71",calculated_currency)])
+
+        format_cell_ranges(checks_worksheet, [("A1",bold),
+                                                ("A2:F2",heading),
+                                                ("A3:A70",bold),
+                                                ("D3:D70",currency)])
+
+        format_cell_ranges(debits_worksheet, [("A1",bold),
+                                                ("A2:F2",heading),
+                                                ("A3:A70",bold),
+                                                ("C3:C70",currency)])
     except:
         print "Error finishing %s-SplitLevel_Operations_Week"%date.strftime("%m%d%y")
         time.sleep(100)
@@ -1502,6 +1549,11 @@ def build_month_sheet(date=False):
     cell_list[18-1].value = "Required sales per day"
     wsheet.update_cells(cell_list, value_input_option='USER_ENTERED')
     CALLS += 3
+
+    format_cell_ranges(wsheet,[("A1:A18",bold),
+                                            ("B1:B16",currency),
+                                            ("B18",currency),
+                                            ("C10",percent)])
 
     gs_sjs = '='
     gs_jacks = '='
