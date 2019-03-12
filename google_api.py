@@ -469,8 +469,8 @@ def test():
         backgroundColor=color(204, 204, 204),
         textFormat=textFormat(bold=True),
         horizontalAlignment='CENTER',
-        numberFormat=numberFormat(type='percent',pattern='##.#%'),
-        padding=padding(left=15,right=15)
+        #numberFormat=numberFormat(type='percent',pattern='##.#%'),
+        numberFormat=numberFormat(type='currency',pattern='[Red][<0]#,##0.##;[Black][>=0]#,##0.##')
         )
 
     format_cell_range(overview_worksheet, 'c8', fmt)
