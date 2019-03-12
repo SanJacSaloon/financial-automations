@@ -40,6 +40,12 @@ calculated = cellFormat(
         textFormat=textFormat(bold=True)
 )
 
+calculated_currency = cellFormat(
+        backgroundColor=color(40, 40, 40),
+        textFormat=textFormat(bold=True),
+        numberFormat=numberFormat(type='currency',pattern='[Red][<0]$###,##0.00;[Black][>=0]$###,##0.00')
+)
+
 def get_credentials():
     """
     Gets valid user credentials from storage.
@@ -489,7 +495,7 @@ def test():
         numberFormat=numberFormat(type='currency',pattern='[Red][<0]$###,##0.00;[Black][>=0]$###,##0.00')
         )
     '''
-    format_cell_ranges(san_jac_worksheet, [("B10",calculated),("B12",calculated),("B14",calculated),("B16",calculated),("B18:B20",calculated),("B23",calculated),("B26",calculated),("B29",calculated),("B32",calculated),("B34",calculated),("B36",calculated),("B39:B40",calculated),("B45",calculated),("B47",calculated),("B49:B60",calculated),("B62:B63",calculated),("B70:B71",calculated)])
+    format_cell_ranges(san_jac_worksheet, [("B10:I10",calculated_currency),("B12:I12",calculated_currency),("B14:I14",calculated_currency),("B16:I16",calculated_currency),("B18:I18",calculated_currency),("B19:I19",calculated_currency),("B20:I20",calculated_currency),("B23:I23",calculated_currency),("B26:I26",calculated_currency),("B29:I29",calculated_currency),("B32:I32",calculated_currency),("B34:I34",calculated_currency),("B36:I36",calculated_currency),("B39:I39",calculated_currency),("B40:I40",calculated_currency),("B45:I45",calculated_currency),("B47:I47",calculated_currency),("B49:I49",calculated_currency),("B50:I50",calculated_currency),("B51:I51",calculated_currency),("B52:I52",calculated_currency),("B53:I53",calculated_currency),("B54:I54",calculated_currency),("B55:I55",calculated_currency),("B56:I56",calculated_currency),("B57:I57",calculated_currency),("B58:I58",calculated_currency),("B59:I59",calculated_currency),("B60:I60",calculated_currency),("B62:I62",calculated_currency),("B63:I63",calculated_currency),("B70:I70",calculated_currency),("B71:I71",calculated_currency)])
     #cell = san_jac_worksheet.cell(3,1)
     #print dir(cell)
     #cell.text_format['bold'] = True
