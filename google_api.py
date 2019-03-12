@@ -36,7 +36,7 @@ percent = cellFormat(
         )
 
 calculated = cellFormat(
-        backgroundColor=color(20, 20, 20),
+        backgroundColor=color(40, 40, 40),
         textFormat=textFormat(bold=True)
 )
 
