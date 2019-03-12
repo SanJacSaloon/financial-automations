@@ -46,6 +46,14 @@ calculated_currency = cellFormat(
         numberFormat=numberFormat(type='currency',pattern='[Red][<0]$###,##0.00;[Black][>=0]$###,##0.00')
 )
 
+bold = cellFormat(
+        textFormat=textFormat(bold=True)
+)
+
+heading = cellFormat(
+        textFormat=textFormat(bold=True,underline=True),
+        horizontalAlignment='CENTER',
+        )
 def get_credentials():
     """
     Gets valid user credentials from storage.
@@ -495,7 +503,22 @@ def test():
         numberFormat=numberFormat(type='currency',pattern='[Red][<0]$###,##0.00;[Black][>=0]$###,##0.00')
         )
     '''
-    format_cell_ranges(san_jac_worksheet, [("B10:I10",calculated_currency),("B12:I12",calculated_currency),("B14:I14",calculated_currency),("B16:I16",calculated_currency),("B18:I18",calculated_currency),("B19:I19",calculated_currency),("B20:I20",calculated_currency),("B23:I23",calculated_currency),("B26:I26",calculated_currency),("B29:I29",calculated_currency),("B32:I32",calculated_currency),("B34:I34",calculated_currency),("B36:I36",calculated_currency),("B39:I39",calculated_currency),("B40:I40",calculated_currency),("B45:I45",calculated_currency),("B47:I47",calculated_currency),("B49:I49",calculated_currency),("B50:I50",calculated_currency),("B51:I51",calculated_currency),("B52:I52",calculated_currency),("B53:I53",calculated_currency),("B54:I54",calculated_currency),("B55:I55",calculated_currency),("B56:I56",calculated_currency),("B57:I57",calculated_currency),("B58:I58",calculated_currency),("B59:I59",calculated_currency),("B60:I60",calculated_currency),("B62:I62",calculated_currency),("B63:I63",calculated_currency),("B70:I70",calculated_currency),("B71:I71",calculated_currency)])
+    format_cell_ranges(san_jac_worksheet, [("A3:A73",bold),
+                                            ("B1:I1",bold),
+                                            ("B2:I2",heading),
+                                            ("B3:I20",currency),
+                                            ("B10:I10",calculated_currency),
+                                            ("B23:I23",currency),
+                                            ("B26:I26",currency),
+                                            ("B29:I29",currency),
+                                            ("B32:I45",currency),
+                                            ("B39:I39",calculated_currency),
+                                            ("B40:I40",calculated_currency),
+                                            ("B49:I71",currency),
+                                            ("B62:I62",calculated_currency),
+                                            ("B63:I63",calculated_currency),
+                                            ("B70:I70",calculated_currency),
+                                            ("B71:I71",calculated_currency)])
     #cell = san_jac_worksheet.cell(3,1)
     #print dir(cell)
     #cell.text_format['bold'] = True
