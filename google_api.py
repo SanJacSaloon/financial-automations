@@ -469,7 +469,7 @@ def test():
         backgroundColor=color(0, 0, 0),
         textFormat=textFormat(bold=True, foregroundColor=color(1, 0, 1)),
         horizontalAlignment='CENTER',
-        numberFormat=numberFormat(type='percent',pattern='##.##')
+        numberFormat=numberFormat(type='percent',pattern='##.#%')
         )
 
     format_cell_range(overview_worksheet, 'c8', fmt)
