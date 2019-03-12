@@ -36,7 +36,7 @@ percent = cellFormat(
         )
 
 calculated = cellFormat(
-        backgroundColor=color(222, 217, 217),
+        backgroundColor=color(10, 10, 10),
         textFormat=textFormat(bold=True)
 )
 
@@ -489,7 +489,7 @@ def test(format):
         numberFormat=numberFormat(type='currency',pattern='[Red][<0]$###,##0.00;[Black][>=0]$###,##0.00')
         )
     '''
-    format_cell_range(overview_worksheet, 'c8', format)
+    format_cell_range(overview_worksheet, 'c8', calculated)
     #cell = san_jac_worksheet.cell(3,1)
     #print dir(cell)
     #cell.text_format['bold'] = True
