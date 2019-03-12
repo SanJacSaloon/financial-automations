@@ -466,12 +466,13 @@ def test():
     #san_jac_worksheet = last_week_sheet.worksheet("San Jac")
     overview_worksheet = last_week_sheet.worksheet("Overview")
     fmt = cellFormat(
-        backgroundColor=color(1, 0.9, 0.9),
+        backgroundColor=color(0, 0, 0),
         textFormat=textFormat(bold=True, foregroundColor=color(1, 0, 1)),
-        horizontalAlignment='CENTER'
+        horizontalAlignment='CENTER',
+        type='percent'
         )
 
-    format_cell_range(overview_worksheet, 'b2', fmt)
+    format_cell_range(overview_worksheet, 'c8', fmt)
     #cell = san_jac_worksheet.cell(3,1)
     #print dir(cell)
     #cell.text_format['bold'] = True
