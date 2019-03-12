@@ -467,7 +467,7 @@ def update_annual_sheet(year):
     cell_list[13].value ="=B14/month(now())"
     worksheet.update_cells(cell_list, value_input_option='USER_ENTERED')
 
-def test(format):
+def test():
     global CALLS
     date=datetime.today()
     if date.strftime("%A").lower() != "sunday":
