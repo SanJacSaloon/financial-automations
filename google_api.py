@@ -26,6 +26,20 @@ APPLICATION_NAME   = 'Google Sheets API Python Quickstart'
 PARENT_FOLDER_ID   = secrets["google"]["parent_folder_id"]
 CALLS              = 0
 
+################FORMATS###################
+currency = cellFormat(
+        numberFormat=numberFormat(type='currency',pattern='[Red][<0]$###,##0.00;[Black][>=0]$###,##0.00')
+        )
+
+percent = cellFormat(
+        numberFormat=numberFormat(type='percent',pattern='##.#%')
+        )
+
+calculated = cellFormat(
+        backgroundColor=color(222, 217, 217),
+        textFormat=textFormat(bold=True)
+)
+
 def get_credentials():
     """
     Gets valid user credentials from storage.
@@ -453,7 +467,7 @@ def update_annual_sheet(year):
     cell_list[13].value ="=B14/month(now())"
     worksheet.update_cells(cell_list, value_input_option='USER_ENTERED')
 
-def test():
+def test(format):
     global CALLS
     date=datetime.today()
     if date.strftime("%A").lower() != "sunday":
@@ -465,6 +479,8 @@ def test():
 
     #san_jac_worksheet = last_week_sheet.worksheet("San Jac")
     overview_worksheet = last_week_sheet.worksheet("Overview")
+    fmt = cellFormat(format)
+    '''
     fmt = cellFormat(
         backgroundColor=color(222, 217, 217),
         textFormat=textFormat(bold=True),
@@ -472,7 +488,7 @@ def test():
         #numberFormat=numberFormat(type='percent',pattern='##.#%'),
         numberFormat=numberFormat(type='currency',pattern='[Red][<0]$###,##0.00;[Black][>=0]$###,##0.00')
         )
-
+    '''
     format_cell_range(overview_worksheet, 'c8', fmt)
     #cell = san_jac_worksheet.cell(3,1)
     #print dir(cell)
@@ -596,6 +612,7 @@ def build_weekly_sheet(date):
         cell_list[71-1].value = '=B11'
         san_jac_worksheet.update_cells(cell_list, value_input_option='USER_ENTERED')
         CALLS += 2
+        
 
         sjs_date = sjs_date+timedelta(days=1)
         cell_list = san_jac_worksheet.range("c1:c71")
