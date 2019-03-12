@@ -1331,6 +1331,12 @@ def build_weekly_sheet(date):
         overview_worksheet.update_cells(cell_list, value_input_option='USER_ENTERED')
         overview_worksheet.update_title("Overview")
         CALLS += 3
+
+        cell_list = overview_worksheet.range("c1:c9")
+        cell_list[8-1].value = "=b8/b7"
+        overview_worksheet.update_cells(cell_list, value_input_option='USER_ENTERED')
+        overview_worksheet.update_title("Overview")
+        
     except:
         print "Error finishing %s-SplitLevel_Operations_Week"%date.strftime("%m%d%y")
         time.sleep(100)
