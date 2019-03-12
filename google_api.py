@@ -477,8 +477,8 @@ def test():
     last_week_sheet = open_google_spreadsheet(spreadsheet_title=last_week_sheet_title)
     #last_week_sheet_id = last_week_sheet.id
 
-    #san_jac_worksheet = last_week_sheet.worksheet("San Jac")
-    overview_worksheet = last_week_sheet.worksheet("Overview")
+    san_jac_worksheet = last_week_sheet.worksheet("San Jac")
+    #overview_worksheet = last_week_sheet.worksheet("Overview")
     
     '''
     fmt = cellFormat(
@@ -489,7 +489,7 @@ def test():
         numberFormat=numberFormat(type='currency',pattern='[Red][<0]$###,##0.00;[Black][>=0]$###,##0.00')
         )
     '''
-    format_cell_range(overview_worksheet, 'c8', calculated)
+    format_cell_range(san_jac_worksheet, "B10,B12,B14,B16,B18:B20,B23,B26,B29,B32,B34,B36,B39:B40,B45,B47,B49:B60,B62:B63,B70:B71", calculated)
     #cell = san_jac_worksheet.cell(3,1)
     #print dir(cell)
     #cell.text_format['bold'] = True
@@ -612,6 +612,7 @@ def build_weekly_sheet(date):
         cell_list[71-1].value = '=B11'
         san_jac_worksheet.update_cells(cell_list, value_input_option='USER_ENTERED')
         CALLS += 2
+        #format_cell_range(san_jac_worksheet, 'c8', calculated)
         
 
         sjs_date = sjs_date+timedelta(days=1)
