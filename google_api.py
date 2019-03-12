@@ -470,7 +470,7 @@ def test():
         textFormat=textFormat(bold=True),
         horizontalAlignment='CENTER',
         numberFormat=numberFormat(type='percent',pattern='##.#%'),
-        padding=padding(left=5,right=5)
+        padding=padding(left=15,right=15)
         )
 
     format_cell_range(overview_worksheet, 'c8', fmt)
