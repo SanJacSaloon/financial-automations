@@ -479,7 +479,7 @@ def test(format):
 
     #san_jac_worksheet = last_week_sheet.worksheet("San Jac")
     overview_worksheet = last_week_sheet.worksheet("Overview")
-    fmt = cellFormat(format)
+    
     '''
     fmt = cellFormat(
         backgroundColor=color(222, 217, 217),
@@ -489,7 +489,7 @@ def test(format):
         numberFormat=numberFormat(type='currency',pattern='[Red][<0]$###,##0.00;[Black][>=0]$###,##0.00')
         )
     '''
-    format_cell_range(overview_worksheet, 'c8', fmt)
+    format_cell_range(overview_worksheet, 'c8', format)
     #cell = san_jac_worksheet.cell(3,1)
     #print dir(cell)
     #cell.text_format['bold'] = True
