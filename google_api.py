@@ -14,6 +14,9 @@ from oauth2client       import client
 from oauth2client       import tools
 from oauth2client.file import Storage
 
+from gspread_formatting import *
+
+
 # If modifying these scopes, delete your previously saved credentials
 # at ~/.credentials/sheets.googleapis.com-python-quickstart.json
 secrets            = json.loads(open("/opt/sjs/secrets.json").read())
@@ -460,12 +463,20 @@ def test():
     last_week_sheet = open_google_spreadsheet(spreadsheet_title=last_week_sheet_title)
     #last_week_sheet_id = last_week_sheet.id
 
-    san_jac_worksheet = last_week_sheet.worksheet("San Jac")
-    cell = san_jac_worksheet.cell(3,1)
-    print dir(cell)
-    cell.text_format['bold'] = True
-    cell.update()
-    return sheet
+    #san_jac_worksheet = last_week_sheet.worksheet("San Jac")
+    overview_worksheet = last_week_sheet.worksheet("Overview")
+    fmt = cellFormat(
+        backgroundColor=color(1, 0.9, 0.9),
+        textFormat=textFormat(bold=True, foregroundColor=color(1, 0, 1)),
+        horizontalAlignment='CENTER'
+        )
+
+    format_cell_range(overview_worksheet, 'b2', fmt)
+    #cell = san_jac_worksheet.cell(3,1)
+    #print dir(cell)
+    #cell.text_format['bold'] = True
+    #cell.update()
+    #return sheet
 
 def build_weekly_sheet(date):
     global CALLS
@@ -1336,7 +1347,7 @@ def build_weekly_sheet(date):
         cell_list[8-1].value = "=b8/b7"
         overview_worksheet.update_cells(cell_list, value_input_option='USER_ENTERED')
         overview_worksheet.update_title("Overview")
-        
+
     except:
         print "Error finishing %s-SplitLevel_Operations_Week"%date.strftime("%m%d%y")
         time.sleep(100)
