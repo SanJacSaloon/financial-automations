@@ -466,11 +466,11 @@ def test():
     #san_jac_worksheet = last_week_sheet.worksheet("San Jac")
     overview_worksheet = last_week_sheet.worksheet("Overview")
     fmt = cellFormat(
-        backgroundColor=color(204, 204, 204),
+        backgroundColor=color(222, 217, 217),
         textFormat=textFormat(bold=True),
         horizontalAlignment='CENTER',
         #numberFormat=numberFormat(type='percent',pattern='##.#%'),
-        numberFormat=numberFormat(type='currency',pattern='[Red][<0]#,##0.##;[Black][>=0]#,##0.##')
+        numberFormat=numberFormat(type='currency',pattern='[Red][<0]$###,##0.00;[Black][>=0]$###,##0.00')
         )
 
     format_cell_range(overview_worksheet, 'c8', fmt)
