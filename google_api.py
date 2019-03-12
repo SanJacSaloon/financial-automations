@@ -465,8 +465,11 @@ def test():
 
     #san_jac_worksheet = last_week_sheet.worksheet("San Jac")
     overview_worksheet = last_week_sheet.worksheet("Overview")
-    fmt = numberFormat(
-        type='PERCENT'
+    fmt = cellFormat(
+        backgroundColor=color(0, 0, 0),
+        textFormat=textFormat(bold=True, foregroundColor=color(1, 0, 1)),
+        horizontalAlignment='CENTER',
+        numberFormat=numberFormat(type='percent')
         )
 
     format_cell_range(overview_worksheet, 'c8', fmt)
