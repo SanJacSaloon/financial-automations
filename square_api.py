@@ -1724,7 +1724,7 @@ if __name__ == '__main__':
         fil.close()
 
         email = {'subject':'Week of %s' % date.strftime("%Y-%m-%d"), 'body':sales[1]}
-        email_report(report=email)
+        email_report(email=secrets["general"]["smtp_to_admin"],report=email)
 
     ###########################
     ##########MONTHLY##########
@@ -1743,7 +1743,7 @@ if __name__ == '__main__':
         fil.close()
 
         email = {'subject':'Month of %s'%sdate.strftime("%Y-%m"), 'body':sales[1]}
-        email_report(report=email)
+        email_report(email=secrets["general"]["smtp_to_admin"],report=email)
         
     if (datetime.datetime.strptime(report_date, "%Y-%m-%d")+datetime.timedelta(days=1)).strftime("%Y-%m-%d") == "2019-01-01":
 
@@ -1755,7 +1755,7 @@ if __name__ == '__main__':
         fil.close()
 
         email = {'subject':'Year of %s'%sdate.strftime("%Y"), 'body':sales[1]}
-        email_report(report=email)
+        email_report(email=secrets["general"]["smtp_to_admin"]report=email)
 
     try:
         get_month()
