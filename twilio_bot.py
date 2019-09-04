@@ -77,7 +77,9 @@ def get_sales ():
     full_report += "San Jac:           " + format_money(sales["sjs_total"])   + "\n"
     full_report += "Jack's:            " + format_money(sales["jacks_total"]) + "\n"
     full_report += "Total:             " + format_money(sales["jacks_total"]  + sales["sjs_total"]) + "\n"
-
+    full_report += "Total Transactions:\n" + format_money(transactions - total_tips) + "\n"
+    full_report += "San Jac Tips:           " + format_money(sales["sjs_tips"])   + "\n"
+    full_report += "Jack's Tips:            " + format_money(sales["jacks_tips"]) + "\n"
     # calculate total tips across both venues.
     total_tips   = int(sales["jacks_tips"]) + int(sales["sjs_tips"])
 
@@ -88,7 +90,8 @@ def get_sales ():
         transactions = int(-111)
 
     # add splice in the total transactions and return the report.
-    return full_report + "Total Transactions:\n" + format_money(transactions - total_tips) + "\n"
+    return full_report
+
 
 
 def get_week ():
