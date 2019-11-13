@@ -187,7 +187,7 @@ def inbound_sms():
 
     elif "report" in inbound_message.lower():
         send_sms("Processing report...",number)
-        os.system("/opt/sjs/financial-automations/square_api.py")
+        os.system("python /opt/sjs/financial-automations/square_api.py")
         send_sms("Done Processing",number)
 
     else:
