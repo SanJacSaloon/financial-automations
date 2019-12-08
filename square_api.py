@@ -1287,13 +1287,24 @@ def monthly_sales (date, recursive=False):
         full_report += "Gross Wine:          " + format_money((monthly_total["sjs_wine"]+monthly_total["jacks_wine"])*.87) + "\n"
         full_report += "Gross Beer:          " + format_money((monthly_total["sjs_beer"]+monthly_total["jacks_beer"])*.87) + "\n"
         full_report += "Total Gross Taxable: " + format_money(total_alc*.87) + "\n"
+        mbgr_tax = (total_alc*.87)*.067
+        full_report += "Tax Due:             " + format_money(mbgr_tax) + "\n"
         full_report += "--MIXED BEVERAGE SALES--\n"
         full_report += "Total Sales:         " + format_money((non_alc*.9175)+(total_alc*.87)+other_sales) + "\n"
-        full_report += "Taxable Sales:       " + format_money((monthly_total["sjs_liquor"]+monthly_total["jacks_liquor"]+monthly_total["sjs_wine"]+monthly_total["jacks_wine"]+monthly_total["sjs_beer"]+monthly_total["jacks_beer"])*.87) + "\n"
+        tmp = (monthly_total["sjs_liquor"]+monthly_total["jacks_liquor"]+monthly_total["sjs_wine"]+monthly_total["jacks_wine"]+monthly_total["sjs_beer"]+monthly_total["jacks_beer"])*.87
+        full_report += "Taxable Sales:       " + format_money(tmp) + "\n"
+        mbs_tax = tmp*.0825
+        full_report += "Tax Due:             " + format_money(mbs_tax) + "\n"
         full_report += "--SALES AND USE--\n"
         full_report += "Total Sales:         " + format_money((non_alc*.9175)+(total_alc*.87)+other_sales) + "\n"
         full_report += "Taxable Sales:       " + format_money(non_alc*.9175) + "\n"
-        full_report += "Taxable Purchases:   " + format_money(((monthly_total["sjs_comps"]+monthly_total["jacks_comps"])*.87)*.2) + "\n"
+        tmp = ((monthly_total["sjs_comps"]+monthly_total["jacks_comps"])*.87)*.2
+        full_report += "Taxable Purchases:   " + format_money(tmp) + "\n"
+        tmp = tmp+(non_alc*.9175)
+        sau_tax = tmp*.0825
+        full_report += "Tax Due:             " + format_money(sau_tax) + "\n"
+        full_report += "\n"
+        full_report += "Total Tax Due:       " + format_money(mbgr_tax+mbs_tax+sau_tax) + "\n"
 
     else:
         return report_string(monthly_total)
