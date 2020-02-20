@@ -511,7 +511,7 @@ def get_cash_drawer (date=False):
 
 
 ########################################################################################################################
-def get_payments (date=False, current=False):
+def get_payments (date=False, current=False, hours=False):
     """
     downloads all of a business's payments.
     """
@@ -547,6 +547,16 @@ def get_payments (date=False, current=False):
         begin      = reportdate.strftime("%Y-%m-%dT08:00:00-06:00")
         parameters = urllib.urlencode({"begin_time": begin, "end_time" : end})
 
+    if hours:
+        try:
+            start_format = "%Y-%m-%d"+"T%02d:00:00-06:00"%hours[0]
+            end_format = "%Y-%m-%d"+"T%02d:00:00-06:00"%hours[1]
+            print start_format
+            print end_format
+            begin = datetime.datetime.today().strftime(start_format)
+            end   = end.strftime(end_format)
+        except:
+            return False
     payments = []
 
     # the base URL for every Connect API request.
