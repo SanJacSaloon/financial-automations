@@ -92,7 +92,34 @@ def get_sales ():
     # add splice in the total transactions and return the report.
     return full_report
 
+def get_sales_hours(message):
+        try:
+            tmp=message.find('-')
+            if tmp == -1: return "Please use proper syntax. eg. sales 05-14 (Use army time)"
+            hours = message[tmp-2:tmp+2]
+            start = hours[:2]
+            end   = hours[3:]
+            print message
+            print hours
+            print start
+            print end
+        except:
+            return "Please use proper syntax. eg. sales 05-14 (Use army time)"         
+        try: payments = square_api.get_payments(current=True,hours=(start,end))
+        except: return "Square is fucking up. Try again"
 
+        try:drawers = square_api.get_cash_drawer(report_date)
+        except:drawers = []
+        sales = square_api.sales_totals(payments,drawers,'')
+        full_report = "SALES:\n"
+        full_report += 'San Jac:           ' + format_money(sales['sjs_total'])+'\n'
+        full_report += "Jack's:            " + format_money(sales['jacks_total'])+'\n'
+        full_report += 'Total:             ' + format_money(sales['jacks_total']+sales['sjs_total'])+'\n'
+        total_tips = int(sales['jacks_tips'])+int(sales['sjs_tips'])
+        try: transactions = square_api.print_transactions_report(square_api.get_transactions(current=True))
+        except: transactions = int(-111)
+        full_report += "Total Transactions:\n" + format_money(transactions-total_tips)+'\n'
+        return full_report
 
 def get_week ():
         weekdays = \
@@ -159,7 +186,9 @@ def inbound_sms():
 
     # "arg" parsing.
     if "sales" in inbound_message.lower():
-        send_sms(get_sales(),number)
+        if '-' in inbound_message.lower():
+            send_sms(get_sales_hours(inbound_message.lower()),number)
+        else:send_sms(get_sales(),number)
 
     elif "wtd" in inbound_message.lower():
         send_sms(get_week(),number)
