@@ -557,7 +557,7 @@ def get_payments (date=False, current=False, hours=False):
             begin = datetime.datetime.today().strftime(start_format)
             end   = datetime.datetime.today().strftime(end_format)
         
-            return False
+            #return False
     payments = []
 
     # the base URL for every Connect API request.
