@@ -548,9 +548,10 @@ def get_payments (date=False, current=False, hours=False):
         parameters = urllib.urlencode({"begin_time": begin, "end_time" : end})
 
     if hours:
-        
-            start_format = "%Y-%m-%d"+"T%02d:00:00-06:00"%hours[0]
-            end_format = "%Y-%m-%d"+"T%02d:00:00-06:00"%hours[1]
+            print hours[0]
+            print hours[1]
+            start_format = "%Y-%m-%d"+"T%02d:00:00-06:00"%int(hours[0])
+            end_format = "%Y-%m-%d"+"T%02d:00:00-06:00"%int(hours[1])
             print start_format
             print end_format
             begin = datetime.datetime.today().strftime(start_format)
