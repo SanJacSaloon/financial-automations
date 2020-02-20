@@ -555,7 +555,7 @@ def get_payments (date=False, current=False, hours=False):
             print start_format
             print end_format
             begin = datetime.datetime.today().strftime(start_format)
-            end   = end.strftime(end_format)
+            end   = datetime.datetime.today().strftime(end_format)
         
             return False
     payments = []
