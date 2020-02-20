@@ -96,7 +96,7 @@ def get_sales_hours(message):
         try:
             tmp=message.find('-')
             if tmp == -1: return "Please use proper syntax. eg. sales 05-14 (Use army time)"
-            hours = message[tmp-2:tmp+2]
+            hours = message[tmp-2:tmp+3]
             start = hours[:2]
             end   = hours[3:]
             print message
