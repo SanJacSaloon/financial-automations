@@ -554,6 +554,10 @@ def get_payments (date=False, current=False, hours=False):
 
             begin = datetime.datetime.today().strftime(start_format)
             end   = datetime.datetime.today().strftime(end_format)
+            print start_format
+            print end_format
+            print begin
+            print end
             parameters = urllib.urlencode({"begin_time": begin, "end_time" : end})
         except: return False
     payments = []
