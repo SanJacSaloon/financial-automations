@@ -99,15 +99,11 @@ def get_sales_hours(message):
             hours = message[tmp-2:tmp+3]
             start = hours[:2]
             end   = hours[3:]
-            print message
-            print hours
-            print start
-            print end
         except:
             return "Please use proper syntax. eg. sales 05-14 (Use army time)"         
         #try: 
         payments = square_api.get_payments(current=True,hours=(start,end))
-        print payments
+
         if not payments:
             return "Please use proper syntax. eg. sales 05-14 (Use army time)"
         #except: return "Square is fucking up. Try again"
