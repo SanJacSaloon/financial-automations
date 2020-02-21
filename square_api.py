@@ -549,6 +549,10 @@ def get_payments (date=False, current=False, hours=False):
 
     if hours:
         try:
+            if int(hours[0])+6 > 24: 
+                hours[0]=(int(hours[0])+6)-24
+            if int(hours[1])+6 > 24: 
+                hours[1]=(int(hours[1])+6)-24
             start_format = "%Y-%m-%d"+"T%02d:00:00"%int(hours[0])+6
             end_format = "%Y-%m-%d"+"T%02d:00:00"%int(hours[1])+6
 
