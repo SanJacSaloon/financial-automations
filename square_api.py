@@ -548,7 +548,7 @@ def get_payments (date=False, current=False, hours=False):
         parameters = urllib.urlencode({"begin_time": begin, "end_time" : end})
 
     if hours:
-        try:
+        #try:
             if int(hours[0])+6 > 24: 
                 hours[0]=(int(hours[0])+6)-24
             if int(hours[1])+6 > 24: 
@@ -563,7 +563,7 @@ def get_payments (date=False, current=False, hours=False):
             print begin
             print end
             parameters = urllib.urlencode({"begin_time": begin, "end_time" : end})
-        except: return False
+        #except: return False
     payments = []
 
     # the base URL for every Connect API request.
