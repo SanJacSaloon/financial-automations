@@ -550,8 +550,8 @@ def get_payments (date=False, current=False, hours=False):
     if hours:
         try:
 
-            start_format = "%Y-%m-%d"+"T%02d:00:00+06:00"%int(hours[0])
-            end_format = "%Y-%m-%d"+"T%02d:00:00+06:00"%int(hours[1])
+            start_format = "%Y-%m-%d"+"T%02d:00:00"%int(hours[0])
+            end_format = "%Y-%m-%d"+"T%02d:00:00"%int(hours[1])
 
             begin = datetime.datetime.today().strftime(start_format)
             end   = datetime.datetime.today().strftime(end_format)
