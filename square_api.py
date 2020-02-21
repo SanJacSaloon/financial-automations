@@ -572,7 +572,7 @@ def get_payments (date=False, current=False, hours=False):
             # ...send a GET request to /v1/LOCATION_ID/payments
             connection.request("GET", request_path, "", request_headers)
             response = connection.getresponse()
-            print json.loads(response.read()
+            print json.loads(response.read())
             # Read the response body JSON into the cumulative list of results
             payments = payments + json.loads(response.read())
 
