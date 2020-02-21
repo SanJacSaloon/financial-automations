@@ -548,22 +548,15 @@ def get_payments (date=False, current=False, hours=False):
         parameters = urllib.urlencode({"begin_time": begin, "end_time" : end})
 
     if hours:
-        #try:
-            if int(hours[0])+6 >= 24: 
-                hours = ((int(hours[0])+6)-24,hours[1])
-            if int(hours[1])+6 >= 24: 
-                hours = (hours[0], (int(hours[1])+6)-24)
-            start_format = "%Y-%m-%d"+"T%02d:00:00"%(int(hours[0])+6)
-            end_format = "%Y-%m-%d"+"T%02d:00:00"%(int(hours[1])+6)
+        try:
+
+            start_format = "%Y-%m-%d"+"T%02d:00:00+06:00"%int(hours[0])
+            end_format = "%Y-%m-%d"+"T%02d:00:00+06:00"%int(hours[1])
 
             begin = datetime.datetime.today().strftime(start_format)
             end   = datetime.datetime.today().strftime(end_format)
-            print start_format
-            print end_format
-            print begin
-            print end
             parameters = urllib.urlencode({"begin_time": begin, "end_time" : end})
-        #except: return False
+        except: return False
     payments = []
 
     # the base URL for every Connect API request.
