@@ -114,7 +114,7 @@ def get_sales_hours(message):
         full_report += "Jack's:            " + format_money(sales['jacks_total'])+'\n'
         full_report += 'Total:             ' + format_money(sales['jacks_total']+sales['sjs_total'])+'\n'
         total_tips = int(sales['jacks_tips'])+int(sales['sjs_tips'])
-        try: transactions = square_api.print_transactions_report(square_api.get_transactions(current=True))
+        try: transactions = square_api.print_transactions_report(square_api.get_transactions(current=True,hours=(start,end)))
         except: transactions = int(-111)
         full_report += "Total Transactions:\n" + format_money(transactions-total_tips)+'\n'
         return full_report

@@ -548,14 +548,14 @@ def get_payments (date=False, current=False, hours=False):
         parameters = urllib.urlencode({"begin_time": begin, "end_time" : end})
 
     if hours:
-        #try:
+        try:
             start_format = "%Y-%m-%d"+"T%02d:00:00-06:00"%int(hours[0])
             end_format = "%Y-%m-%d"+"T%02d:00:00-06:00"%int(hours[1])
 
             begin = datetime.datetime.today().strftime(start_format)
             end   = datetime.datetime.today().strftime(end_format)
             parameters = urllib.urlencode({"begin_time": begin, "end_time" : end})
-        #except: return False
+        except: return False
     payments = []
 
     # the base URL for every Connect API request.
@@ -617,7 +617,7 @@ def print_transactions_report (transactions):
 
 
 ########################################################################################################################
-def get_transactions (date=False, current=False):
+def get_transactions (date=False, current=False,hours=False):
     global log
 
     # Make sure to URL-encode all parameters
@@ -651,10 +651,20 @@ def get_transactions (date=False, current=False):
             begin = date + "T08:00:00-06:00"
 
         parameters = urllib.urlencode({'begin_time': begin})
-
+    
     else:
         begin = reportdate.strftime("%Y-%m-%dT08:00:00-06:00")
 
+    if hours:
+        try:
+            start_format = "%Y-%m-%d"+"T%02d:00:00-06:00"%int(hours[0])
+            end_format = "%Y-%m-%d"+"T%02d:00:00-06:00"%int(hours[1])
+
+            begin = datetime.datetime.today().strftime(start_format)
+            end   = datetime.datetime.today().strftime(end_format)
+            parameters = urllib.urlencode({"begin_time": begin, "end_time" : end})
+        except: return False
+            
     # the base URL for every Connect API request.
     transactions = []
     connection   = httplib.HTTPSConnection("connect.squareup.com")
