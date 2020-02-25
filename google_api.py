@@ -1481,7 +1481,7 @@ def build_weekly_sheet(date):
                                                 ("C3:C70",currency)])
     except:
         print "Error finishing %s-SplitLevel_Operations_Week"%date.strftime("%m%d%y")
-        time.sleep(100)
+        time.sleep(20)
         CALLS = 0
         delete_google_spreadsheet(sheet.id)
         return build_weekly_sheet(date)
