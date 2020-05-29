@@ -96,11 +96,11 @@ def get_sales ():
     # add splice in the total transactions and return the report.
 
     full_report += "Comps:            " + format_money(-1.0*(sales["sjs_comps"]+sales["jacks_comps"])) + "\n"
-    full_report += "Comp %:            " + format_money((-1.0*(sales["sjs_comps"]+sales["jacks_comps"])/(transactions - total_tips))) + "\n"
+    full_report += "Comp %:            " + "%.02f"%((-1.0*(sales["sjs_comps"]+sales["jacks_comps"])/(transactions - total_tips))*100) + "\n"
     full_report += "Discounts:            " + format_money(-1.0*(sales["sjs_dcounts"]+sales["jacks_dcounts"])) + "\n"
-    full_report += "Discount %:            " + format_money((-1.0*(sales["sjs_dcounts"]+sales["jacks_dcounts"])/(transactions - total_tips))) + "\n"
+    full_report += "Discount %:            " + "%.02f"%((-1.0*(sales["sjs_dcounts"]+sales["jacks_dcounts"])/(transactions - total_tips))*100) + "\n"
     full_report += "Total Opps:            " + format_money(total_discount) + "\n"
-    full_report += "Total Opp %:            " + format_money(total_discount/(transactions - total_tips)) + "\n"
+    full_report += "Total Opp %:            " + "%.02f"%(total_discount/(transactions - total_tips)*100) + "\n"
     return full_report
 
 def get_sales_hours(message):
