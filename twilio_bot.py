@@ -71,7 +71,11 @@ def get_sales ():
 
     # pull sales totals.
     sales = square_api.sales_totals(payments, drawers, "")
-
+    
+    total_discount = -1.0*(sales["sjs_dcounts"]+sales["jacks_dcounts"]+sales["sjs_comps"]+sales["jacks_comps"])
+    total_sales = sales["sjs_total"]+sales["jacks_total"]
+    try:discount_percentage = "%.02f"%((total_discount/total_sales)*100)
+    except:discount_percentage = "Error"
     # create a sales report for each floor and combined.
     full_report  = "SALES:\n"
     full_report += "San Jac:           " + format_money(sales["sjs_total"])   + "\n"
@@ -90,6 +94,13 @@ def get_sales ():
     full_report += "San Jac Tips:           " + format_money(sales["sjs_tips"])   + "\n"
     full_report += "Jack's Tips:            " + format_money(sales["jacks_tips"]) + "\n"
     # add splice in the total transactions and return the report.
+
+    full_report += "Comps:            " + format_money(-1.0*(sales["sjs_comps"]+sales["jacks_comps"]) + "\n"
+    full_report += "Comp %:            " + format_money((-1.0*(sales["sjs_comps"]+sales["jacks_comps"])/(transactions - total_tips))) + "\n"
+    full_report += "Discounts:            " + format_money(-1.0*(sales["sjs_dcounts"]+sales["jacks_dcounts"]) + "\n"
+    full_report += "Discount %:            " + format_money((-1.0*(sales["sjs_dcounts"]+sales["jacks_dcounts"])/(transactions - total_tips))) + "\n"
+    full_report += "Total Opps:            " + format_money(total_discount) + "\n"
+    full_report += "Total Opp %:            " + format_money(total_discount/(transactions - total_tips)) + "\n"
     return full_report
 
 def get_sales_hours(message):
