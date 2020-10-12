@@ -1537,6 +1537,11 @@ def report_string (total):
     return_string += "Unknown Device:    " + format_money(total["unknown"])   + "\n"
     return_string += "\n"
     return_string += "\n"
+    try:food_percentage = "%.02f"%(((total["jacks_food"]+total["sjs_food"])/total_sales)*100)
+    except:food_percentage = "Error"
+    return_string += "Food Percentage: %s"%food_percentage
+    return_string += "\n"
+    return_string += "\n"
     total_discount = -1.0*(total["sjs_dcounts"]+total["jacks_dcounts"]+total["sjs_comps"]+total["jacks_comps"])
     total_sales = total["sjs_total"]+total["jacks_total"]
     try:discount_percentage = "%.02f"%((total_discount/total_sales)*100)

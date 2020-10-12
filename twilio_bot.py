@@ -76,11 +76,13 @@ def get_sales ():
     total_sales = sales["sjs_total"]+sales["jacks_total"]
     try:discount_percentage = "%.02f"%((total_discount/total_sales)*100)
     except:discount_percentage = "Error"
+    total_food = sales["jacks_food"]+sales["sjs_food"]
+    try:food_percentage = "%.02f"%((total_food/total_sales)*100)
+    except:food_percentage = "Error"
     # create a sales report for each floor and combined.
     full_report  = "SALES:\n"
     full_report += "San Jac:           " + format_money(sales["sjs_total"])   + "\n"
     full_report += "Jack's:            " + format_money(sales["jacks_total"]) + "\n"
-    full_report += "Total Food:        " + format_money(sales["jacks_food"]+sales["sjs_food"]) + "\n"
     full_report += "Total:             " + format_money(sales["jacks_total"]  + sales["sjs_total"]) + "\n"
     
     # calculate total tips across both venues.
@@ -102,6 +104,8 @@ def get_sales ():
     full_report += "Discount %:        " + "%.02f"%((-1.0*(sales["sjs_dcounts"]+sales["jacks_dcounts"])/(transactions - total_tips))*100) + "\n"
     full_report += "Total Opps:        " + format_money(total_discount) + "\n"
     full_report += "Total Opp %:       " + "%.02f"%(total_discount/(transactions - total_tips)*100) + "\n"
+    full_report += "Total Food:        " + format_money(total_food) + "\n"
+    full_report += "Total Food %:      " + "%.02f"%(total_food/(transactions - total_tips)*100) + "\n"
     return full_report
 
 def get_sales_hours(message):
