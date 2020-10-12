@@ -80,6 +80,7 @@ def get_sales ():
     full_report  = "SALES:\n"
     full_report += "San Jac:           " + format_money(sales["sjs_total"])   + "\n"
     full_report += "Jack's:            " + format_money(sales["jacks_total"]) + "\n"
+    full_report += "Total Food:        " + format_money(sales["jacks_food"]+sales["sjs_food"]) + "\n"
     full_report += "Total:             " + format_money(sales["jacks_total"]  + sales["sjs_total"]) + "\n"
     
     # calculate total tips across both venues.

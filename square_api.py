@@ -784,6 +784,8 @@ def sales_totals(payments,drawers,reportd):
      # variables for holding cumulative values of various monetary amounts.
     total["sjs_tips"]         = 0
     total["jacks_tips"]       = 0
+    total["sjs_food"]         = 0
+    total["jacks_food"]       = 0
     total["sjs_refunds"]      = 0
     total["jacks_refunds"]    = 0
     total["sjs_beer"]         = 0
@@ -872,6 +874,11 @@ def sales_totals(payments,drawers,reportd):
                         total["sjs_total"]       = total["sjs_total"]   + amount
                         total["sjs_nonalc"]      = total["sjs_nonalc"]  + amount
 
+                    elif "food" in category.lower():
+                        total["sjs_total"]       = total["sjs_total"]   + amount
+                        total["sjs_food"]      = total["sjs_food"]  + amount
+                        total["sjs_nonalc"]      = total["sjs_nonalc"]  + amount
+
                     elif "wine" in category.lower():
                         total["sjs_total"]       = total["sjs_total"]   + amount
                         total["sjs_wine"]        = total["sjs_wine"]    + amount
@@ -932,6 +939,11 @@ def sales_totals(payments,drawers,reportd):
                     elif "non/alc" in category.lower():
                         total["jacks_total"]   = total["jacks_total"]    + amount
                         total["jacks_nonalc"]  = total["jacks_nonalc"]   + amount
+
+                    elif "food" in category.lower():
+                        total["jacks_total"]       = total["jacks_total"]   + amount
+                        total["jacks_food"]      = total["jacks_food"]  + amount
+                        total["jacks_nonalc"]      = total["jacks_nonalc"]  + amount
 
                     elif "wine" in category.lower():
                         total["jacks_total"]   = total["jacks_total"]    + amount
@@ -1025,6 +1037,7 @@ def fill_db (reportd, total, timeframe):
     d["sjs_beer"]         = total["sjs_beer"]
     d["sjs_wine"]         = total["sjs_wine"]
     d["sjs_redbull"]      = 0
+    d["sjs_food"]         = total["sjs_food"]
     d["sjs_nonalc"]       = total["sjs_nonalc"]
     d["sjs_service"]      = total["sjs_service"]
     d["sjs_retail"]       = total["sjs_retail"]
@@ -1041,6 +1054,7 @@ def fill_db (reportd, total, timeframe):
     d["jacks_wine"]       = total["jacks_wine"]
     d["jacks_redbull"]    = 0
     d["jacks_nonalc"]     = total["jacks_nonalc"]
+    d["jacks_food"]       = total["jacks_food"]
     d["jacks_service"]    = total["jacks_service"]
     d["jacks_retail"]     = total["jacks_retail"]
     d["jacks_total"]      = total["jacks_total"]
@@ -1468,6 +1482,7 @@ def report_string (total):
     return_string += "     =San Jac=\n"
     return_string += "Total:             " + format_money(total["sjs_total"])   + "\n"
     return_string += "Total Alcohol:     " + format_money(total["sjs_alcohol"]) + "\n"
+    return_string += "Total Food:        " + format_money(total["sjs_food"]) + "\n"
     return_string += "Total Non-Alcohol: " + format_money(total["sjs_retail"]   + total["sjs_nonalc"]) + "\n"
     return_string += "Total Taxes:       " + format_money((total["sjs_alcohol"] * .027) + (total["sjs_total"] * .0825)) + "\n"
     return_string += "\n"
@@ -1475,6 +1490,7 @@ def report_string (total):
     return_string += "Beer:              " + format_money(total["sjs_beer"])          + "\n"
     return_string += "Wine:              " + format_money(total["sjs_wine"])          + "\n"
     return_string += "Non-Alcohol:       " + format_money(total["sjs_nonalc"])        + "\n"
+    return_string += "Total Food:        " + format_money(total["sjs_food"]) + "\n"
     return_string += "Service/Room:      " + format_money(total["sjs_service"])       + "\n"
     return_string += "Merch:             " + format_money(total["sjs_retail"])        + "\n"
     return_string += "Total Credit:      " + format_money(total["sjs_credit"])        + "\n"
@@ -1494,12 +1510,14 @@ def report_string (total):
     return_string += "     =Jack's=\n"
     return_string += "Total:             " + format_money(total["jacks_total"])   + "\n"
     return_string += "Total Alcohol:     " + format_money(total["jacks_alcohol"]) + "\n"
+    return_string += "Total Food:        " + format_money(total["jacks_food"]) + "\n"
     return_string += "Total Non-Alcohol: " + format_money(total["jacks_retail"]   + total["jacks_nonalc"]) + "\n"
     return_string += "Total Taxes:       " + format_money((total["jacks_alcohol"] * .027)+(total["jacks_total"] * .0825)) + "\n"
     return_string += "\n"
     return_string += "Liquor:            " + format_money(total["jacks_liquor"])  + "\n"
     return_string += "Beer:              " + format_money(total["jacks_beer"])    + "\n"
     return_string += "Wine:              " + format_money(total["jacks_wine"])    + "\n"
+    return_string += "Total Food:        " + format_money(total["jacks_food"]) + "\n"
     return_string += "Non-Alcohol:       " + format_money(total["jacks_nonalc"])  + "\n"
     return_string += "Service/Room:      " + format_money(total["jacks_service"]) + "\n"
     return_string += "Merch:             " + format_money(total["jacks_retail"])  + "\n"
