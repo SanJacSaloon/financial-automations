@@ -1610,6 +1610,7 @@ def rerun_numbers(starting_date):
 
         report_date = datetime.datetime.strptime(report_date, "%Y-%m-%d") + datetime.timedelta(days=1)
         report_date = datetime.datetime.strftime(report_date, "%Y-%m-%d")
+        time.sleep(100)
 
 ########################################################################################################################
 class Daily (dict):
