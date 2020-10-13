@@ -1482,15 +1482,14 @@ def report_string (total):
     return_string += "     =San Jac=\n"
     return_string += "Total:             " + format_money(total["sjs_total"])   + "\n"
     return_string += "Total Alcohol:     " + format_money(total["sjs_alcohol"]) + "\n"
-    return_string += "Total Food:        " + format_money(total["sjs_food"]) + "\n"
     return_string += "Total Non-Alcohol: " + format_money(total["sjs_retail"]   + total["sjs_nonalc"]) + "\n"
     return_string += "Total Taxes:       " + format_money((total["sjs_alcohol"] * .027) + (total["sjs_total"] * .0825)) + "\n"
     return_string += "\n"
     return_string += "Liquor:            " + format_money(total["sjs_liquor"])        + "\n"
     return_string += "Beer:              " + format_money(total["sjs_beer"])          + "\n"
     return_string += "Wine:              " + format_money(total["sjs_wine"])          + "\n"
-    return_string += "Non-Alcohol:       " + format_money(total["sjs_nonalc"])        + "\n"
-    return_string += "Total Food:        " + format_money(total["sjs_food"]) + "\n"
+    return_string += "Non-Alcohol:       " + format_money(total["sjs_nonalc"]-total["sjs_food"])        + "\n"
+    return_string += "Total Food:        " + format_money(total["sjs_food"]) "\n"
     return_string += "Service/Room:      " + format_money(total["sjs_service"])       + "\n"
     return_string += "Merch:             " + format_money(total["sjs_retail"])        + "\n"
     return_string += "Total Credit:      " + format_money(total["sjs_credit"])        + "\n"
@@ -1510,7 +1509,6 @@ def report_string (total):
     return_string += "     =Jack's=\n"
     return_string += "Total:             " + format_money(total["jacks_total"])   + "\n"
     return_string += "Total Alcohol:     " + format_money(total["jacks_alcohol"]) + "\n"
-    return_string += "Total Food:        " + format_money(total["jacks_food"]) + "\n"
     return_string += "Total Non-Alcohol: " + format_money(total["jacks_retail"]   + total["jacks_nonalc"]) + "\n"
     return_string += "Total Taxes:       " + format_money((total["jacks_alcohol"] * .027)+(total["jacks_total"] * .0825)) + "\n"
     return_string += "\n"
@@ -1518,7 +1516,7 @@ def report_string (total):
     return_string += "Beer:              " + format_money(total["jacks_beer"])    + "\n"
     return_string += "Wine:              " + format_money(total["jacks_wine"])    + "\n"
     return_string += "Total Food:        " + format_money(total["jacks_food"]) + "\n"
-    return_string += "Non-Alcohol:       " + format_money(total["jacks_nonalc"])  + "\n"
+    return_string += "Non-Alcohol:       " + format_money(total["jacks_nonalc"]-total["jacks_food"])  + "\n"
     return_string += "Service/Room:      " + format_money(total["jacks_service"]) + "\n"
     return_string += "Merch:             " + format_money(total["jacks_retail"])  + "\n"
     return_string += "Total Credit:      " + format_money(total["jacks_credit"])  + "\n"
@@ -1537,13 +1535,17 @@ def report_string (total):
     return_string += "Unknown Device:    " + format_money(total["unknown"])   + "\n"
     return_string += "\n"
     return_string += "\n"
+
+    total_sales = total["sjs_total"]+total["jacks_total"]
+
     try:food_percentage = "%.02f"%(((total["jacks_food"]+total["sjs_food"])/total_sales)*100)
     except:food_percentage = "Error"
     return_string += "Food Percentage: %s"%food_percentage
     return_string += "\n"
     return_string += "\n"
+
     total_discount = -1.0*(total["sjs_dcounts"]+total["jacks_dcounts"]+total["sjs_comps"]+total["jacks_comps"])
-    total_sales = total["sjs_total"]+total["jacks_total"]
+    
     try:discount_percentage = "%.02f"%((total_discount/total_sales)*100)
     except:discount_percentage = "Error"
     return_string += "Discount Percentage: %s"%discount_percentage
