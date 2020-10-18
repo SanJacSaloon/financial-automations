@@ -40,7 +40,7 @@ from squareconnect.models.search_catalog_objects_request import SearchCatalogObj
 import google_api
 
 # enable testing
-testing = False
+testing = True
 
 # Uses the locale to format currency amounts correctly.
 # NOTE: this took a touch of trial and error.
@@ -1537,6 +1537,9 @@ def report_string (total):
     return_string += "\n"
 
     total_sales = total["sjs_total"]+total["jacks_total"]
+    print total_sales
+    print total["jacks_food"]
+    print total["sjs_food"]
 
     try:food_percentage = "%.02f"%(((total["jacks_food"]+total["sjs_food"])/total_sales)*100)
     except:food_percentage = "Error"
