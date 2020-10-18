@@ -76,7 +76,7 @@ def get_sales ():
     total_sales = sales["sjs_total"]+sales["jacks_total"]
     try:discount_percentage = "%.02f"%((total_discount/total_sales)*100)
     except:discount_percentage = "Error"
-    total_food = sales["jacks_food"]+sales["sjs_food"]
+    total_food = float(sales["jacks_food"]+sales["sjs_food"])
     try:food_percentage = "%.02f"%((total_food/total_sales)*100)
     except:food_percentage = "Error"
     # create a sales report for each floor and combined.
