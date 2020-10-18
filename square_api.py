@@ -1536,8 +1536,8 @@ def report_string (total):
     return_string += "\n"
     return_string += "\n"
 
-    total_food = total["jacks_food"]+total["sjs_food"]
-    total_sales = total["sjs_total"]+total["jacks_total"]
+    total_food = float(total["jacks_food"]+total["sjs_food"])
+    total_sales = float(total["sjs_total"]+total["jacks_total"])
 
     print total_food
     print total_sales
