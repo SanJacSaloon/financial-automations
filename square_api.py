@@ -1539,6 +1539,8 @@ def report_string (total):
     total_food = total["jacks_food"]+total["sjs_food"]
     total_sales = total["sjs_total"]+total["jacks_total"]
 
+    print total_food
+    print total_sales
     print total_food/total_sales
 
     try:food_percentage = "%.02f"%(((total["jacks_food"]+total["sjs_food"])/total_sales)*100)
