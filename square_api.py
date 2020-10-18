@@ -1536,13 +1536,11 @@ def report_string (total):
     return_string += "\n"
     return_string += "\n"
 
+    total_food = total["jacks_food"]+total["sjs_food"]
     total_sales = total["sjs_total"]+total["jacks_total"]
-    print total_sales
-    print total["jacks_food"]
-    print total["sjs_food"]
-    print total["jacks_food"]+total["sjs_food"]
-    print (total["jacks_food"]+total["sjs_food"])/total_sales
-    
+
+    print total_food/total_sales
+
     try:food_percentage = "%.02f"%(((total["jacks_food"]+total["sjs_food"])/total_sales)*100)
     except:food_percentage = "Error"
     return_string += "Food Percentage: %s"%food_percentage
