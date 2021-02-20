@@ -339,22 +339,40 @@ def fill_sales(date,total):
     colnum_string(col=col)
 
     print_date = date.strftime("%m%d%y")
-    ###SAN JAC###
-    print "[%s]: Populating sales for San Jac worksheet"%print_date
-    san_jac_worksheet = sheet.worksheet("San Jac")
-    san_jac_worksheet.update_cell(3,col,format_money(abs(total['sjs_liquor'])).replace('$',''))
-    san_jac_worksheet.update_cell(4,col,format_money(abs(total['sjs_beer'])).replace('$',''))
-    san_jac_worksheet.update_cell(5,col,format_money(abs(total['sjs_wine'])).replace('$',''))
-    san_jac_worksheet.update_cell(7,col,format_money(abs(total['sjs_nonalc'])).replace('$',''))
-    san_jac_worksheet.update_cell(8,col,format_money(abs(total['sjs_service'])).replace('$',''))
-    san_jac_worksheet.update_cell(9,col,format_money(abs(total['sjs_retail'])).replace('$',''))
-    san_jac_worksheet.update_cell(11,col,format_money(abs(total['sjs_credit'])).replace('$',''))
-    san_jac_worksheet.update_cell(43,col,format_money(abs(total['sjs_comps'])).replace('$',''))
-    san_jac_worksheet.update_cell(44,col,format_money(abs(total['sjs_dcounts'])).replace('$',''))
-    san_jac_worksheet.update_cell(66,col,format_money(abs(total['sjs_cash'])).replace('$',''))
-    san_jac_worksheet.update_cell(67,col,format_money(abs(total['sjs_paidout'])).replace('$',''))
-    san_jac_worksheet.update_cell(68,col,format_money(abs(total['sjs_tip_credit'])).replace('$',''))
-    san_jac_worksheet.update_cell(69,col,format_money(abs(total['sjs_tip_credit']*.025)).replace('$',''))
+    if date < datetime.strptime('Feb 14 2021', '%b %d %Y'):
+        ###SAN JAC###
+        print "[%s]: Populating sales for San Jac worksheet"%print_date
+        san_jac_worksheet = sheet.worksheet("San Jac")
+        san_jac_worksheet.update_cell(3,col,format_money(abs(total['sjs_liquor'])).replace('$',''))
+        san_jac_worksheet.update_cell(4,col,format_money(abs(total['sjs_beer'])).replace('$',''))
+        san_jac_worksheet.update_cell(5,col,format_money(abs(total['sjs_wine'])).replace('$',''))
+        san_jac_worksheet.update_cell(7,col,format_money(abs(total['sjs_nonalc'])).replace('$',''))
+        san_jac_worksheet.update_cell(8,col,format_money(abs(total['sjs_service'])).replace('$',''))
+        san_jac_worksheet.update_cell(9,col,format_money(abs(total['sjs_retail'])).replace('$',''))
+        san_jac_worksheet.update_cell(11,col,format_money(abs(total['sjs_credit'])).replace('$',''))
+        san_jac_worksheet.update_cell(43,col,format_money(abs(total['sjs_comps'])).replace('$',''))
+        san_jac_worksheet.update_cell(44,col,format_money(abs(total['sjs_dcounts'])).replace('$',''))
+        san_jac_worksheet.update_cell(66,col,format_money(abs(total['sjs_cash'])).replace('$',''))
+        san_jac_worksheet.update_cell(67,col,format_money(abs(total['sjs_paidout'])).replace('$',''))
+        san_jac_worksheet.update_cell(68,col,format_money(abs(total['sjs_tip_credit'])).replace('$',''))
+        san_jac_worksheet.update_cell(69,col,format_money(abs(total['sjs_tip_credit']*.025)).replace('$',''))
+    else:
+        ###SAN JAC###
+        print "[%s]: Populating sales for San Jac worksheet"%print_date
+        san_jac_worksheet = sheet.worksheet("San Jac")
+        san_jac_worksheet.update_cell(3,col,format_money(abs(total['sjs_liquor'])).replace('$',''))
+        san_jac_worksheet.update_cell(4,col,format_money(abs(total['sjs_beer'])).replace('$',''))
+        san_jac_worksheet.update_cell(5,col,format_money(abs(total['sjs_wine'])).replace('$',''))
+        san_jac_worksheet.update_cell(7,col,format_money(abs(total['sjs_nonalc'])).replace('$',''))
+        san_jac_worksheet.update_cell(8,col,format_money(abs(total['sjs_service'])).replace('$',''))
+        san_jac_worksheet.update_cell(9,col,format_money(abs(total['sjs_retail'])).replace('$',''))
+        san_jac_worksheet.update_cell(11,col,format_money(abs(total['sjs_credit'])).replace('$',''))
+        san_jac_worksheet.update_cell(43,col,format_money(abs(total['sjs_comps'])).replace('$',''))
+        san_jac_worksheet.update_cell(44,col,format_money(abs(total['sjs_dcounts'])).replace('$',''))
+        san_jac_worksheet.update_cell(85,col,format_money(abs(total['sjs_cash'])).replace('$',''))
+        san_jac_worksheet.update_cell(86,col,format_money(abs(total['sjs_paidout'])).replace('$',''))
+        san_jac_worksheet.update_cell(87,col,format_money(abs(total['sjs_tip_credit'])).replace('$',''))
+        san_jac_worksheet.update_cell(88,col,format_money(abs(total['sjs_tip_credit']*.025)).replace('$',''))
 
     if date < datetime.strptime('Apr 1 2018', '%b %d %Y'):
         ###JACK'S###
@@ -373,7 +391,7 @@ def fill_sales(date,total):
         jacks_worksheet.update_cell(64,col,format_money(abs(total['jacks_paidout'])).replace('$',''))
         jacks_worksheet.update_cell(65,col,format_money(abs(total['jacks_tip_credit'])).replace('$',''))
         jacks_worksheet.update_cell(66,col,format_money(abs(total['jacks_tip_credit']*.025)).replace('$',''))
-    else:
+    elif date < datetime.strptime('Feb 14 2021', '%b %d %Y'):
         ###JACK'S###
         print "[%s]: Populating sales for Jack's worksheet"%print_date
         jacks_worksheet = sheet.worksheet("Jack's")
@@ -390,6 +408,23 @@ def fill_sales(date,total):
         jacks_worksheet.update_cell(67,col,format_money(abs(total['jacks_paidout'])).replace('$',''))
         jacks_worksheet.update_cell(68,col,format_money(abs(total['jacks_tip_credit'])).replace('$',''))
         jacks_worksheet.update_cell(69,col,format_money(abs(total['jacks_tip_credit']*.025)).replace('$',''))
+    else:
+        ###JACK'S###
+        print "[%s]: Populating sales for Jack's worksheet"%print_date
+        jacks_worksheet = sheet.worksheet("Jack's")
+        jacks_worksheet.update_cell(3,col,format_money(abs(total['jacks_liquor'])).replace('$',''))
+        jacks_worksheet.update_cell(4,col,format_money(abs(total['jacks_beer'])).replace('$',''))
+        jacks_worksheet.update_cell(5,col,format_money(abs(total['jacks_wine'])).replace('$',''))
+        jacks_worksheet.update_cell(7,col,format_money(abs(total['jacks_nonalc'])).replace('$',''))
+        jacks_worksheet.update_cell(8,col,format_money(abs(total['jacks_service'])).replace('$',''))
+        jacks_worksheet.update_cell(9,col,format_money(abs(total['jacks_retail'])).replace('$',''))
+        jacks_worksheet.update_cell(11,col,format_money(abs(total['jacks_credit'])).replace('$',''))
+        jacks_worksheet.update_cell(43,col,format_money(abs(total['jacks_comps'])).replace('$',''))
+        jacks_worksheet.update_cell(44,col,format_money(abs(total['jacks_dcounts'])).replace('$',''))
+        jacks_worksheet.update_cell(85,col,format_money(abs(total['jacks_cash'])).replace('$',''))
+        jacks_worksheet.update_cell(86,col,format_money(abs(total['jacks_paidout'])).replace('$',''))
+        jacks_worksheet.update_cell(87,col,format_money(abs(total['jacks_tip_credit'])).replace('$',''))
+        jacks_worksheet.update_cell(88,col,format_money(abs(total['jacks_tip_credit']*.025)).replace('$',''))
 
 
     sheet = open_google_spreadsheet(spreadsheet_title="Averages")
@@ -521,11 +556,11 @@ def test():
                                             ("B32:I45",currency),
                                             ("B39:I39",calculated_currency),
                                             ("B40:I40",calculated_currency),
-                                            ("B49:I71",currency),
-                                            ("B62:I62",calculated_currency),
-                                            ("B63:I63",calculated_currency),
-                                            ("B70:I70",calculated_currency),
-                                            ("B71:I71",calculated_currency)])
+                                            ("B49:I90",currency),
+                                            ("B81:I81",calculated_currency),
+                                            ("B82:I82",calculated_currency),
+                                            ("B89:I89",calculated_currency),
+                                            ("B90:I90",calculated_currency)])
 
     format_cell_ranges(jacks_worksheet, [("A3:A73",bold),
                                             ("B1:I1",bold),
@@ -538,21 +573,21 @@ def test():
                                             ("B32:I45",currency),
                                             ("B39:I39",calculated_currency),
                                             ("B40:I40",calculated_currency),
-                                            ("B49:I71",currency),
-                                            ("B62:I62",calculated_currency),
-                                            ("B63:I63",calculated_currency),
-                                            ("B70:I70",calculated_currency),
-                                            ("B71:I71",calculated_currency)])
+                                            ("B49:I90",currency),
+                                            ("B81:I81",calculated_currency),
+                                            ("B82:I82",calculated_currency),
+                                            ("B89:I89",calculated_currency),
+                                            ("B90:I90",calculated_currency)])
 
     format_cell_ranges(checks_worksheet, [("A1",bold),
                                             ("A2:F2",heading),
-                                            ("A3:A70",bold),
-                                            ("D3:D70",currency)])
+                                            ("A3:A90",bold),
+                                            ("D3:D90",currency)])
 
     format_cell_ranges(debits_worksheet, [("A1",bold),
                                             ("A2:F2",heading),
-                                            ("A3:A70",bold),
-                                            ("C3:C70",currency)])
+                                            ("A3:A90",bold),
+                                            ("C3:C90",currency)])
 
     #cell = san_jac_worksheet.cell(3,1)
     #print dir(cell)
@@ -579,8 +614,8 @@ def build_weekly_sheet(date):
 
         ###SAN JAC###
         print "[%s]: Populating San Jac worksheet"%print_date
-        san_jac_worksheet = sheet.add_worksheet("San Jac",75,12)
-        cell_list = san_jac_worksheet.range("A1:A71")
+        san_jac_worksheet = sheet.add_worksheet("San Jac",95,12)
+        cell_list = san_jac_worksheet.range("A1:A90")
         cell_list[3-1].value = "Liquor Sales"
         cell_list[4-1].value = "Beer Sales"
         cell_list[5-1].value = "Wine Sales"
@@ -614,31 +649,50 @@ def build_weekly_sheet(date):
         cell_list[45-1].value = "Total Opportunity Cost:"
         cell_list[47-1].value = "Days in month"
         cell_list[48-1].value = "DAILY STATIC COSTS"
-        cell_list[49-1].value = "Electric"
-        cell_list[50-1].value = "Water/Waste"
-        cell_list[51-1].value = "Internet"
-        cell_list[52-1].value = "Cable"
-        cell_list[53-1].value = "Rentals"
-        cell_list[54-1].value = "Rent"
-        cell_list[55-1].value = "Annual expenses"
-        cell_list[56-1].value = "Insurance"
-        cell_list[57-1].value = "Bar supply"
-        cell_list[58-1].value = "Booking Agent"
-        cell_list[59-1].value = "Accountant"
-        cell_list[60-1].value = "Subscriptions"
-        cell_list[62-1].value = "Total"
-        cell_list[63-1].value = "Net Profit:"
-        cell_list[66-1].value = "Cash in"
-        cell_list[67-1].value = "Paid out"
-        cell_list[68-1].value = "Tip out"
-        cell_list[69-1].value = "Tip credit card fee"
-        cell_list[70-1].value = "Net Cash:"
-        cell_list[71-1].value = "Credit:"
+        cell_list[49-1].value = "Advertising & Marketing"
+        cell_list[50-1].value = "Auto"
+        cell_list[51-1].value = "Bank & Credit Card Charges"
+        cell_list[52-1].value = "Bank Charges & Fees"
+        cell_list[53-1].value = "Bar & Office Supplies"
+        cell_list[54-1].value = "Cash Back Expense"
+        cell_list[55-1].value = "Cash Short/(Over)"
+        cell_list[56-1].value = "Cleaning Service"
+        cell_list[57-1].value = "Contract Labor"
+        cell_list[58-1].value = "Donation"
+        cell_list[59-1].value = "Dues & Subscriptions"
+        cell_list[60-1].value = "Equipment Rent & Lease"
+        cell_list[61-1].value = "Event Catering"
+        cell_list[62-1].value = "Guaranteed Payment"
+        cell_list[63-1].value = "Ice"
+        cell_list[64-1].value = "Insurance"
+        cell_list[65-1].value = "Legal & Professional Services"
+        cell_list[66-1].value = "Licenses & Permits"
+        cell_list[67-1].value = "Maintenance & Repairs"
+        cell_list[68-1].value = "Miscellaneous"
+        cell_list[69-1].value = "Payroll Prep"
+        cell_list[70-1].value = "Postage & Freight"
+        cell_list[71-1].value = "Printing"
+        cell_list[72-1].value = "Property Taxes"
+        cell_list[73-1].value = "Rent"
+        cell_list[74-1].value = "Staff Outings"
+        cell_list[75-1].value = "Telephone"
+        cell_list[76-1].value = "Utilities"
+        cell_list[77-1].value = "  Cable"
+        cell_list[78-1].value = "  Electricity"
+        cell_list[79-1].value = "  Gas"
+        cell_list[81-1].value = "Total"
+        cell_list[82-1].value = "Net Profit:"
+        cell_list[85-1].value = "Cash in"
+        cell_list[86-1].value = "Paid out"
+        cell_list[87-1].value = "Tip out"
+        cell_list[88-1].value = "Tip credit card fee"
+        cell_list[89-1].value = "Net Cash:"
+        cell_list[90-1].value = "Credit:"
         san_jac_worksheet.update_cells(cell_list, value_input_option='USER_ENTERED')
         CALLS += 6
 
         sjs_date = date
-        cell_list = san_jac_worksheet.range("B1:B71")
+        cell_list = san_jac_worksheet.range("B1:B90")
         cell_list[1-1].value = sjs_date.strftime("%m/%d/%y")
         cell_list[2-1].value = sjs_date.strftime("%A")
         cell_list[10-1].value = "=SUM(B3:B9)"
@@ -658,29 +712,48 @@ def build_weekly_sheet(date):
         cell_list[40-1].value = "=if(now()>B1,B10-B39,0)"
         cell_list[45-1].value = "=sum(B43:B44)"
         cell_list[47-1].value = "=DAY(EOMONTH(B1,0))"
-        cell_list[49-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!B2"))/B47/2'
-        cell_list[50-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!B3"))/B47/2'
-        cell_list[51-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!B4"))/B47/2'
-        cell_list[52-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!B5"))/B47/2'
-        cell_list[53-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!B6"))/B47/2'
-        cell_list[54-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!B10"))/B47/2'
-        cell_list[55-1].value = '=IMPORTRANGE("1jLESmrMCNS1uDSOkJiE7FKbQqDYVI7Vp2StZwIVgoaY","Sheet1!B18")/365/2'
-        cell_list[56-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!B11"))/B47/2'
-        cell_list[57-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!B15"))/B47/2'
-        cell_list[58-1].value = '0'
-        cell_list[59-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!B20"))/B47/2'
-        cell_list[60-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!B21"))/B47/2'
-        cell_list[62-1].value = '=sum(B49:B60)'
-        cell_list[63-1].value = '=if(now()>B1,B40-B62,0)'
-        cell_list[70-1].value = '=B66-B67+B69'
-        cell_list[71-1].value = '=B11'
+        cell_list[49-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D33"))/B$47/2'
+        cell_list[50-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D34"))/B$47/2'
+        cell_list[51-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D35"))/B$47/2'
+        cell_list[52-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D36"))/B$47/2'
+        cell_list[53-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D37"))/B$47/2'
+        cell_list[54-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D38"))/B$47/2'
+        cell_list[55-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D39"))/B$47/2'
+        cell_list[56-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D40"))/B$47/2'
+        cell_list[57-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D41"))/B$47/2'
+        cell_list[58-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D42"))/B$47/2'
+        cell_list[59-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D43"))/B$47/2'
+        cell_list[60-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D44"))/B$47/2'
+        cell_list[61-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D45"))/B$47/2'
+        cell_list[62-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D46"))/B$47/2'
+        cell_list[63-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D47"))/B$47/2'
+        cell_list[64-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D48"))/B$47/2'
+        cell_list[65-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D49"))/B$47/2'
+        cell_list[66-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D50"))/B$47/2'
+        cell_list[67-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D52"))/B$47/2'
+        cell_list[68-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D53"))/B$47/2'
+        cell_list[69-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D55"))/B$47/2'
+        cell_list[70-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D57"))/B$47/2'
+        cell_list[71-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D58"))/B$47/2'
+        cell_list[72-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D60"))/B$47/2'
+        cell_list[73-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D61"))/B$47/2'
+        cell_list[74-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D62"))/B$47/2'
+        cell_list[75-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D64"))/B$47/2'
+        cell_list[76-1].value = ''
+        cell_list[77-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D67"))/B$47/2'
+        cell_list[78-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D68"))/B$47/2'
+        cell_list[79-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D69"))/B$47/2'
+        cell_list[81-1].value = '=sum(B49:B79)'
+        cell_list[82-1].value = '=if(now()>B1,B40-B81,0)'
+        cell_list[89-1].value = '=B85-B86+B88'
+        cell_list[90-1].value = '=B11'
         san_jac_worksheet.update_cells(cell_list, value_input_option='USER_ENTERED')
         CALLS += 2
         #format_cell_range(san_jac_worksheet, 'c8', calculated)
         
 
         sjs_date = sjs_date+timedelta(days=1)
-        cell_list = san_jac_worksheet.range("c1:c71")
+        cell_list = san_jac_worksheet.range("c1:c90")
         cell_list[1-1].value = sjs_date.strftime("%m/%d/%y")
         cell_list[2-1].value = sjs_date.strftime("%A")
         cell_list[10-1].value = "=SUM(c3:c9)"
@@ -700,27 +773,46 @@ def build_weekly_sheet(date):
         cell_list[40-1].value = "=if(now()>C1,c10-c39,0)"
         cell_list[45-1].value = "=sum(c43:c44)"
         cell_list[47-1].value = "=DAY(EOMONTH(c1,0))"
-        cell_list[49-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b2"))/c47/2'
-        cell_list[50-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b3"))/c47/2'
-        cell_list[51-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b4"))/c47/2'
-        cell_list[52-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b5"))/c47/2'
-        cell_list[53-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b6"))/c47/2'
-        cell_list[54-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b10"))/c47/2'
-        cell_list[55-1].value = '=IMPORTRANGE("1jLESmrMCNS1uDSOkJiE7FKbQqDYVI7Vp2StZwIVgoaY","Sheet1!b18")/365/2'
-        cell_list[56-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b11"))/c47/2'
-        cell_list[57-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b15"))/c47/2'
-        cell_list[58-1].value = '0'
-        cell_list[59-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b20"))/c47/2'
-        cell_list[60-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b21"))/c47/2'
-        cell_list[62-1].value = '=sum(c49:c60)'
-        cell_list[63-1].value = '=if(now()>C1,c40-c62,0)'
-        cell_list[70-1].value = '=c66-c67+c69'
-        cell_list[71-1].value = '=c11'
+        cell_list[49-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D33"))/C$47/2'
+        cell_list[50-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D34"))/C$47/2'
+        cell_list[51-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D35"))/C$47/2'
+        cell_list[52-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D36"))/C$47/2'
+        cell_list[53-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D37"))/C$47/2'
+        cell_list[54-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D38"))/C$47/2'
+        cell_list[55-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D39"))/C$47/2'
+        cell_list[56-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D40"))/C$47/2'
+        cell_list[57-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D41"))/C$47/2'
+        cell_list[58-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D42"))/C$47/2'
+        cell_list[59-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D43"))/C$47/2'
+        cell_list[60-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D44"))/C$47/2'
+        cell_list[61-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D45"))/C$47/2'
+        cell_list[62-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D46"))/C$47/2'
+        cell_list[63-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D47"))/C$47/2'
+        cell_list[64-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D48"))/C$47/2'
+        cell_list[65-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D49"))/C$47/2'
+        cell_list[66-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D50"))/C$47/2'
+        cell_list[67-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D52"))/C$47/2'
+        cell_list[68-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D53"))/C$47/2'
+        cell_list[69-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D55"))/C$47/2'
+        cell_list[70-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D57"))/C$47/2'
+        cell_list[71-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D58"))/C$47/2'
+        cell_list[72-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D60"))/C$47/2'
+        cell_list[73-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D61"))/C$47/2'
+        cell_list[74-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D62"))/C$47/2'
+        cell_list[75-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D64"))/C$47/2'
+        cell_list[76-1].value = ''
+        cell_list[77-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D67"))/C$47/2'
+        cell_list[78-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D68"))/C$47/2'
+        cell_list[79-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D69"))/C$47/2'
+        cell_list[81-1].value = '=sum(c49:c79)'
+        cell_list[82-1].value = '=if(now()>C1,c40-c81,0)'
+        cell_list[89-1].value = '=c85-c86+c88'
+        cell_list[90-1].value = '=c11'
         san_jac_worksheet.update_cells(cell_list, value_input_option='USER_ENTERED')
         CALLS += 2
 
         sjs_date = sjs_date+timedelta(days=1)
-        cell_list = san_jac_worksheet.range("d1:d71")
+        cell_list = san_jac_worksheet.range("d1:d90")
         cell_list[1-1].value = sjs_date.strftime("%m/%d/%y")
         cell_list[2-1].value = sjs_date.strftime("%A")
         cell_list[10-1].value = "=SUM(d3:d9)"
@@ -740,27 +832,46 @@ def build_weekly_sheet(date):
         cell_list[40-1].value = "=if(now()>D1,d10-d39,0)"
         cell_list[45-1].value = "=sum(d43:d44)"
         cell_list[47-1].value = "=DAY(EOMONTH(d1,0))"
-        cell_list[49-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b2"))/d47/2'
-        cell_list[50-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b3"))/d47/2'
-        cell_list[51-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b4"))/d47/2'
-        cell_list[52-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b5"))/d47/2'
-        cell_list[53-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b6"))/d47/2'
-        cell_list[54-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b10"))/d47/2'
-        cell_list[55-1].value = '=IMPORTRANGE("1jLESmrMCNS1uDSOkJiE7FKbQqDYVI7Vp2StZwIVgoaY","Sheet1!b18")/365/2'
-        cell_list[56-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b11"))/d47/2'
-        cell_list[57-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b15"))/d47/2'
-        cell_list[58-1].value = '0'
-        cell_list[59-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b20"))/d47/2'
-        cell_list[60-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b21"))/d47/2'
-        cell_list[62-1].value = '=sum(d49:d60)'
-        cell_list[63-1].value = '=if(now()>D1,d40-d62,0)'
-        cell_list[70-1].value = '=d66-d67+d69'
-        cell_list[71-1].value = '=d11'
+        cell_list[49-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D33"))/D$47/2'
+        cell_list[50-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D34"))/D$47/2'
+        cell_list[51-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D35"))/D$47/2'
+        cell_list[52-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D36"))/D$47/2'
+        cell_list[53-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D37"))/D$47/2'
+        cell_list[54-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D38"))/D$47/2'
+        cell_list[55-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D39"))/D$47/2'
+        cell_list[56-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D40"))/D$47/2'
+        cell_list[57-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D41"))/D$47/2'
+        cell_list[58-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D42"))/D$47/2'
+        cell_list[59-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D43"))/D$47/2'
+        cell_list[60-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D44"))/D$47/2'
+        cell_list[61-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D45"))/D$47/2'
+        cell_list[62-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D46"))/D$47/2'
+        cell_list[63-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D47"))/D$47/2'
+        cell_list[64-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D48"))/D$47/2'
+        cell_list[65-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D49"))/D$47/2'
+        cell_list[66-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D50"))/D$47/2'
+        cell_list[67-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D52"))/D$47/2'
+        cell_list[68-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D53"))/D$47/2'
+        cell_list[69-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D55"))/D$47/2'
+        cell_list[70-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D57"))/D$47/2'
+        cell_list[71-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D58"))/D$47/2'
+        cell_list[72-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D60"))/D$47/2'
+        cell_list[73-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D61"))/D$47/2'
+        cell_list[74-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D62"))/D$47/2'
+        cell_list[75-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D64"))/D$47/2'
+        cell_list[76-1].value = ''
+        cell_list[77-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D67"))/D$47/2'
+        cell_list[78-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D68"))/D$47/2'
+        cell_list[79-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D69"))/D$47/2'
+        cell_list[81-1].value = '=sum(D49:D79)'
+        cell_list[82-1].value = '=if(now()>D1,D40-D81,0)'
+        cell_list[89-1].value = '=D85-D86+D88'
+        cell_list[90-1].value = '=d11'
         san_jac_worksheet.update_cells(cell_list, value_input_option='USER_ENTERED')
         CALLS += 2
 
         sjs_date = sjs_date+timedelta(days=1)
-        cell_list = san_jac_worksheet.range("e1:e71")
+        cell_list = san_jac_worksheet.range("e1:e90")
         cell_list[1-1].value = sjs_date.strftime("%m/%d/%y")
         cell_list[2-1].value = sjs_date.strftime("%A")
         cell_list[10-1].value = "=SUM(e3:e9)"
@@ -780,27 +891,46 @@ def build_weekly_sheet(date):
         cell_list[40-1].value = "=if(now()>E1,e10-e39,0)"
         cell_list[45-1].value = "=sum(e43:e44)"
         cell_list[47-1].value = "=DAY(EOMONTH(e1,0))"
-        cell_list[49-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b2"))/e47/2'
-        cell_list[50-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b3"))/e47/2'
-        cell_list[51-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b4"))/e47/2'
-        cell_list[52-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b5"))/e47/2'
-        cell_list[53-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b6"))/e47/2'
-        cell_list[54-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b10"))/e47/2'
-        cell_list[55-1].value = '=IMPORTRANGE("1jLESmrMCNS1uDSOkJiE7FKbQqDYVI7Vp2StZwIVgoaY","Sheet1!b18")/365/2'
-        cell_list[56-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b11"))/e47/2'
-        cell_list[57-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b15"))/e47/2'
-        cell_list[58-1].value = '0'
-        cell_list[59-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b20"))/e47/2'
-        cell_list[60-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b21"))/e47/2'
-        cell_list[62-1].value = '=sum(e49:e60)'
-        cell_list[63-1].value = '=if(now()>E1,e40-e62,0)'
-        cell_list[70-1].value = '=e66-e67+e69'
-        cell_list[71-1].value = '=e11'
+        cell_list[49-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D33"))/E$47/2'
+        cell_list[50-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D34"))/E$47/2'
+        cell_list[51-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D35"))/E$47/2'
+        cell_list[52-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D36"))/E$47/2'
+        cell_list[53-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D37"))/E$47/2'
+        cell_list[54-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D38"))/E$47/2'
+        cell_list[55-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D39"))/E$47/2'
+        cell_list[56-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D40"))/E$47/2'
+        cell_list[57-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D41"))/E$47/2'
+        cell_list[58-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D42"))/E$47/2'
+        cell_list[59-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D43"))/E$47/2'
+        cell_list[60-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D44"))/E$47/2'
+        cell_list[61-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D45"))/E$47/2'
+        cell_list[62-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D46"))/E$47/2'
+        cell_list[63-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D47"))/E$47/2'
+        cell_list[64-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D48"))/E$47/2'
+        cell_list[65-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D49"))/E$47/2'
+        cell_list[66-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D50"))/E$47/2'
+        cell_list[67-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D52"))/E$47/2'
+        cell_list[68-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D53"))/E$47/2'
+        cell_list[69-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D55"))/E$47/2'
+        cell_list[70-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D57"))/E$47/2'
+        cell_list[71-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D58"))/E$47/2'
+        cell_list[72-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D60"))/E$47/2'
+        cell_list[73-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D61"))/E$47/2'
+        cell_list[74-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D62"))/E$47/2'
+        cell_list[75-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D64"))/E$47/2'
+        cell_list[76-1].value = ''
+        cell_list[77-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D67"))/E$47/2'
+        cell_list[78-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D68"))/E$47/2'
+        cell_list[79-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D69"))/E$47/2'
+        cell_list[81-1].value = '=sum(E49:E79)'
+        cell_list[82-1].value = '=if(now()>E1,E40-E81,0)'
+        cell_list[89-1].value = '=E85-E86+E88'
+        cell_list[90-1].value = '=e11'
         san_jac_worksheet.update_cells(cell_list, value_input_option='USER_ENTERED')
         CALLS += 2
 
         sjs_date = sjs_date+timedelta(days=1)
-        cell_list = san_jac_worksheet.range("f1:f71")
+        cell_list = san_jac_worksheet.range("f1:f90")
         cell_list[1-1].value = sjs_date.strftime("%m/%d/%y")
         cell_list[2-1].value = sjs_date.strftime("%A")
         cell_list[10-1].value = "=SUM(f3:f9)"
@@ -820,27 +950,46 @@ def build_weekly_sheet(date):
         cell_list[40-1].value = "=if(now()>F1,f10-f39,0)"
         cell_list[45-1].value = "=sum(f43:f44)"
         cell_list[47-1].value = "=DAY(EOMONTH(f1,0))"
-        cell_list[49-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b2"))/f47/2'
-        cell_list[50-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b3"))/f47/2'
-        cell_list[51-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b4"))/f47/2'
-        cell_list[52-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b5"))/f47/2'
-        cell_list[53-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b6"))/f47/2'
-        cell_list[54-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b10"))/f47/2'
-        cell_list[55-1].value = '=IMPORTRANGE("1jLESmrMCNS1uDSOkJiE7FKbQqDYVI7Vp2StZwIVgoaY","Sheet1!b18")/365/2'
-        cell_list[56-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b11"))/f47/2'
-        cell_list[57-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b15"))/f47/2'
-        cell_list[58-1].value = '0'
-        cell_list[59-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b20"))/f47/2'
-        cell_list[60-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b21"))/f47/2'
-        cell_list[62-1].value = '=sum(f49:f60)'
-        cell_list[63-1].value = '=if(now()>F1,f40-f62,0)'
-        cell_list[70-1].value = '=f66-f67+f69'
-        cell_list[71-1].value = '=f11'
+        cell_list[49-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D33"))/F$47/2'
+        cell_list[50-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D34"))/F$47/2'
+        cell_list[51-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D35"))/F$47/2'
+        cell_list[52-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D36"))/F$47/2'
+        cell_list[53-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D37"))/F$47/2'
+        cell_list[54-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D38"))/F$47/2'
+        cell_list[55-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D39"))/F$47/2'
+        cell_list[56-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D40"))/F$47/2'
+        cell_list[57-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D41"))/F$47/2'
+        cell_list[58-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D42"))/F$47/2'
+        cell_list[59-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D43"))/F$47/2'
+        cell_list[60-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D44"))/F$47/2'
+        cell_list[61-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D45"))/F$47/2'
+        cell_list[62-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D46"))/F$47/2'
+        cell_list[63-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D47"))/F$47/2'
+        cell_list[64-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D48"))/F$47/2'
+        cell_list[65-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D49"))/F$47/2'
+        cell_list[66-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D50"))/F$47/2'
+        cell_list[67-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D52"))/F$47/2'
+        cell_list[68-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D53"))/F$47/2'
+        cell_list[69-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D55"))/F$47/2'
+        cell_list[70-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D57"))/F$47/2'
+        cell_list[71-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D58"))/F$47/2'
+        cell_list[72-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D60"))/F$47/2'
+        cell_list[73-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D61"))/F$47/2'
+        cell_list[74-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D62"))/F$47/2'
+        cell_list[75-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D64"))/F$47/2'
+        cell_list[76-1].value = ''
+        cell_list[77-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D67"))/F$47/2'
+        cell_list[78-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D68"))/F$47/2'
+        cell_list[79-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D69"))/F$47/2'
+        cell_list[81-1].value = '=sum(F49:F79)'
+        cell_list[82-1].value = '=if(now()>F1,F40-F81,0)'
+        cell_list[89-1].value = '=F85-F86+F88'
+        cell_list[90-1].value = '=f11'
         san_jac_worksheet.update_cells(cell_list, value_input_option='USER_ENTERED')
         CALLS += 2
 
         sjs_date = sjs_date+timedelta(days=1)
-        cell_list = san_jac_worksheet.range("g1:g71")
+        cell_list = san_jac_worksheet.range("g1:g90")
         cell_list[1-1].value = sjs_date.strftime("%m/%d/%y")
         cell_list[2-1].value = sjs_date.strftime("%A")
         cell_list[10-1].value = "=SUM(g3:g9)"
@@ -860,27 +1009,46 @@ def build_weekly_sheet(date):
         cell_list[40-1].value = "=if(now()>G1,g10-g39,0)"
         cell_list[45-1].value = "=sum(g43:g44)"
         cell_list[47-1].value = "=DAY(EOMONTH(g1,0))"
-        cell_list[49-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b2"))/g47/2'
-        cell_list[50-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b3"))/g47/2'
-        cell_list[51-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b4"))/g47/2'
-        cell_list[52-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b5"))/g47/2'
-        cell_list[53-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b6"))/g47/2'
-        cell_list[54-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b10"))/g47/2'
-        cell_list[55-1].value = '=IMPORTRANGE("1jLESmrMCNS1uDSOkJiE7FKbQqDYVI7Vp2StZwIVgoaY","Sheet1!b18")/365/2'
-        cell_list[56-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b11"))/g47/2'
-        cell_list[57-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b15"))/g47/2'
-        cell_list[58-1].value = '0'
-        cell_list[59-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b20"))/g47/2'
-        cell_list[60-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b21"))/g47/2'
-        cell_list[62-1].value = '=sum(g49:g60)'
-        cell_list[63-1].value = '=if(now()>G1,g40-g62,0)'
-        cell_list[70-1].value = '=g66-g67+g69'
-        cell_list[71-1].value = '=g11'
+        cell_list[49-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D33"))/G$47/2'
+        cell_list[50-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D34"))/G$47/2'
+        cell_list[51-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D35"))/G$47/2'
+        cell_list[52-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D36"))/G$47/2'
+        cell_list[53-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D37"))/G$47/2'
+        cell_list[54-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D38"))/G$47/2'
+        cell_list[55-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D39"))/G$47/2'
+        cell_list[56-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D40"))/G$47/2'
+        cell_list[57-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D41"))/G$47/2'
+        cell_list[58-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D42"))/G$47/2'
+        cell_list[59-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D43"))/G$47/2'
+        cell_list[60-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D44"))/G$47/2'
+        cell_list[61-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D45"))/G$47/2'
+        cell_list[62-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D46"))/G$47/2'
+        cell_list[63-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D47"))/G$47/2'
+        cell_list[64-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D48"))/G$47/2'
+        cell_list[65-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D49"))/G$47/2'
+        cell_list[66-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D50"))/G$47/2'
+        cell_list[67-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D52"))/G$47/2'
+        cell_list[68-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D53"))/G$47/2'
+        cell_list[69-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D55"))/G$47/2'
+        cell_list[70-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D57"))/G$47/2'
+        cell_list[71-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D58"))/G$47/2'
+        cell_list[72-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D60"))/G$47/2'
+        cell_list[73-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D61"))/G$47/2'
+        cell_list[74-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D62"))/G$47/2'
+        cell_list[75-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D64"))/G$47/2'
+        cell_list[76-1].value = ''
+        cell_list[77-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D67"))/G$47/2'
+        cell_list[78-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D68"))/G$47/2'
+        cell_list[79-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D69"))/G$47/2'
+        cell_list[81-1].value = '=sum(G49:G79)'
+        cell_list[82-1].value = '=if(now()>G1,G40-G81,0)'
+        cell_list[89-1].value = '=G85-G86+G88'
+        cell_list[90-1].value = '=g11'
         san_jac_worksheet.update_cells(cell_list, value_input_option='USER_ENTERED')
         CALLS += 2
 
         sjs_date = sjs_date+timedelta(days=1)
-        cell_list = san_jac_worksheet.range("h1:h71")
+        cell_list = san_jac_worksheet.range("h1:h90")
         cell_list[1-1].value = sjs_date.strftime("%m/%d/%y")
         cell_list[2-1].value = sjs_date.strftime("%A")
         cell_list[10-1].value = "=SUM(h3:h9)"
@@ -900,26 +1068,45 @@ def build_weekly_sheet(date):
         cell_list[40-1].value = "=if(now()>H1,h10-h39,0)"
         cell_list[45-1].value = "=sum(h43:h44)"
         cell_list[47-1].value = "=DAY(EOMONTH(h1,0))"
-        cell_list[49-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b2"))/h47/2'
-        cell_list[50-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b3"))/h47/2'
-        cell_list[51-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b4"))/h47/2'
-        cell_list[52-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b5"))/h47/2'
-        cell_list[53-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b6"))/h47/2'
-        cell_list[54-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b10"))/h47/2'
-        cell_list[55-1].value = '=IMPORTRANGE("1jLESmrMCNS1uDSOkJiE7FKbQqDYVI7Vp2StZwIVgoaY","Sheet1!b18")/365/2'
-        cell_list[56-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b11"))/h47/2'
-        cell_list[57-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b15"))/h47/2'
-        cell_list[58-1].value = '0'
-        cell_list[59-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b20"))/h47/2'
-        cell_list[60-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b21"))/h47/2'
-        cell_list[62-1].value = '=sum(h49:h60)'
-        cell_list[63-1].value = '=if(now()>H1,h40-h62,0)'
-        cell_list[70-1].value = '=h66-h67+h69'
-        cell_list[71-1].value = '=h11'
+        cell_list[49-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D33"))/H$47/2'
+        cell_list[50-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D34"))/H$47/2'
+        cell_list[51-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D35"))/H$47/2'
+        cell_list[52-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D36"))/H$47/2'
+        cell_list[53-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D37"))/H$47/2'
+        cell_list[54-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D38"))/H$47/2'
+        cell_list[55-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D39"))/H$47/2'
+        cell_list[56-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D40"))/H$47/2'
+        cell_list[57-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D41"))/H$47/2'
+        cell_list[58-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D42"))/H$47/2'
+        cell_list[59-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D43"))/H$47/2'
+        cell_list[60-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D44"))/H$47/2'
+        cell_list[61-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D45"))/H$47/2'
+        cell_list[62-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D46"))/H$47/2'
+        cell_list[63-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D47"))/H$47/2'
+        cell_list[64-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D48"))/H$47/2'
+        cell_list[65-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D49"))/H$47/2'
+        cell_list[66-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D50"))/H$47/2'
+        cell_list[67-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D52"))/H$47/2'
+        cell_list[68-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D53"))/H$47/2'
+        cell_list[69-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D55"))/H$47/2'
+        cell_list[70-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D57"))/H$47/2'
+        cell_list[71-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D58"))/H$47/2'
+        cell_list[72-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D60"))/H$47/2'
+        cell_list[73-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D61"))/H$47/2'
+        cell_list[74-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D62"))/H$47/2'
+        cell_list[75-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D64"))/H$47/2'
+        cell_list[76-1].value = ''
+        cell_list[77-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D67"))/H$47/2'
+        cell_list[78-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D68"))/H$47/2'
+        cell_list[79-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D69"))/H$47/2'
+        cell_list[81-1].value = '=sum(H49:H79)'
+        cell_list[82-1].value = '=if(now()>H1,H40-H81,0)'
+        cell_list[89-1].value = '=H85-H86+H88'
+        cell_list[90-1].value = '=h11'
         san_jac_worksheet.update_cells(cell_list, value_input_option='USER_ENTERED')
         CALLS += 2
 
-        cell_list = san_jac_worksheet.range("i1:i71")
+        cell_list = san_jac_worksheet.range("i1:i90")
         cell_list[2-1].value = "Week"
         cell_list[3-1].value = "=sum(B3:H3)"
         cell_list[4-1].value = "=sum(B4:H4)"
@@ -964,21 +1151,36 @@ def build_weekly_sheet(date):
         cell_list[58-1].value = "=sum(B58:H58)"
         cell_list[59-1].value = "=sum(B59:H59)"
         cell_list[60-1].value = "=sum(B60:H60)"
+        cell_list[61-1].value = "=sum(B61:H61)"
         cell_list[62-1].value = "=sum(B62:H62)"
         cell_list[63-1].value = "=sum(B63:H63)"
+        cell_list[64-1].value = "=sum(B64:H64)"
+        cell_list[65-1].value = "=sum(B65:H65)"
         cell_list[66-1].value = "=sum(B66:H66)"
         cell_list[67-1].value = "=sum(B67:H67)"
         cell_list[68-1].value = "=sum(B68:H68)"
         cell_list[69-1].value = "=sum(B69:H69)"
         cell_list[70-1].value = "=sum(B70:H70)"
         cell_list[71-1].value = "=sum(B71:H71)"
+        cell_list[72-1].value = "=sum(B72:H72)"
+        cell_list[73-1].value = "=sum(B73:H73)"
+        cell_list[74-1].value = "=sum(B74:H74)"
+        cell_list[75-1].value = "=sum(B75:H75)"
+        cell_list[76-1].value = "=sum(B76:H76)"
+        cell_list[77-1].value = "=sum(B77:H77)"
+        cell_list[78-1].value = "=sum(B78:H78)"
+        cell_list[79-1].value = "=sum(B79:H79)"
+        cell_list[81-1].value = "=sum(B81:H81)"
+        cell_list[82-1].value = "=sum(B82:H82)"
+        cell_list[89-1].value = "=sum(B89:H89)"
+        cell_list[90-1].value = "=sum(B90:H90)"
         san_jac_worksheet.update_cells(cell_list, value_input_option='USER_ENTERED')
         CALLS += 2
 
         ###JACK'S###
         print "[%s]: Populating Jack's worksheet"%print_date
-        jacks_worksheet = sheet.add_worksheet("Jack's",75,12)
-        cell_list = jacks_worksheet.range("A1:A71")
+        jacks_worksheet = sheet.add_worksheet("Jack's",95,12)
+        cell_list = jacks_worksheet.range("A1:A90")
         cell_list[3-1].value = "Liquor Sales"
         cell_list[4-1].value = "Beer Sales"
         cell_list[5-1].value = "Wine Sales"
@@ -1012,31 +1214,50 @@ def build_weekly_sheet(date):
         cell_list[45-1].value = "Total Opportunity Cost:"
         cell_list[47-1].value = "Days in month"
         cell_list[48-1].value = "DAILY STATIC COSTS"
-        cell_list[49-1].value = "Electric"
-        cell_list[50-1].value = "Water/Waste"
-        cell_list[51-1].value = "Internet"
-        cell_list[52-1].value = "Cable"
-        cell_list[53-1].value = "Rentals"
-        cell_list[54-1].value = "Rent"
-        cell_list[55-1].value = "Annual expenses"
-        cell_list[56-1].value = "Insurance"
-        cell_list[57-1].value = "Bar supply"
-        cell_list[58-1].value = "Booking Agent"
-        cell_list[59-1].value = "Accountant"
-        cell_list[60-1].value = "Subscriptions"
-        cell_list[62-1].value = "Total"
-        cell_list[63-1].value = "Net Profit:"
-        cell_list[66-1].value = "Cash in"
-        cell_list[67-1].value = "Paid out"
-        cell_list[68-1].value = "Tip out"
-        cell_list[69-1].value = "Tip credit card fee"
-        cell_list[70-1].value = "Net Cash:"
-        cell_list[71-1].value = "Credit:"
+        cell_list[49-1].value = "Advertising & Marketing"
+        cell_list[50-1].value = "Auto"
+        cell_list[51-1].value = "Bank & Credit Card Charges"
+        cell_list[52-1].value = "Bank Charges & Fees"
+        cell_list[53-1].value = "Bar & Office Supplies"
+        cell_list[54-1].value = "Cash Back Expense"
+        cell_list[55-1].value = "Cash Short/(Over)"
+        cell_list[56-1].value = "Cleaning Service"
+        cell_list[57-1].value = "Contract Labor"
+        cell_list[58-1].value = "Donation"
+        cell_list[59-1].value = "Dues & Subscriptions"
+        cell_list[60-1].value = "Equipment Rent & Lease"
+        cell_list[61-1].value = "Event Catering"
+        cell_list[62-1].value = "Guaranteed Payment"
+        cell_list[63-1].value = "Ice"
+        cell_list[64-1].value = "Insurance"
+        cell_list[65-1].value = "Legal & Professional Services"
+        cell_list[66-1].value = "Licenses & Permits"
+        cell_list[67-1].value = "Maintenance & Repairs"
+        cell_list[68-1].value = "Miscellaneous"
+        cell_list[69-1].value = "Payroll Prep"
+        cell_list[70-1].value = "Postage & Freight"
+        cell_list[71-1].value = "Printing"
+        cell_list[72-1].value = "Property Taxes"
+        cell_list[73-1].value = "Rent"
+        cell_list[74-1].value = "Staff Outings"
+        cell_list[75-1].value = "Telephone"
+        cell_list[76-1].value = "Utilities"
+        cell_list[77-1].value = "  Cable"
+        cell_list[78-1].value = "  Electricity"
+        cell_list[79-1].value = "  Gas"
+        cell_list[81-1].value = "Total"
+        cell_list[82-1].value = "Net Profit:"
+        cell_list[85-1].value = "Cash in"
+        cell_list[86-1].value = "Paid out"
+        cell_list[87-1].value = "Tip out"
+        cell_list[88-1].value = "Tip credit card fee"
+        cell_list[89-1].value = "Net Cash:"
+        cell_list[90-1].value = "Credit:"
         jacks_worksheet.update_cells(cell_list)
         CALLS += 3
 
         jacks_date = date
-        cell_list = jacks_worksheet.range("B1:B71")
+        cell_list = jacks_worksheet.range("B1:B90")
         cell_list[1-1].value = jacks_date.strftime("%m/%d/%y")
         cell_list[2-1].value = jacks_date.strftime("%A")
         cell_list[10-1].value = "=SUM(B3:B9)"
@@ -1056,27 +1277,46 @@ def build_weekly_sheet(date):
         cell_list[40-1].value = "=if(now()>B1,B10-B39,0)"
         cell_list[45-1].value = "=sum(B43:B44)"
         cell_list[47-1].value = "=DAY(EOMONTH(B1,0))"
-        cell_list[49-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b2"))/B47/2'
-        cell_list[50-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b3"))/B47/2'
-        cell_list[51-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b4"))/B47/2'
-        cell_list[52-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b5"))/B47/2'
-        cell_list[53-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b6"))/B47/2'
-        cell_list[54-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b10"))/B47/2'
-        cell_list[55-1].value = '=IMPORTRANGE("1jLESmrMCNS1uDSOkJiE7FKbQqDYVI7Vp2StZwIVgoaY","Sheet1!b18")/365/2'
-        cell_list[56-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b11"))/B47/2'
-        cell_list[57-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b15"))/B47/2'
-        cell_list[58-1].value = '0'
-        cell_list[59-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b20"))/B47/2'
-        cell_list[60-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b21"))/B47/2'
-        cell_list[62-1].value = '=sum(B49:B60)'
-        cell_list[63-1].value = '=if(now()>B1,B40-B62,0)'
-        cell_list[70-1].value = '=B66-B67+B69'
-        cell_list[71-1].value = '=B11'
+        cell_list[49-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D33"))/B$47/2'
+        cell_list[50-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D34"))/B$47/2'
+        cell_list[51-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D35"))/B$47/2'
+        cell_list[52-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D36"))/B$47/2'
+        cell_list[53-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D37"))/B$47/2'
+        cell_list[54-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D38"))/B$47/2'
+        cell_list[55-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D39"))/B$47/2'
+        cell_list[56-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D40"))/B$47/2'
+        cell_list[57-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D41"))/B$47/2'
+        cell_list[58-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D42"))/B$47/2'
+        cell_list[59-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D43"))/B$47/2'
+        cell_list[60-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D44"))/B$47/2'
+        cell_list[61-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D45"))/B$47/2'
+        cell_list[62-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D46"))/B$47/2'
+        cell_list[63-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D47"))/B$47/2'
+        cell_list[64-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D48"))/B$47/2'
+        cell_list[65-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D49"))/B$47/2'
+        cell_list[66-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D50"))/B$47/2'
+        cell_list[67-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D52"))/B$47/2'
+        cell_list[68-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D53"))/B$47/2'
+        cell_list[69-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D55"))/B$47/2'
+        cell_list[70-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D57"))/B$47/2'
+        cell_list[71-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D58"))/B$47/2'
+        cell_list[72-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D60"))/B$47/2'
+        cell_list[73-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D61"))/B$47/2'
+        cell_list[74-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D62"))/B$47/2'
+        cell_list[75-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D64"))/B$47/2'
+        cell_list[76-1].value = ''
+        cell_list[77-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D67"))/B$47/2'
+        cell_list[78-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D68"))/B$47/2'
+        cell_list[79-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D69"))/B$47/2'
+        cell_list[81-1].value = '=sum(B49:B79)'
+        cell_list[82-1].value = '=if(now()>B1,B40-B81,0)'
+        cell_list[89-1].value = '=B85-B86+B88'
+        cell_list[90-1].value = '=B11'
         jacks_worksheet.update_cells(cell_list, value_input_option='USER_ENTERED')
         CALLS += 2
 
         jacks_date = jacks_date+timedelta(days=1)
-        cell_list = jacks_worksheet.range("c1:c71")
+        cell_list = jacks_worksheet.range("c1:c90")
         cell_list[1-1].value = jacks_date.strftime("%m/%d/%y")
         cell_list[2-1].value = jacks_date.strftime("%A")
         cell_list[10-1].value = "=SUM(c3:c9)"
@@ -1096,27 +1336,46 @@ def build_weekly_sheet(date):
         cell_list[40-1].value = "=if(now()>C1,c10-c39,0)"
         cell_list[45-1].value = "=sum(c43:c44)"
         cell_list[47-1].value = "=DAY(EOMONTH(c1,0))"
-        cell_list[49-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b2"))/c47/2'
-        cell_list[50-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b3"))/c47/2'
-        cell_list[51-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b4"))/c47/2'
-        cell_list[52-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b5"))/c47/2'
-        cell_list[53-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b6"))/c47/2'
-        cell_list[54-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b10"))/c47/2'
-        cell_list[55-1].value = '=IMPORTRANGE("1jLESmrMCNS1uDSOkJiE7FKbQqDYVI7Vp2StZwIVgoaY","Sheet1!b18")/365/2'
-        cell_list[56-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b11"))/c47/2'
-        cell_list[57-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b15"))/c47/2'
-        cell_list[58-1].value = '0'
-        cell_list[59-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b20"))/c47/2'
-        cell_list[60-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b21"))/c47/2'
-        cell_list[62-1].value = '=sum(c49:c60)'
-        cell_list[63-1].value = '=if(now()>C1,c40-c62,0)'
-        cell_list[70-1].value = '=c66-c67+c69'
-        cell_list[71-1].value = '=c11'
+        cell_list[49-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D33"))/C$47/2'
+        cell_list[50-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D34"))/C$47/2'
+        cell_list[51-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D35"))/C$47/2'
+        cell_list[52-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D36"))/C$47/2'
+        cell_list[53-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D37"))/C$47/2'
+        cell_list[54-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D38"))/C$47/2'
+        cell_list[55-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D39"))/C$47/2'
+        cell_list[56-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D40"))/C$47/2'
+        cell_list[57-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D41"))/C$47/2'
+        cell_list[58-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D42"))/C$47/2'
+        cell_list[59-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D43"))/C$47/2'
+        cell_list[60-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D44"))/C$47/2'
+        cell_list[61-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D45"))/C$47/2'
+        cell_list[62-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D46"))/C$47/2'
+        cell_list[63-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D47"))/C$47/2'
+        cell_list[64-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D48"))/C$47/2'
+        cell_list[65-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D49"))/C$47/2'
+        cell_list[66-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D50"))/C$47/2'
+        cell_list[67-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D52"))/C$47/2'
+        cell_list[68-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D53"))/C$47/2'
+        cell_list[69-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D55"))/C$47/2'
+        cell_list[70-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D57"))/C$47/2'
+        cell_list[71-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D58"))/C$47/2'
+        cell_list[72-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D60"))/C$47/2'
+        cell_list[73-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D61"))/C$47/2'
+        cell_list[74-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D62"))/C$47/2'
+        cell_list[75-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D64"))/C$47/2'
+        cell_list[76-1].value = ''
+        cell_list[77-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D67"))/C$47/2'
+        cell_list[78-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D68"))/C$47/2'
+        cell_list[79-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D69"))/C$47/2'
+        cell_list[81-1].value = '=sum(c49:c79)'
+        cell_list[82-1].value = '=if(now()>C1,c40-c81,0)'
+        cell_list[89-1].value = '=c85-c86+c88'
+        cell_list[90-1].value = '=c11'
         jacks_worksheet.update_cells(cell_list, value_input_option='USER_ENTERED')
         CALLS += 2
 
         jacks_date = jacks_date+timedelta(days=1)
-        cell_list = jacks_worksheet.range("d1:d71")
+        cell_list = jacks_worksheet.range("d1:d90")
         cell_list[1-1].value = jacks_date.strftime("%m/%d/%y")
         cell_list[2-1].value = jacks_date.strftime("%A")
         cell_list[10-1].value = "=SUM(d3:d9)"
@@ -1136,27 +1395,46 @@ def build_weekly_sheet(date):
         cell_list[40-1].value = "=if(now()>D1,d10-d39,0)"
         cell_list[45-1].value = "=sum(d43:d44)"
         cell_list[47-1].value = "=DAY(EOMONTH(d1,0))"
-        cell_list[49-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b2"))/d47/2'
-        cell_list[50-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b3"))/d47/2'
-        cell_list[51-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b4"))/d47/2'
-        cell_list[52-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b5"))/d47/2'
-        cell_list[53-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b6"))/d47/2'
-        cell_list[54-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b10"))/d47/2'
-        cell_list[55-1].value = '=IMPORTRANGE("1jLESmrMCNS1uDSOkJiE7FKbQqDYVI7Vp2StZwIVgoaY","Sheet1!b18")/365/2'
-        cell_list[56-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b11"))/d47/2'
-        cell_list[57-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b15"))/d47/2'
-        cell_list[58-1].value = '0'
-        cell_list[59-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b20"))/d47/2'
-        cell_list[60-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b21"))/d47/2'
-        cell_list[62-1].value = '=sum(d49:d60)'
-        cell_list[63-1].value = '=if(now()>D1,d40-d62,0)'
-        cell_list[70-1].value = '=d66-d67+d69'
-        cell_list[71-1].value = '=d11'
+        cell_list[49-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D33"))/D$47/2'
+        cell_list[50-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D34"))/D$47/2'
+        cell_list[51-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D35"))/D$47/2'
+        cell_list[52-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D36"))/D$47/2'
+        cell_list[53-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D37"))/D$47/2'
+        cell_list[54-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D38"))/D$47/2'
+        cell_list[55-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D39"))/D$47/2'
+        cell_list[56-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D40"))/D$47/2'
+        cell_list[57-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D41"))/D$47/2'
+        cell_list[58-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D42"))/D$47/2'
+        cell_list[59-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D43"))/D$47/2'
+        cell_list[60-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D44"))/D$47/2'
+        cell_list[61-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D45"))/D$47/2'
+        cell_list[62-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D46"))/D$47/2'
+        cell_list[63-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D47"))/D$47/2'
+        cell_list[64-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D48"))/D$47/2'
+        cell_list[65-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D49"))/D$47/2'
+        cell_list[66-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D50"))/D$47/2'
+        cell_list[67-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D52"))/D$47/2'
+        cell_list[68-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D53"))/D$47/2'
+        cell_list[69-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D55"))/D$47/2'
+        cell_list[70-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D57"))/D$47/2'
+        cell_list[71-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D58"))/D$47/2'
+        cell_list[72-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D60"))/D$47/2'
+        cell_list[73-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D61"))/D$47/2'
+        cell_list[74-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D62"))/D$47/2'
+        cell_list[75-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D64"))/D$47/2'
+        cell_list[76-1].value = ''
+        cell_list[77-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D67"))/D$47/2'
+        cell_list[78-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D68"))/D$47/2'
+        cell_list[79-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D69"))/D$47/2'
+        cell_list[81-1].value = '=sum(D49:D79)'
+        cell_list[82-1].value = '=if(now()>D1,D40-D81,0)'
+        cell_list[89-1].value = '=D85-D86+D88'
+        cell_list[90-1].value = '=d11'
         jacks_worksheet.update_cells(cell_list, value_input_option='USER_ENTERED')
         CALLS += 2
 
         jacks_date = jacks_date+timedelta(days=1)
-        cell_list = jacks_worksheet.range("e1:e71")
+        cell_list = jacks_worksheet.range("e1:e90")
         cell_list[1-1].value = jacks_date.strftime("%m/%d/%y")
         cell_list[2-1].value = jacks_date.strftime("%A")
         cell_list[10-1].value = "=SUM(e3:e9)"
@@ -1176,27 +1454,46 @@ def build_weekly_sheet(date):
         cell_list[40-1].value = "=if(now()>E1,e10-e39,0)"
         cell_list[45-1].value = "=sum(e43:e44)"
         cell_list[47-1].value = "=DAY(EOMONTH(e1,0))"
-        cell_list[49-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b2"))/e47/2'
-        cell_list[50-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b3"))/e47/2'
-        cell_list[51-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b4"))/e47/2'
-        cell_list[52-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b5"))/e47/2'
-        cell_list[53-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b6"))/e47/2'
-        cell_list[54-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b10"))/e47/2'
-        cell_list[55-1].value = '=IMPORTRANGE("1jLESmrMCNS1uDSOkJiE7FKbQqDYVI7Vp2StZwIVgoaY","Sheet1!b18")/365/2'
-        cell_list[56-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b11"))/e47/2'
-        cell_list[57-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b15"))/e47/2'
-        cell_list[58-1].value = '0'
-        cell_list[59-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b20"))/e47/2'
-        cell_list[60-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b21"))/e47/2'
-        cell_list[62-1].value = '=sum(e49:e60)'
-        cell_list[63-1].value = '=if(now()>E1,e40-e62,0)'
-        cell_list[70-1].value = '=e66-e67+e69'
-        cell_list[71-1].value = '=e11'
+        cell_list[49-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D33"))/E$47/2'
+        cell_list[50-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D34"))/E$47/2'
+        cell_list[51-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D35"))/E$47/2'
+        cell_list[52-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D36"))/E$47/2'
+        cell_list[53-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D37"))/E$47/2'
+        cell_list[54-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D38"))/E$47/2'
+        cell_list[55-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D39"))/E$47/2'
+        cell_list[56-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D40"))/E$47/2'
+        cell_list[57-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D41"))/E$47/2'
+        cell_list[58-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D42"))/E$47/2'
+        cell_list[59-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D43"))/E$47/2'
+        cell_list[60-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D44"))/E$47/2'
+        cell_list[61-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D45"))/E$47/2'
+        cell_list[62-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D46"))/E$47/2'
+        cell_list[63-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D47"))/E$47/2'
+        cell_list[64-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D48"))/E$47/2'
+        cell_list[65-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D49"))/E$47/2'
+        cell_list[66-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D50"))/E$47/2'
+        cell_list[67-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D52"))/E$47/2'
+        cell_list[68-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D53"))/E$47/2'
+        cell_list[69-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D55"))/E$47/2'
+        cell_list[70-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D57"))/E$47/2'
+        cell_list[71-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D58"))/E$47/2'
+        cell_list[72-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D60"))/E$47/2'
+        cell_list[73-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D61"))/E$47/2'
+        cell_list[74-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D62"))/E$47/2'
+        cell_list[75-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D64"))/E$47/2'
+        cell_list[76-1].value = ''
+        cell_list[77-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D67"))/E$47/2'
+        cell_list[78-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D68"))/E$47/2'
+        cell_list[79-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D69"))/E$47/2'
+        cell_list[81-1].value = '=sum(E49:E79)'
+        cell_list[82-1].value = '=if(now()>E1,E40-E81,0)'
+        cell_list[89-1].value = '=E85-E86+E88'
+        cell_list[90-1].value = '=e11'
         jacks_worksheet.update_cells(cell_list, value_input_option='USER_ENTERED')
         CALLS += 2
 
         jacks_date = jacks_date+timedelta(days=1)
-        cell_list = jacks_worksheet.range("f1:f71")
+        cell_list = jacks_worksheet.range("f1:f90")
         cell_list[1-1].value = jacks_date.strftime("%m/%d/%y")
         cell_list[2-1].value = jacks_date.strftime("%A")
         cell_list[10-1].value = "=SUM(f3:f9)"
@@ -1216,27 +1513,46 @@ def build_weekly_sheet(date):
         cell_list[40-1].value = "=if(now()>F1,f10-f39,0)"
         cell_list[45-1].value = "=sum(f43:f44)"
         cell_list[47-1].value = "=DAY(EOMONTH(f1,0))"
-        cell_list[49-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b2"))/f47/2'
-        cell_list[50-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b3"))/f47/2'
-        cell_list[51-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b4"))/f47/2'
-        cell_list[52-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b5"))/f47/2'
-        cell_list[53-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b6"))/f47/2'
-        cell_list[54-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b10"))/f47/2'
-        cell_list[55-1].value = '=IMPORTRANGE("1jLESmrMCNS1uDSOkJiE7FKbQqDYVI7Vp2StZwIVgoaY","Sheet1!b18")/365/2'
-        cell_list[56-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b11"))/f47/2'
-        cell_list[57-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b15"))/f47/2'
-        cell_list[58-1].value = '0'
-        cell_list[59-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b20"))/f47/2'
-        cell_list[60-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b21"))/f47/2'
-        cell_list[62-1].value = '=sum(f49:f60)'
-        cell_list[63-1].value = '=if(now()>F1,f40-f62,0)'
-        cell_list[70-1].value = '=f66-f67+f69'
-        cell_list[71-1].value = '=f11'
+        cell_list[49-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D33"))/F$47/2'
+        cell_list[50-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D34"))/F$47/2'
+        cell_list[51-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D35"))/F$47/2'
+        cell_list[52-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D36"))/F$47/2'
+        cell_list[53-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D37"))/F$47/2'
+        cell_list[54-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D38"))/F$47/2'
+        cell_list[55-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D39"))/F$47/2'
+        cell_list[56-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D40"))/F$47/2'
+        cell_list[57-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D41"))/F$47/2'
+        cell_list[58-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D42"))/F$47/2'
+        cell_list[59-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D43"))/F$47/2'
+        cell_list[60-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D44"))/F$47/2'
+        cell_list[61-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D45"))/F$47/2'
+        cell_list[62-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D46"))/F$47/2'
+        cell_list[63-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D47"))/F$47/2'
+        cell_list[64-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D48"))/F$47/2'
+        cell_list[65-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D49"))/F$47/2'
+        cell_list[66-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D50"))/F$47/2'
+        cell_list[67-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D52"))/F$47/2'
+        cell_list[68-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D53"))/F$47/2'
+        cell_list[69-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D55"))/F$47/2'
+        cell_list[70-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D57"))/F$47/2'
+        cell_list[71-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D58"))/F$47/2'
+        cell_list[72-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D60"))/F$47/2'
+        cell_list[73-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D61"))/F$47/2'
+        cell_list[74-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D62"))/F$47/2'
+        cell_list[75-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D64"))/F$47/2'
+        cell_list[76-1].value = ''
+        cell_list[77-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D67"))/F$47/2'
+        cell_list[78-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D68"))/F$47/2'
+        cell_list[79-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D69"))/F$47/2'
+        cell_list[81-1].value = '=sum(F49:F79)'
+        cell_list[82-1].value = '=if(now()>F1,F40-F81,0)'
+        cell_list[89-1].value = '=F85-F86+F88'
+        cell_list[90-1].value = '=f11'
         jacks_worksheet.update_cells(cell_list, value_input_option='USER_ENTERED')
         CALLS += 2
 
         jacks_date = jacks_date+timedelta(days=1)
-        cell_list = jacks_worksheet.range("g1:g71")
+        cell_list = jacks_worksheet.range("g1:g90")
         cell_list[1-1].value = jacks_date.strftime("%m/%d/%y")
         cell_list[2-1].value = jacks_date.strftime("%A")
         cell_list[10-1].value = "=SUM(g3:g9)"
@@ -1256,27 +1572,46 @@ def build_weekly_sheet(date):
         cell_list[40-1].value = "=if(now()>G1,g10-g39,0)"
         cell_list[45-1].value = "=sum(g43:g44)"
         cell_list[47-1].value = "=DAY(EOMONTH(g1,0))"
-        cell_list[49-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b2"))/g47/2'
-        cell_list[50-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b3"))/g47/2'
-        cell_list[51-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b4"))/g47/2'
-        cell_list[52-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b5"))/g47/2'
-        cell_list[53-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b6"))/g47/2'
-        cell_list[54-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b10"))/g47/2'
-        cell_list[55-1].value = '=IMPORTRANGE("1jLESmrMCNS1uDSOkJiE7FKbQqDYVI7Vp2StZwIVgoaY","Sheet1!b18")/365/2'
-        cell_list[56-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b11"))/g47/2'
-        cell_list[57-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b15"))/g47/2'
-        cell_list[58-1].value = '0'
-        cell_list[59-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b20"))/g47/2'
-        cell_list[60-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b21"))/g47/2'
-        cell_list[62-1].value = '=sum(g49:g60)'
-        cell_list[63-1].value = '=if(now()>G1,g40-g62,0)'
-        cell_list[70-1].value = '=g66-g67+g69'
-        cell_list[71-1].value = '=g11'
+        cell_list[49-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D33"))/G$47/2'
+        cell_list[50-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D34"))/G$47/2'
+        cell_list[51-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D35"))/G$47/2'
+        cell_list[52-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D36"))/G$47/2'
+        cell_list[53-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D37"))/G$47/2'
+        cell_list[54-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D38"))/G$47/2'
+        cell_list[55-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D39"))/G$47/2'
+        cell_list[56-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D40"))/G$47/2'
+        cell_list[57-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D41"))/G$47/2'
+        cell_list[58-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D42"))/G$47/2'
+        cell_list[59-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D43"))/G$47/2'
+        cell_list[60-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D44"))/G$47/2'
+        cell_list[61-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D45"))/G$47/2'
+        cell_list[62-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D46"))/G$47/2'
+        cell_list[63-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D47"))/G$47/2'
+        cell_list[64-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D48"))/G$47/2'
+        cell_list[65-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D49"))/G$47/2'
+        cell_list[66-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D50"))/G$47/2'
+        cell_list[67-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D52"))/G$47/2'
+        cell_list[68-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D53"))/G$47/2'
+        cell_list[69-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D55"))/G$47/2'
+        cell_list[70-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D57"))/G$47/2'
+        cell_list[71-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D58"))/G$47/2'
+        cell_list[72-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D60"))/G$47/2'
+        cell_list[73-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D61"))/G$47/2'
+        cell_list[74-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D62"))/G$47/2'
+        cell_list[75-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D64"))/G$47/2'
+        cell_list[76-1].value = ''
+        cell_list[77-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D67"))/G$47/2'
+        cell_list[78-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D68"))/G$47/2'
+        cell_list[79-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D69"))/G$47/2'
+        cell_list[81-1].value = '=sum(G49:G79)'
+        cell_list[82-1].value = '=if(now()>G1,G40-G81,0)'
+        cell_list[89-1].value = '=G85-G86+G88'
+        cell_list[90-1].value = '=g11'
         jacks_worksheet.update_cells(cell_list, value_input_option='USER_ENTERED')
         CALLS += 2
 
         jacks_date = jacks_date+timedelta(days=1)
-        cell_list = jacks_worksheet.range("h1:h71")
+        cell_list = jacks_worksheet.range("h1:h90")
         cell_list[1-1].value = jacks_date.strftime("%m/%d/%y")
         cell_list[2-1].value = jacks_date.strftime("%A")
         cell_list[10-1].value = "=SUM(h3:h9)"
@@ -1296,26 +1631,45 @@ def build_weekly_sheet(date):
         cell_list[40-1].value = "=if(now()>H1,h10-h39,0)"
         cell_list[45-1].value = "=sum(h43:h44)"
         cell_list[47-1].value = "=DAY(EOMONTH(h1,0))"
-        cell_list[49-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b2"))/h47/2'
-        cell_list[50-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b3"))/h47/2'
-        cell_list[51-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b4"))/h47/2'
-        cell_list[52-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b5"))/h47/2'
-        cell_list[53-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b6"))/h47/2'
-        cell_list[54-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b10"))/h47/2'
-        cell_list[55-1].value = '=IMPORTRANGE("1jLESmrMCNS1uDSOkJiE7FKbQqDYVI7Vp2StZwIVgoaY","Sheet1!b18")/365/2'
-        cell_list[56-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b11"))/h47/2'
-        cell_list[57-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b15"))/h47/2'
-        cell_list[58-1].value = '0'
-        cell_list[59-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b20"))/h47/2'
-        cell_list[60-1].value = '=sum(IMPORTRANGE("1kFVaWgQSSaSugDLEmLEtNP0X9FRruu3N8KTwtHF3gVM","Sheet1!b21"))/h47/2'
-        cell_list[62-1].value = '=sum(h49:h60)'
-        cell_list[63-1].value = '=if(now()>H1,h40-h62,0)'
-        cell_list[70-1].value = '=h66-h67+h69'
-        cell_list[71-1].value = '=h11'
+        cell_list[49-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D33"))/H$47/2'
+        cell_list[50-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D34"))/H$47/2'
+        cell_list[51-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D35"))/H$47/2'
+        cell_list[52-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D36"))/H$47/2'
+        cell_list[53-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D37"))/H$47/2'
+        cell_list[54-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D38"))/H$47/2'
+        cell_list[55-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D39"))/H$47/2'
+        cell_list[56-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D40"))/H$47/2'
+        cell_list[57-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D41"))/H$47/2'
+        cell_list[58-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D42"))/H$47/2'
+        cell_list[59-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D43"))/H$47/2'
+        cell_list[60-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D44"))/H$47/2'
+        cell_list[61-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D45"))/H$47/2'
+        cell_list[62-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D46"))/H$47/2'
+        cell_list[63-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D47"))/H$47/2'
+        cell_list[64-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D48"))/H$47/2'
+        cell_list[65-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D49"))/H$47/2'
+        cell_list[66-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D50"))/H$47/2'
+        cell_list[67-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D52"))/H$47/2'
+        cell_list[68-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D53"))/H$47/2'
+        cell_list[69-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D55"))/H$47/2'
+        cell_list[70-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D57"))/H$47/2'
+        cell_list[71-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D58"))/H$47/2'
+        cell_list[72-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D60"))/H$47/2'
+        cell_list[73-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D61"))/H$47/2'
+        cell_list[74-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D62"))/H$47/2'
+        cell_list[75-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D64"))/H$47/2'
+        cell_list[76-1].value = ''
+        cell_list[77-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D67"))/H$47/2'
+        cell_list[78-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D68"))/H$47/2'
+        cell_list[79-1].value = 'sum(IMPORTRANGE("1L5LdMeXzuDRNroMm1syTOOB9pmO3UdPnu51dflsf5dc","Profit and Loss!D69"))/H$47/2'
+        cell_list[81-1].value = '=sum(H49:H79)'
+        cell_list[82-1].value = '=if(now()>H1,H40-H81,0)'
+        cell_list[89-1].value = '=H85-H86+H88'
+        cell_list[90-1].value = '=h11'
         jacks_worksheet.update_cells(cell_list, value_input_option='USER_ENTERED')
         CALLS += 2
 
-        cell_list = jacks_worksheet.range("i1:i71")
+        cell_list = jacks_worksheet.range("i1:i90")
         cell_list[2-1].value = "Week"
         cell_list[3-1].value = "=sum(B3:H3)"
         cell_list[4-1].value = "=sum(B4:H4)"
@@ -1360,14 +1714,29 @@ def build_weekly_sheet(date):
         cell_list[58-1].value = "=sum(B58:H58)"
         cell_list[59-1].value = "=sum(B59:H59)"
         cell_list[60-1].value = "=sum(B60:H60)"
+        cell_list[61-1].value = "=sum(B61:H61)"
         cell_list[62-1].value = "=sum(B62:H62)"
         cell_list[63-1].value = "=sum(B63:H63)"
+        cell_list[64-1].value = "=sum(B64:H64)"
+        cell_list[65-1].value = "=sum(B65:H65)"
         cell_list[66-1].value = "=sum(B66:H66)"
         cell_list[67-1].value = "=sum(B67:H67)"
         cell_list[68-1].value = "=sum(B68:H68)"
         cell_list[69-1].value = "=sum(B69:H69)"
         cell_list[70-1].value = "=sum(B70:H70)"
         cell_list[71-1].value = "=sum(B71:H71)"
+        cell_list[72-1].value = "=sum(B72:H72)"
+        cell_list[73-1].value = "=sum(B73:H73)"
+        cell_list[74-1].value = "=sum(B74:H74)"
+        cell_list[75-1].value = "=sum(B75:H75)"
+        cell_list[76-1].value = "=sum(B76:H76)"
+        cell_list[77-1].value = "=sum(B77:H77)"
+        cell_list[78-1].value = "=sum(B78:H78)"
+        cell_list[79-1].value = "=sum(B79:H79)"
+        cell_list[81-1].value = "=sum(B81:H81)"
+        cell_list[82-1].value = "=sum(B82:H82)"
+        cell_list[89-1].value = "=sum(B89:H89)"
+        cell_list[90-1].value = "=sum(B90:H90)"
         jacks_worksheet.update_cells(cell_list, value_input_option='USER_ENTERED')
         CALLS += 2
 
@@ -1411,15 +1780,15 @@ def build_weekly_sheet(date):
         CALLS += 2
 
         cell_list = overview_worksheet.range("b1:b9")
-        tfs_credit = '=sum(IMPORTRANGE("%s","San Jac!F71:H71"))+sum(IMPORTRANGE("%s","Jack'%(last_week_sheet_id,last_week_sheet_id)
-        tfs_credit+= "'"+'s!F71:H71"))'
+        tfs_credit = '=sum(IMPORTRANGE("%s","San Jac!F90:H90"))+sum(IMPORTRANGE("%s","Jack'%(last_week_sheet_id,last_week_sheet_id)
+        tfs_credit+= "'"+'s!F90:H90"))'
         cell_list[3-1].value = tfs_credit
-        tfs_cash = '=sum(IMPORTRANGE("%s","San Jac!F70:H70"))+sum(IMPORTRANGE("%s","Jack'%(last_week_sheet_id,last_week_sheet_id)
-        tfs_cash+= "'"+'s!F70:H70"))'
+        tfs_cash = '=sum(IMPORTRANGE("%s","San Jac!F89:H89"))+sum(IMPORTRANGE("%s","Jack'%(last_week_sheet_id,last_week_sheet_id)
+        tfs_cash+= "'"+'s!F89:H89"))'
         cell_list[4-1].value = tfs_cash
-        balance = "=sum(B2:B4)+sum('San Jac'!I70:I71)+sum('Jack''s'!I70:I71)-sum('Checks Written'!D3:D90)-sum('Debit Card Charges'!C3:C50)"
+        balance = "=sum(B2:B4)+sum('San Jac'!I89:I90)+sum('Jack''s'!I89:I90)-sum('Checks Written'!D3:D90)-sum('Debit Card Charges'!C3:C90)"
         cell_list[5-1].value = balance
-        net_profit = "=sumif('San Jac'!B3:H3,"+'">0"'+",'San Jac'!B63:H63)+sumif('Jack''s'!B3:H3,"+'">0"'+",'Jack''s'!B63:H63)"
+        net_profit = "=sumif('San Jac'!B3:H3,"+'">0"'+",'San Jac'!B82:H82)+sumif('Jack''s'!B3:H3,"+'">0"'+",'Jack''s'!B82:H82)"
         cell_list[6-1].value = net_profit
         cell_list[7-1].value = "=sum('San Jac'!I10)+sum('Jack''s'!I10)"
         cell_list[8-1].value = "=sum('San Jac'!I45)+sum('Jack''s'!I45)"
@@ -1436,7 +1805,8 @@ def build_weekly_sheet(date):
                                             ("B2:B8",currency),
                                             ("C8",percent)])
 
-        format_cell_ranges(san_jac_worksheet, [("A3:A73",bold),
+        format_cell_ranges(san_jac_worksheet, [("A3:A48",bold),
+                                                ("A81:A90",bold),
                                                 ("B1:I1",bold),
                                                 ("B2:I2",heading),
                                                 ("B3:I20",currency),
@@ -1447,13 +1817,14 @@ def build_weekly_sheet(date):
                                                 ("B32:I45",currency),
                                                 ("B39:I39",calculated_currency),
                                                 ("B40:I40",calculated_currency),
-                                                ("B49:I71",currency),
-                                                ("B62:I62",calculated_currency),
-                                                ("B63:I63",calculated_currency),
-                                                ("B70:I70",calculated_currency),
-                                                ("B71:I71",calculated_currency)])
+                                                ("B49:I90",currency),
+                                                ("B81:I81",calculated_currency),
+                                                ("B82:I82",calculated_currency),
+                                                ("B89:I89",calculated_currency),
+                                                ("B90:I90",calculated_currency)])
 
-        format_cell_ranges(jacks_worksheet, [("A3:A73",bold),
+        format_cell_ranges(jacks_worksheet, [("A3:A48",bold),
+                                                ("A81:A90",bold),
                                                 ("B1:I1",bold),
                                                 ("B2:I2",heading),
                                                 ("B3:I20",currency),
@@ -1464,11 +1835,11 @@ def build_weekly_sheet(date):
                                                 ("B32:I45",currency),
                                                 ("B39:I39",calculated_currency),
                                                 ("B40:I40",calculated_currency),
-                                                ("B49:I71",currency),
-                                                ("B62:I62",calculated_currency),
-                                                ("B63:I63",calculated_currency),
-                                                ("B70:I70",calculated_currency),
-                                                ("B71:I71",calculated_currency)])
+                                                ("B49:I90",currency),
+                                                ("B81:I81",calculated_currency),
+                                                ("B82:I82",calculated_currency),
+                                                ("B89:I89",calculated_currency),
+                                                ("B90:I90",calculated_currency)])
 
         format_cell_ranges(checks_worksheet, [("A1",bold),
                                                 ("A2:F2",heading),
@@ -1568,8 +1939,8 @@ def build_month_sheet(date=False):
         if len(weekly_sheets[sheet_id]) > 1:
             gs_sjs += '+sum(IMPORTRANGE("%s","San Jac!%s10:%s10"))'%(sheet_id,weekly_sheets[sheet_id][0],weekly_sheets[sheet_id][1])
             gs_jacks += '+sum(IMPORTRANGE("%s","Jack'%sheet_id+"'"+'s!%s10:%s10"))'%(weekly_sheets[sheet_id][0],weekly_sheets[sheet_id][1])
-            np_sjs += '+sum(IMPORTRANGE("%s","San Jac!%s63:%s63"))'%(sheet_id,weekly_sheets[sheet_id][0],weekly_sheets[sheet_id][1])
-            np_jacks += '+sum(IMPORTRANGE("%s","Jack'%sheet_id+"'"+'s!%s63:%s63"))'%(weekly_sheets[sheet_id][0],weekly_sheets[sheet_id][1])
+            np_sjs += '+sum(IMPORTRANGE("%s","San Jac!%s82:%s82"))'%(sheet_id,weekly_sheets[sheet_id][0],weekly_sheets[sheet_id][1])
+            np_jacks += '+sum(IMPORTRANGE("%s","Jack'%sheet_id+"'"+'s!%s82:%s82"))'%(weekly_sheets[sheet_id][0],weekly_sheets[sheet_id][1])
             oc_sjs += '+sum(IMPORTRANGE("%s","San Jac!%s45:%s45"))'%(sheet_id,weekly_sheets[sheet_id][0],weekly_sheets[sheet_id][1])
             oc_jacks += '+sum(IMPORTRANGE("%s","Jack'%sheet_id+"'"+'s!%s45:%s45"))'%(weekly_sheets[sheet_id][0],weekly_sheets[sheet_id][1])
             merch += '+sum(IMPORTRANGE("%s","San Jac!%s9:%s9"))'%(sheet_id,weekly_sheets[sheet_id][0],weekly_sheets[sheet_id][1])
@@ -1579,8 +1950,8 @@ def build_month_sheet(date=False):
         else:
             gs_sjs += '+sum(IMPORTRANGE("%s","San Jac!%s10"))'%(sheet_id,weekly_sheets[sheet_id][0])
             gs_jacks += '+sum(IMPORTRANGE("%s","Jack'%sheet_id+"'"+'s!%s10"))'%(weekly_sheets[sheet_id][0])
-            np_sjs += '+sum(IMPORTRANGE("%s","San Jac!%s63"))'%(sheet_id,weekly_sheets[sheet_id][0])
-            np_jacks += '+sum(IMPORTRANGE("%s","Jack'%sheet_id+"'"+'s!%s63"))'%(weekly_sheets[sheet_id][0])
+            np_sjs += '+sum(IMPORTRANGE("%s","San Jac!%s82"))'%(sheet_id,weekly_sheets[sheet_id][0])
+            np_jacks += '+sum(IMPORTRANGE("%s","Jack'%sheet_id+"'"+'s!%s82"))'%(weekly_sheets[sheet_id][0])
             oc_sjs += '+sum(IMPORTRANGE("%s","San Jac!%s45"))'%(sheet_id,weekly_sheets[sheet_id][0])
             oc_jacks += '+sum(IMPORTRANGE("%s","Jack'%sheet_id+"'"+'s!%s45"))'%(weekly_sheets[sheet_id][0])
             merch += '+sum(IMPORTRANGE("%s","San Jac!%s9"))'%(sheet_id,weekly_sheets[sheet_id][0])
